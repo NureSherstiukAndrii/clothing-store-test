@@ -1,0 +1,44 @@
+body{
+    margin: 0px;
+    padding: 0px;
+}
+
+header{
+    background: lightgray;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
+    position: fixed;
+}
+.header-content{
+    display: flex;
+    align-items: center;
+    width: 80%;
+    justify-content: space-between;
+}
+.navigation{
+    display: flex;
+    align-items: center;
+    width: 70%;
+    justify-content: space-between;
+}
+.navigation-block{
+    display: flex;
+    list-style: none;
+    width: 60%;
+    justify-content: space-around;
+}
+.navigation-block-btn:hover{
+    cursor: pointer;
+    transition: 0.3s;
+    color: gray;
+}
+.navigation-account-links{
+    display: flex;
+    width: 30%;
+    justify-content: space-between;
+}
+.navigation-account-links > div > span{
+    margin-left: 10px;
+}
