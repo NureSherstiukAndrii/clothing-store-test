@@ -10,6 +10,7 @@ header{
     justify-content: center;
     font-size: 18px;
     position: fixed;
+    z-index: 1;
 }
 .header-content{
     display: flex;
@@ -41,4 +42,49 @@ header{
 }
 .navigation-account-links > div > span{
     margin-left: 10px;
+}
+
+.introduction{
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    justify-content: space-between;
+    top: 57px;
+    background:lightgray;
+}
+.introduction > img{
+    width: 59%;
+}
+.introduction-container{
+    background: gray;
+    height: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+}
+.introduction-phrase{
+    display: flex;
+    width: 63%;
+    flex-direction: column;
+    height: 60%;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+.introduction-phrase > button{
+    width: 180px;
+    height: 35px;
+    font-size: 17px;
+    background: none;
+    border: 1px solid lightgray;
+    color: #333333;
+}
+.introduction-phrase > button:hover{
+    cursor: pointer;
+    transition: 0.2s;
+    background: #333333;
+    color: white;
+    border: none;
 }
