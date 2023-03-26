@@ -133,3 +133,11 @@ color: red;
     background-image: url("../img/size-chart.jpg");
     background-repeat: round;
 }
+
+.last-arrivals{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    top: 100px;
+}
