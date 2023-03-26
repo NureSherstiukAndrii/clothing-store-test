@@ -5,7 +5,6 @@ body{
     margin: 0px;
     padding: 0px;
 }
-
 header{
     background: lightgray;
     width: 100%;
@@ -140,4 +139,14 @@ color: red;
     align-items: center;
     position: relative;
     top: 100px;
+}
+footer{
+    position: relative;
+    top: 100px;
+    background: lightgray;
+    width: 100%;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 }
