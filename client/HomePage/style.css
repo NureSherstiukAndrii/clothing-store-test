@@ -134,7 +134,7 @@ color: red;
     background-repeat: round;
 }
 
-.last-arrivals{
+.last-arrivals, .popular-clothes{
     display: flex;
     flex-direction: column;
     align-items: center;
