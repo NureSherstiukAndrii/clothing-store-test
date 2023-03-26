@@ -86,8 +86,50 @@ header{
 }
 .introduction-phrase > button:hover{
     cursor: pointer;
-    transition: 0.2s;
+    transition: 0.4s;
     background: #333333;
     color: white;
     border: none;
+}
+
+.main-categories{
+    width: 100%;
+    display: flex;
+    position: relative;
+    top: 65px;
+    height: 610px;
+    justify-content: space-between;
+    font-weight: bold;
+}
+.main-categories > a{
+    width: 33%;
+    color: white;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    text-decoration: none;
+}
+.main-categories > a > h1{
+    width: 60%;
+}
+.main-categories > a:hover{
+    cursor: pointer;
+    filter: brightness(0.5);
+    transition: 0.6s;
+}
+.main-categories > div:not:hover{
+color: red;
+}
+.category-about{
+    background-image: url("../img/about-us.jpg");
+    background-repeat: round;
+}
+.category-shop{
+    background-image: url("../img/about-shop.jpg");
+    background-repeat: round;
+}
+.category-size{
+    background-image: url("../img/size-chart.jpg");
+    background-repeat: round;
 }
