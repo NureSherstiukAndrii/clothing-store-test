@@ -68,11 +68,8 @@ header{
 }
 .introduction-phrase{
     display: flex;
-    width: 63%;
     flex-direction: column;
-    height: 60%;
     text-align: center;
-    justify-content: center;
     align-items: center;
 }
 .introduction-phrase > button{
