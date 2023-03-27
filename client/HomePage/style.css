@@ -117,9 +117,6 @@ header{
     filter: brightness(0.5);
     transition: 0.6s;
 }
-.main-categories > div:not:hover{
-color: red;
-}
 .category-about{
     background-image: url("../img/about-us.jpg");
     background-repeat: round;
