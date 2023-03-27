@@ -1,0 +1,16 @@
+html{
+    font-family: 'Montserrat', sans-serif;
+}
+body{
+    margin: 0px;
+    padding: 0px;
+}
+header{
+    background: lightgray;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
+    position: fixed;
+    z-index: 1;
+}
