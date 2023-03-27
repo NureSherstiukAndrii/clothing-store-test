@@ -46,3 +46,29 @@ header{
 .navigation-account-links > div > span{
     margin-left: 10px;
 }
+
+.introduction{
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    justify-content: space-between;
+    top: 57px;
+    background:lightgray;
+}
+.introduction > img{
+    width: 59%;
+}
+.introduction-container{
+    background: gray;
+    height: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+}
+.introduction-phrase{
+    display: flex;
+    width: 45%;
+    flex-direction: column;
+}
