@@ -113,6 +113,7 @@ header{
     cursor: pointer;
     filter: brightness(0.5);
     transition: 0.6s;
+    transform: scale(0.98);
 }
 .category-about{
     background-image: url("../img/about-us.jpg");
