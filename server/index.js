@@ -4,9 +4,14 @@ const path = require('path')
 
 const dbService = require("./db");
 
-
 const parentDir = path.resolve(__dirname, '..');
-app.use(express.static(path.join(parentDir)))
+
+app.use('/styles', express.static(path.join(parentDir, 'client/styles'), {
+    headers: { 'Content-Type': 'text/css' }
+}));
+
+
+app.use(express.static(path.join(parentDir, '/client')))
 app.use(express.json());
 
 
