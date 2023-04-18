@@ -19,9 +19,14 @@ app.get("/", function (req, res){
     res.sendFile( parentDir + "/client/HomePage/index.html");
 })
 
-app.get("/AllTours", function (req, res){
-    res.sendFile(__dirname + "/toursPage.html");
+app.get("/about", function (req, res){
+    res.sendFile(parentDir + "/client/AboutUsPage/index.html");
 })
+
+app.get("/shop", function (req, res){
+    res.sendFile(parentDir + "/client/ShopPage/index.html");
+})
+
 
 app.get('/script.js', (req, res) => {
     res.type('text/javascript');
