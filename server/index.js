@@ -28,51 +28,46 @@ app.get("/shop", function (req, res){
 })
 
 
-app.get('/script.js', (req, res) => {
-    res.type('text/javascript');
-    res.sendFile(__dirname + '/script.js');
-});
-
-app.get("/getAllTours", function(request, response){
+app.get("/getAllProducts", function(request, response){
     const db = dbService.getDbServiceInstance();
-    let result = db.getAllTours();
+    let result = db.getAllProducts();
 
     result
         .then((data) => response.json({ data: data }))
         .catch((err) => console.log(err));
 });
 
-
-app.post('/insertTour', (req, res) => {
-    const {id, name} = req.body;
-    const db = dbService.getDbServiceInstance()
-
-    const result = db.addTour(+id, name)
-
-    result
-        .then((data) => {res.json({ data: data }); console.log(data)})
-        .catch((err) => console.log(err));
-});
-
-app.delete("/deleteTour/:id", (request, response) => {
-    const { id } = request.params;
-    const db = dbService.getDbServiceInstance();
-
-    const result = db.deleteTour(id);
-
-    result
-        .then((data) => response.json({ success: data }))
-        .catch((err) => console.log(err));
-});
-
-app.patch("/updateTour", (request, response) => {
-    console.log(request);
-    const {id, name} = request.body;
-    const db = dbService.getDbServiceInstance();
-    const result = db.editTour(+id, name);
-    result
-        .then((data) => response.json({ success: data }))
-        .catch((err) => console.log(err));
-});
+//
+// app.post('/insertTour', (req, res) => {
+//     const {id, name} = req.body;
+//     const db = dbService.getDbServiceInstance()
+//
+//     const result = db.addTour(+id, name)
+//
+//     result
+//         .then((data) => {res.json({ data: data }); console.log(data)})
+//         .catch((err) => console.log(err));
+// });
+//
+// app.delete("/deleteTour/:id", (request, response) => {
+//     const { id } = request.params;
+//     const db = dbService.getDbServiceInstance();
+//
+//     const result = db.deleteTour(id);
+//
+//     result
+//         .then((data) => response.json({ success: data }))
+//         .catch((err) => console.log(err));
+// });
+//
+// app.patch("/updateTour", (request, response) => {
+//     console.log(request);
+//     const {id, name} = request.body;
+//     const db = dbService.getDbServiceInstance();
+//     const result = db.editTour(+id, name);
+//     result
+//         .then((data) => response.json({ success: data }))
+//         .catch((err) => console.log(err));
+// });
 
 app.listen(3000);

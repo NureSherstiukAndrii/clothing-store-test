@@ -17,7 +17,7 @@ class DbService {
         return instance ? instance : new DbService();
     }
 
-    async getAllTours() {
+    async getAllProducts() {
         try {
             const pool = new sql.ConnectionPool(config);
             const response = await new Promise((resolve, reject) => {

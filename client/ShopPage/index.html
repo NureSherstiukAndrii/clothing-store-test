@@ -54,10 +54,48 @@
 
 <div class="main-content">
     <div class="filters">
+        <div style="border-bottom: 1px solid; font-size: 20px; font-weight: bold;">Фільтрувати за</div>
+        <ul id="filter-categories">
+            <li>
+                <div class="filter-category">
+                    <span>Коллекции</span>
+                    <span class="close-open">&#9660;</span>
+                </div>
+                <div class="collection-container">
+                    <div>nike</div>
+                    <div>adidas</div>
+                    <div>puma</div>
+                    <div>zara</div>
+                </div>
+            </li>
+            <li>
+                <div class="filter-category">
+                    <span>Цене</span>
+                    <span class="close-open">&#9660;</span>
+                </div>
+                <div class="collection-container">
+                    <label for="price-from">От:<input type="text" id="price-from"/></label>
+                    <label for="price-to">До:<input type="text" id="price-to"/></label>
+                </div>
+            </li>
 
+            <li>
+                <div class="filter-category">
+                    <span>Размеру</span>
+                    <span class="close-open">&#9660;</span>
+                </div>
+                <div class="collection-container">
+                    <label for="size-m">M<input type="checkbox" id="size-m"/></label>
+                    <label for="size-l">L<input type="checkbox" id="size-l"/></label>
+                    <label for="size-xl">XL<input type="checkbox" id="size-xl"/></label>
+                    <label for="size-xxl">XXL<input type="checkbox" id="size-xxl"/></label>
+                </div>
+            </li>
+
+        </ul>
     </div>
 
-    <div class="clothes">
+    <div id="products" class="clothes">
 
     </div>
 </div>
@@ -78,6 +116,8 @@
 <!--    </div>-->
 <!--</footer>-->
 
+
+<script src="../scripts/shop_script.js"></script>
 
 </body>
 </html>

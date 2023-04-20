@@ -85,6 +85,61 @@ header{
     flex-direction: column;
     text-align: center;
 }
+.main-content{
+    display: flex;
+    position: relative;
+    margin-top: 100px;
+    width: 95%;
+    justify-content: space-around;
+}
+.filters{
+    width: 20%;
+}
+.clothes{
+    display: flex;
+    background: gray;
+}
+.product{
+    background: lightgray;
+    height: 200px;
+    width: 300px;
+}
+.collection-container{
+    max-height: 0;
+    transition: max-height 0.52s ease-out;
+    overflow: hidden;
+    top: 30px;
+}
+.collection-container > div{
+    margin: 10px 0px;
+}
+#filter-categories{
+    display: flex;
+    height: 40%;
+    flex-direction: column;
+    padding-left: 0px;
+}
+li{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid;
+    flex-direction: column;
+    margin: 20px 0px;
+    cursor: pointer;
+}
+.filter-category{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.active ~ .collection-container {
+    transition: max-height 0.50s ease-in;
+    max-height: 400px;
+}
+.active .close-open {
+    transform: rotate(180deg);
+}
+
 footer{
     position: relative;
     border-top: 2px solid;
