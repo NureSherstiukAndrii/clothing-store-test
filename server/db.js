@@ -80,6 +80,31 @@ class DbService {
             sql.close();
         }
     }
+
+    async getProductImages(){
+        try {
+            const pool = new sql.ConnectionPool(config);
+            return await new Promise((resolve, reject) => {
+                pool.connect().then(() => {
+                    const request = new sql.Request(pool);
+                    request.query("SELECT * FROM Product_img;").then((result, err) => {
+                        if (err) {
+                            reject(new Error(err.message));
+                        }
+                        resolve(result.recordset);
+                        pool.close();
+                    }).catch((err) => {
+                        console.error(err);
+                        pool.close();
+                    });
+                })
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
 }
 
 module.exports = DbService;

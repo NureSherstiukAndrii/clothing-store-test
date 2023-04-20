@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     fetch("http://localhost:3000/getAllProducts")
         .then((response) => response.json())
-        .then((response) => loadHTMLProducts(response.data))
+        .then((response) => loadHTMLProducts(response))
 });
 
 
@@ -17,7 +17,7 @@ const filter_block = document.getElementsByClassName('filter-category');
 
 
 function loadHTMLProducts(data) {
-
+    console.log(data)
     const allProducts = document.getElementById('products')
 
     if (data.length === 0) {
