@@ -33,7 +33,18 @@ app.get("/getAllProducts", function(request, response){
     let products = db.getAllProducts();
     let images = db.getProductImages();
 
-    let productsJson;
+    let result;
+
+    Promise.all([products, images]).then(([p, i]) => {
+       result = addImagesToProducts(p, i);
+
+       response.json({data: result});
+    });
+
+    //let result = addImagesToProducts(p, i);
+    //console.log(result);
+    //response.json(result);
+    /*let productsJson;
     let imagesJson;
 
     products
@@ -41,17 +52,17 @@ app.get("/getAllProducts", function(request, response){
 
     images
         .then((data) => imagesJson = JSON.stringify(data));
-    /*Promise.all([products, images]).then(values => {
+    Promise.all([products, images]).then(values => {
         const productsData = values[0];
         const imagesData = values[1];
 
         productsJson = JSON.stringify(productsData);
         imagesJson = JSON.stringify(imagesData);
-    });*/
+    });
 
     let result = addImagesToProducts(productsJson, imagesJson);
 
-    response.json(result);
+    response.json(result);*/
 });
 
 app.get("/getImages", function(request, response){
@@ -63,21 +74,19 @@ app.get("/getImages", function(request, response){
         .catch((err) => console.log(err));
 });
 
-function addImagesToProducts(products_json, images_json) {
-
-    let products = JSON.parse(products_json);
-    let images = JSON.parse(images_json);
+function addImagesToProducts(products, images) {
     for (let i = 0; i < products.length; i++) {
         const productImages = [];
         for (let j = 0; j < images.length; j++) {
-            if (products[i].id === images[j].p_id) {
+            if (products[i].Id === images[j].p_id) {
                 productImages.push(images[j].img);
             }
         }
         products[i].images = productImages;
     }
-    return JSON.stringify(products);
+    return products;
 }
+
 
 
 //

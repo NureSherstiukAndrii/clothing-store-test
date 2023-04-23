@@ -1,4 +1,5 @@
 const sql = require('mssql');
+const { Storage } = require('@google-cloud/storage');
 let instance = null;
 
 const config = {
@@ -12,9 +13,33 @@ const config = {
     },
 };
 
+
+const storage = new Storage({
+    projectId: 'dogwood-garden-382315',
+    keyFilename: 'C:\\Users\\User\\Desktop\\кладовка)\\dogwood-garden-382315-f58b3243e2e9.json'
+});
+
+const bucketName = 'nure_bucket';
+const bucket = storage.bucket(bucketName);
+
+const configStorage = {
+    action: 'read',
+    expires: Date.now() + 60 * 1000 // дата истечения ссылки
+};
+
 class DbService {
     static getDbServiceInstance() {
         return instance ? instance : new DbService();
+    }
+
+    async getFilesFromStorage() {
+        try {
+            const [files] = await bucket.getFiles();
+            console.log('files', files);
+            return files;
+        } catch (err) {
+            console.error('ERROR:', err);
+        }
     }
 
     async getAllProducts() {
@@ -103,6 +128,10 @@ class DbService {
             console.log(error);
         }
     }
+
+
+
+
 
 
 }

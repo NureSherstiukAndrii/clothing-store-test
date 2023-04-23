@@ -15,9 +15,19 @@ const config = {
     expires: Date.now() + 60 * 1000 // дата истечения ссылки
 };
 
+async function getFilesFromStorage() {
+    try {
+        const [files] = await storage.bucket(bucketName).getFiles();
+        console.log('files', files);
+        return files;
+    } catch (err) {
+        console.error('ERROR:', err);
+    }
+}
 
 
-app.get("/", function(request, response){
+
+/*app.get("/", function(request, response){
     //const pool = new sql.ConnectionPool(config);
     file.getSignedUrl(config, function (err, url) {
         if (err) {
@@ -26,4 +36,4 @@ app.get("/", function(request, response){
         }
         response.send(`<img src="${url}" />`); // передача ссылки в тег img
     });
-});
+});*/
