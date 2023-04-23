@@ -5,15 +5,7 @@ const storage = new Storage({
 });
 
 const bucketName = 'nure_bucket';
-const bucket = storage.bucket(bucketName);
 
-const fileName = '1_image.jpg';
-const file = bucket.file(fileName);
-
-const config = {
-    action: 'read',
-    expires: Date.now() + 60 * 1000 // дата истечения ссылки
-};
 
 async function getFilesFromStorage() {
     try {
@@ -25,15 +17,31 @@ async function getFilesFromStorage() {
     }
 }
 
+class Cloud_img{
+
+    bucket = storage.bucket(bucketName);
+
+    config = {
+        action: 'read',
+        expires: Date.now() + 180 * 60 * 1000 // дата истечения ссылки
+    };
 
 
-/*app.get("/", function(request, response){
-    //const pool = new sql.ConnectionPool(config);
-    file.getSignedUrl(config, function (err, url) {
-        if (err) {
-            console.error(err);
-            return;
-        }
-        response.send(`<img src="${url}" />`); // передача ссылки в тег img
-    });
-});*/
+    async getImgUrl(filename){
+        const file = this.bucket.file(filename);
+        return new Promise((resolve, reject) => {
+            file.getSignedUrl(this.config, function (err, url) {
+                if (err) {
+                    console.error(err);
+                    reject(err);
+                } else {
+                    console.log(url);
+                    resolve(url);
+                }
+            });
+        });
+    }
+
+}
+
+module.exports = Cloud_img;

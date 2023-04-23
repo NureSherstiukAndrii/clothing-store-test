@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", function () {
     fetch("http://localhost:3000/getAllProducts")
         .then((response) => response.json())
@@ -17,7 +18,7 @@ const filter_block = document.getElementsByClassName('filter-category');
 
 
 function loadHTMLProducts(data) {
-    console.log(data);
+
     const allProducts = document.getElementById('products')
 
     if (data.length === 0) {
@@ -27,9 +28,11 @@ function loadHTMLProducts(data) {
 
     let productHtml = "";
 
-    data.forEach(({Id, Name, price}) => {
+    data.forEach(({Id, Name, price, images}) => {
+
+
         productHtml += "<div class='product'>";
-        productHtml += `<img src="" alt="product ${Id}"/>`;
+        productHtml += `<img id="my-image-${Id}" style="width: 150px" src="" alt="product ${Id}"/>`;
         productHtml += `<h2 id='product_name-${Name}'>${Name}</h2>`;
         productHtml += `<span id='product_price-${price}'>$ ${price}</span>`
         productHtml += `<div>`
@@ -37,6 +40,14 @@ function loadHTMLProducts(data) {
         productHtml += `<button class="edit-product-btn" data-id=${Id}>Змінити</button>`;
         productHtml += `</div>`
         productHtml += "</div>";
+
+        fetch("/api/cloud-img?filename=1.jpg")
+            .then(response => response.json())
+            .then(data => {
+                const img = document.getElementById("my-image");
+                img.src = data.url;
+            })
+            .catch(error => console.error(error));
     });
 
     allProducts.innerHTML = productHtml;

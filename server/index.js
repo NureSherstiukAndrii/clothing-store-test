@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
-const path = require('path')
+const path = require('path');
+const cloud_img = require("./cloud_img");
 
 const dbService = require("./db");
 
@@ -13,6 +14,19 @@ app.use('/styles', express.static(path.join(parentDir, 'client/styles'), {
 
 app.use(express.static(path.join(parentDir, '/client')))
 app.use(express.json());
+
+const cloudImg = new cloud_img();
+
+app.get('/api/cloud-img', async (req, res) => {
+    try {
+        const url = await cloudImg.getImgUrl(req.query.filename);
+        console.log(url);
+        res.json({url});
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({error: 'Internal Server Error'});
+    }
+});
 
 
 app.get("/", function (req, res){
