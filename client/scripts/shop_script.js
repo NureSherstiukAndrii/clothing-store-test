@@ -32,7 +32,7 @@ function loadHTMLProducts(data) {
 
 
         productHtml += "<div class='product'>";
-        productHtml += `<img id="my-image-${Id}" style="width: 150px" src="" alt="product ${Id}"/>`;
+        productHtml += `<img id="my-image-${Id}" style="width: 100px" src="" alt="product ${Id}"/>`;
         productHtml += `<h2 id='product_name-${Name}'>${Name}</h2>`;
         productHtml += `<span id='product_price-${price}'>$ ${price}</span>`
         productHtml += `<div>`
@@ -41,10 +41,11 @@ function loadHTMLProducts(data) {
         productHtml += `</div>`
         productHtml += "</div>";
 
-        fetch("/api/cloud-img?filename=1.jpg")
+
+        fetch(`/api/cloud-img?filename=${images[0]}`)
             .then(response => response.json())
             .then(data => {
-                const img = document.getElementById("my-image");
+            const img = document.getElementById(`my-image-${Id}`);
                 img.src = data.url;
             })
             .catch(error => console.error(error));
