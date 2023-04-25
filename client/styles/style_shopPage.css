@@ -96,11 +96,24 @@ header{
     flex-direction: column;
     text-align: center;
 }
+.main-container{
+    margin-top: 70px;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+}
+.sorts{
+    height: 30px;
+    margin-right: 33px;
+    border: 1px solid gray;
+    background: white;
+    color: grey;
+    border-radius: 5px;
+}
 .main-content{
     display: flex;
     position: relative;
-    margin-top: 100px;
-     width: 100%;
+    width: 100%;
     justify-content: space-around;
 }
 .filters{
