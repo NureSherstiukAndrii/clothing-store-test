@@ -9,12 +9,81 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles/style_shopPage.css">
+    <link rel="stylesheet" href="../styles/modal.css">
     <title>Shop</title>
 </head>
 <body>
 
 
-
+<form id="productData">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h3>Заповніть інформацію про товар</h3>
+    <div class="modal-content">
+        <div class="modal-content__item">
+            <label for="name">Имя</label><input type="text" id="name">
+        </div>
+        <div class="modal-content__item">
+            <label for="sex">Гендер</label>
+            <select id="sex" style="width: 208px;" >
+                <option value="Для чоловіка">Для чоловіка</option>
+                <option value="Для жінки">Для жінки</option>
+            </select>
+        </div>
+        <div class="modal-content__item">
+            <label for="price">Цена</label><input type="text" id="price">
+        </div>
+        <div class="modal-content__item">
+            <label for="description">Описание</label><input type="text" id="description">
+        </div>
+        <div class="modal-content__item">
+            <label for="type_of_product">Тип продукта</label><input type="text" id="type_of_product">
+        </div>
+        <div class="modal-content__item">
+            <label for="type">Тип(одежда обувь)</label>
+            <select id="type" style="width: 208px;" >
+                <option value="Одяг">Одяг</option>
+                <option value="Взуття">Взуття</option>
+            </select>
+        </div>
+        <div class="modal-content__item">
+            <label for="size">Размер</label>
+            <select id="size" style="width: 208px;" >
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+            </select>
+        </div>
+        <div class="modal-content__item">
+            <label for="rating">рейтинг</label><input type="text" id="rating">
+        </div>
+        <div class="modal-content__item">
+            <label for="season">Сезон</label>
+            <select id="season" style="width: 208px;" >
+                <option value="Осінь">Осінь</option>
+                <option value="Весна">Весна</option>
+                <option value="Літо">Літо</option>
+                <option value="Зима">Зима</option>
+                <option value="Всесезонний">Всесезонний</option>
+            </select>
+        </div>
+        <div class="modal-content__item">
+            <label for="collection_name">Имя коллекции</label><input type="text" id="collection_name">
+        </div>
+        <div class="modal-content__item">
+            <label for="images">картинка</label><input type="file" id="images" multiple>
+        </div>
+        <div class="add-res">
+            <input
+                    type="submit"
+                    value="Додати продукт"
+                    id="addProductInput"
+                    onclick="closeModal()"
+            />
+            <input type="reset" value="Скинути дані" />
+        </div>
+    </div>
+</form>
 
 <!--<form id="editPersonalData" class="formData1">-->
 <!--    <span class="close1" onclick="editData()">&times;</span>-->
@@ -40,7 +109,7 @@
             <a href="/"><img src="../img/logo.png" alt="logo"></a>
             <span>Our logo</span>
         </div>
-
+        <button id="addProductBtn" onclick="openModal()">Додати товар</button>
         <div class="navigation">
             <div class="navigation-block">
                 <a href="/about" class="navigation-block-btn">Про нас</a>
@@ -120,31 +189,6 @@
 
     </div>
 </div>
-
-<!--<form id="image-form" enctype="multipart/form-data">-->
-<!--    <input type="file" id="image-input" name="images" multiple>-->
-<!--    <button type="submit" id="upload-button">Upload Images</button>-->
-<!--</form>-->
-
-
-<form id="personalData">
-    <label for="name">Имя</label><input type="text" id="name">
-    <label for="sex">Гендер</label><input type="text" id="sex">
-    <label for="price">Цена</label><input type="text" id="price">
-    <label for="description">Описание</label><input type="text" id="description">
-    <label for="type_of_product">Тип продукта</label><input type="text" id="type_of_product">
-    <label for="type">Тип(одежда обувь)</label><input type="text" id="type">
-    <label for="size">Размер</label><input type="text" id="size">
-    <label for="rating">рейтинг</label><input type="text" id="rating">
-    <label for="season">Сезон</label><input type="text" id="season">
-    <label for="collection_name">Имя коллекции</label><input type="text" id="collection_name">
-    <label for="images">картинка</label><input type="file" id="images" multiple>
-    <input
-            type="submit"
-            value="Добавить тур"
-            id="plus"
-    />
-</form>
 
 
 <!--<footer>-->

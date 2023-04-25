@@ -1,11 +1,10 @@
-const modal = document.getElementById('editPersonalData')
-const edit = document.getElementById("edit");
-const close = document.getElementsByClassName("close1");
+const modal = document.getElementById('productData')
 
-function editData() {
-    if (edit) {
+function openModal() {
+        modal.style.display = "flex";
+        document.body.style.backgroundColor = "rgba(0, 0, 0, 0.5);";
+}
+
+function closeModal() {
         modal.style.display = "none";
-    } else if (close) {
-        modal.style.display = "none";
-    }
 }

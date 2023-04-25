@@ -16,9 +16,9 @@ const filter_block = document.getElementsByClassName('filter-category');
     })
 })
 
-const button = document.getElementById('plus');
+const addProductInput = document.getElementById('addProductInput');
 
-button.addEventListener('click', event => {
+addProductInput.addEventListener('click', event => {
     event.preventDefault();
 
     const nameInput = document.querySelector("#name");
@@ -122,7 +122,7 @@ function loadHTMLProducts(data) {
 
 
         productHtml += "<div class='product'>";
-        productHtml += `<img id="my-image-${Id}" style="width: 100px" src="" alt="product ${Id}"/>`;
+        productHtml += `<img id="my-image-${Id}" src="" alt="product ${Id}"/>`;
         productHtml += `<h2 id='product_name-${Name}'>${Name}</h2>`;
         productHtml += `<span id='product_price-${price}'>$ ${price}</span>`
         productHtml += `<div>`
