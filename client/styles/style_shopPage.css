@@ -163,3 +163,6 @@ footer{
     display: flex;
     justify-content: space-between;
 }
+#personalData {
+    z-index: 1;
+}

@@ -2,6 +2,15 @@ const express = require("express");
 const app = express();
 const path = require('path');
 const cloud_img = require("./cloud_img");
+const Multer = require('multer');
+
+const { Storage } = require('@google-cloud/storage');
+const storage = new Storage({
+    projectId: 'dogwood-garden-382315',
+    keyFilename: './dogwood-garden-382315-f58b3243e2e9.json',
+});
+const bucketName = 'nure_bucket';
+const bucket = storage.bucket(bucketName);
 
 const dbService = require("./db");
 
@@ -17,10 +26,16 @@ app.use(express.json());
 
 const cloudImg = new cloud_img();
 
+const multer = Multer({
+    storage: Multer.memoryStorage(),
+    limits: {
+        fileSize: 5 * 1024 * 1024 // 5 MB
+    }
+});
+
 app.get('/api/cloud-img', async (req, res) => {
     try {
         const url = await cloudImg.getImgUrl(req.query.filename);
-        console.log(url);
         res.json({url});
     } catch (err) {
         console.error(err);
@@ -54,38 +69,6 @@ app.get("/getAllProducts", function(request, response){
 
        response.json({data: result});
     });
-
-    //let result = addImagesToProducts(p, i);
-    //console.log(result);
-    //response.json(result);
-    /*let productsJson;
-    let imagesJson;
-
-    products
-        .then((data) => productsJson = JSON.stringify(data));
-
-    images
-        .then((data) => imagesJson = JSON.stringify(data));
-    Promise.all([products, images]).then(values => {
-        const productsData = values[0];
-        const imagesData = values[1];
-
-        productsJson = JSON.stringify(productsData);
-        imagesJson = JSON.stringify(imagesData);
-    });
-
-    let result = addImagesToProducts(productsJson, imagesJson);
-
-    response.json(result);*/
-});
-
-app.get("/getImages", function(request, response){
-    const db = dbService.getDbServiceInstance();
-    let result = db.getAllProducts();
-
-    result
-        .then((data) => response.json({ data: data }))
-        .catch((err) => console.log(err));
 });
 
 function addImagesToProducts(products, images) {
@@ -101,19 +84,42 @@ function addImagesToProducts(products, images) {
     return products;
 }
 
+app.post('/insertProductJSON', (req, res) => {
+    const {name, sex, price, description, type_of_product,type,size,rating, season,collection_name, img} = req.body;
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.addProduct(name, sex, price, description, type_of_product,type,size,rating, season,collection_name, img)
+
+    result
+        .then((data) => {res.json({ data: data });})
+        .catch((err) => console.log(err));
+});
+
+app.post('/insertProductFiles', multer.array('images', 4), (req, res) => {
+    const files = req.files;
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const fileName = file.originalname;
+
+        const blob = bucket.file(fileName);
+        const blobStream = blob.createWriteStream();
+
+        blobStream.on('error', err => {
+            console.error(err);
+            res.status(500).send({ error: 'Error uploading files to Google Cloud' });
+        });
+
+        blobStream.on('finish', () => {
+            if (i === files.length - 1) {
+                res.status(200).send({ message: 'Files uploaded successfully' });
+            }
+        });
+
+        blobStream.end(file.buffer);
+    }
+});
 
 
-//
-// app.post('/insertTour', (req, res) => {
-//     const {id, name} = req.body;
-//     const db = dbService.getDbServiceInstance()
-//
-//     const result = db.addTour(+id, name)
-//
-//     result
-//         .then((data) => {res.json({ data: data }); console.log(data)})
-//         .catch((err) => console.log(err));
-// });
 //
 // app.delete("/deleteTour/:id", (request, response) => {
 //     const { id } = request.params;

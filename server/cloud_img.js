@@ -1,7 +1,7 @@
 const { Storage } = require('@google-cloud/storage');
 const storage = new Storage({
     projectId: 'dogwood-garden-382315',
-    keyFilename: 'C:\\Users\\User\\Desktop\\кладовка)\\dogwood-garden-382315-f58b3243e2e9.json'
+    keyFilename: './dogwood-garden-382315-f58b3243e2e9.json',
 });
 
 const bucketName = 'nure_bucket';
@@ -35,7 +35,6 @@ class Cloud_img{
                     console.error(err);
                     reject(err);
                 } else {
-                    console.log(url);
                     resolve(url);
                 }
             });

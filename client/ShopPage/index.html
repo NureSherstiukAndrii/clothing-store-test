@@ -13,6 +13,27 @@
 </head>
 <body>
 
+
+
+
+<!--<form id="editPersonalData" class="formData1">-->
+<!--    <span class="close1" onclick="editData()">&times;</span>-->
+<!--    <h3>Змінити інформацію про тур</h3>-->
+<!--    <div class="modal-content__item">-->
+<!--        <label for="edit_id">id</label><input type="text" id="edit_id">-->
+<!--    </div>-->
+<!--    <div class="modal-content__item">-->
+<!--        <label for="edit_name">name</label><input type="text" id="edit_name">-->
+<!--    </div>-->
+<!--    <input-->
+<!--            type="submit"-->
+<!--            value="редактировать тур"-->
+<!--            id="edit"-->
+<!--            onclick="editData()"-->
+<!--    />-->
+<!--</form>-->
+
+
 <header>
     <div class="header-content">
         <div class="logo">
@@ -100,6 +121,31 @@
     </div>
 </div>
 
+<!--<form id="image-form" enctype="multipart/form-data">-->
+<!--    <input type="file" id="image-input" name="images" multiple>-->
+<!--    <button type="submit" id="upload-button">Upload Images</button>-->
+<!--</form>-->
+
+
+<form id="personalData">
+    <label for="name">Имя</label><input type="text" id="name">
+    <label for="sex">Гендер</label><input type="text" id="sex">
+    <label for="price">Цена</label><input type="text" id="price">
+    <label for="description">Описание</label><input type="text" id="description">
+    <label for="type_of_product">Тип продукта</label><input type="text" id="type_of_product">
+    <label for="type">Тип(одежда обувь)</label><input type="text" id="type">
+    <label for="size">Размер</label><input type="text" id="size">
+    <label for="rating">рейтинг</label><input type="text" id="rating">
+    <label for="season">Сезон</label><input type="text" id="season">
+    <label for="collection_name">Имя коллекции</label><input type="text" id="collection_name">
+    <label for="images">картинка</label><input type="file" id="images" multiple>
+    <input
+            type="submit"
+            value="Добавить тур"
+            id="plus"
+    />
+</form>
+
 
 <!--<footer>-->
 <!--    <img src="../img/logo.png" alt="logo">-->
@@ -118,6 +164,7 @@
 
 
 <script src="../scripts/shop_script.js"></script>
+<script src="../scripts/modal.js"></script>
 
 </body>
 </html>
