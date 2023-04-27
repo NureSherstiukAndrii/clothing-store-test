@@ -9,9 +9,99 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles/style_shopPage.css">
+    <link rel="stylesheet" href="../styles/modal.css">
     <title>Shop</title>
 </head>
 <body>
+
+
+<form id="productData">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h3>Заповніть інформацію про товар</h3>
+    <div class="modal-content">
+        <div class="modal-content__item">
+            <label for="name">Имя</label><input type="text" id="name">
+        </div>
+        <div class="modal-content__item">
+            <label for="sex">Гендер</label>
+            <select id="sex" style="width: 208px;" >
+                <option value="Для чоловіка">Для чоловіка</option>
+                <option value="Для жінки">Для жінки</option>
+            </select>
+        </div>
+        <div class="modal-content__item">
+            <label for="price">Цена</label><input type="text" id="price">
+        </div>
+        <div class="modal-content__item">
+            <label for="description">Описание</label><input type="text" id="description">
+        </div>
+        <div class="modal-content__item">
+            <label for="type_of_product">Тип продукта</label><input type="text" id="type_of_product">
+        </div>
+        <div class="modal-content__item">
+            <label for="type">Тип(одежда обувь)</label>
+            <select id="type" style="width: 208px;" >
+                <option value="Одяг">Одяг</option>
+                <option value="Взуття">Взуття</option>
+            </select>
+        </div>
+        <div class="modal-content__item">
+            <label for="size">Размер</label>
+            <select id="size" style="width: 208px;" >
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+            </select>
+        </div>
+        <div class="modal-content__item">
+            <label for="rating">рейтинг</label><input type="text" id="rating">
+        </div>
+        <div class="modal-content__item">
+            <label for="season">Сезон</label>
+            <select id="season" style="width: 208px;" >
+                <option value="Осінь">Осінь</option>
+                <option value="Весна">Весна</option>
+                <option value="Літо">Літо</option>
+                <option value="Зима">Зима</option>
+                <option value="Всесезонний">Всесезонний</option>
+            </select>
+        </div>
+        <div class="modal-content__item">
+            <label for="collection_name">Имя коллекции</label><input type="text" id="collection_name">
+        </div>
+        <div class="modal-content__item">
+            <label for="images">картинка</label><input type="file" id="images" multiple>
+        </div>
+        <div class="add-res">
+            <input
+                    type="submit"
+                    value="Додати продукт"
+                    id="addProductInput"
+                    onclick="closeModal()"
+            />
+            <input type="reset" value="Скинути дані" />
+        </div>
+    </div>
+</form>
+
+<!--<form id="editPersonalData" class="formData1">-->
+<!--    <span class="close1" onclick="editData()">&times;</span>-->
+<!--    <h3>Змінити інформацію про тур</h3>-->
+<!--    <div class="modal-content__item">-->
+<!--        <label for="edit_id">id</label><input type="text" id="edit_id">-->
+<!--    </div>-->
+<!--    <div class="modal-content__item">-->
+<!--        <label for="edit_name">name</label><input type="text" id="edit_name">-->
+<!--    </div>-->
+<!--    <input-->
+<!--            type="submit"-->
+<!--            value="редактировать тур"-->
+<!--            id="edit"-->
+<!--            onclick="editData()"-->
+<!--    />-->
+<!--</form>-->
+
 
 <header>
     <div class="header-content">
@@ -19,7 +109,7 @@
             <a href="/"><img src="../img/logo.png" alt="logo"></a>
             <span>Our logo</span>
         </div>
-
+        <button id="addProductBtn" onclick="openModal()">Додати товар</button>
         <div class="navigation">
             <div class="navigation-block">
                 <a href="/about" class="navigation-block-btn">Про нас</a>
@@ -52,52 +142,62 @@
 
 
 
-<div class="main-content">
-    <div class="filters">
-        <div style="border-bottom: 1px solid; font-size: 20px; font-weight: bold;">Фільтрувати за</div>
-        <ul id="filter-categories">
-            <li>
-                <div class="filter-category">
-                    <span>Коллекции</span>
-                    <span class="close-open">&#9660;</span>
-                </div>
-                <div class="collection-container">
-                    <div>nike</div>
-                    <div>adidas</div>
-                    <div>puma</div>
-                    <div>zara</div>
-                </div>
-            </li>
-            <li>
-                <div class="filter-category">
-                    <span>Цене</span>
-                    <span class="close-open">&#9660;</span>
-                </div>
-                <div class="collection-container">
-                    <label for="price-from">От:<input type="text" id="price-from"/></label>
-                    <label for="price-to">До:<input type="text" id="price-to"/></label>
-                </div>
-            </li>
+<div class="main-container">
 
-            <li>
-                <div class="filter-category">
-                    <span>Размеру</span>
-                    <span class="close-open">&#9660;</span>
-                </div>
-                <div class="collection-container">
-                    <label for="size-m">M<input type="checkbox" id="size-m"/></label>
-                    <label for="size-l">L<input type="checkbox" id="size-l"/></label>
-                    <label for="size-xl">XL<input type="checkbox" id="size-xl"/></label>
-                    <label for="size-xxl">XXL<input type="checkbox" id="size-xxl"/></label>
-                </div>
-            </li>
+    <select class="sorts" id="sorting">
+        <option value="від дешевих">від дешевих</option>
+        <option value="від дорогих">від дорогих</option>
+        <option value="новинки">новинки</option>
+        <option value="популярні">популярні</option>
+    </select>
 
-        </ul>
-    </div>
+   <div class="main-content">
+       <div class="filters">
+           <div style="border-bottom: 1px solid; font-size: 20px; font-weight: bold;">Фільтрувати за</div>
+           <ul id="filter-categories">
+               <li>
+                   <div class="filter-category">
+                       <span>Коллекции</span>
+                       <span class="close-open">&#9660;</span>
+                   </div>
+                   <div class="collection-container">
+                       <div>nike</div>
+                       <div>adidas</div>
+                       <div>puma</div>
+                       <div>zara</div>
+                   </div>
+               </li>
+               <li>
+                   <div class="filter-category">
+                       <span>Цене</span>
+                       <span class="close-open">&#9660;</span>
+                   </div>
+                   <div class="collection-container">
+                       <label for="price-from">От:<input type="text" id="price-from"/></label>
+                       <label for="price-to">До:<input type="text" id="price-to"/></label>
+                   </div>
+               </li>
 
-    <div id="products" class="clothes">
+               <li>
+                   <div class="filter-category">
+                       <span>Размеру</span>
+                       <span class="close-open">&#9660;</span>
+                   </div>
+                   <div class="collection-container">
+                       <label for="size-m">M<input type="checkbox" id="size-m"/></label>
+                       <label for="size-l">L<input type="checkbox" id="size-l"/></label>
+                       <label for="size-xl">XL<input type="checkbox" id="size-xl"/></label>
+                       <label for="size-xxl">XXL<input type="checkbox" id="size-xxl"/></label>
+                   </div>
+               </li>
 
-    </div>
+           </ul>
+       </div>
+
+       <div id="products" class="clothes">
+
+       </div>
+   </div>
 </div>
 
 
@@ -118,6 +218,7 @@
 
 
 <script src="../scripts/shop_script.js"></script>
+<script src="../scripts/modal.js"></script>
 
 </body>
 </html>
