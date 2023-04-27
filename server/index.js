@@ -56,6 +56,19 @@ app.get("/shop", function (req, res){
     res.sendFile(parentDir + "/client/ShopPage/index.html");
 })
 
+app.get('/products/:id', (req, res) => {
+    res.sendFile(parentDir + '/client/ProductPage/product.html');
+});
+
+app.get('/product/:id', (req, res) => {
+    const productId = req.params.id;
+    const db = dbService.getDbServiceInstance();
+    let result = db.getProduct(productId);
+
+    result
+        .then((data) => {res.json({ data: data });})
+        .catch((err) => console.log(err));
+});
 
 app.get("/getAllProducts", function(request, response){
     const db = dbService.getDbServiceInstance();
@@ -118,7 +131,6 @@ app.post('/insertProductFiles', multer.array('images', 4), (req, res) => {
         blobStream.end(file.buffer);
     }
 });
-
 
 //
 // app.delete("/deleteTour/:id", (request, response) => {

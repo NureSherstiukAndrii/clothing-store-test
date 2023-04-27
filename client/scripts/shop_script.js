@@ -121,7 +121,7 @@ function loadHTMLProducts(data) {
     data.forEach(({Id, Name, price, images}) => {
 
 
-        productHtml += "<div class='product'>";
+        productHtml += `<div class='product' onclick="showProduct(${Id})">`;
         productHtml += `<img id="my-image-${Id}" src="" alt="product ${Id}"/>`;
         productHtml += `<h2 id='product_name-${Name}'>${Name}</h2>`;
         productHtml += `<span id='product_price-${price}'>$ ${price}</span>`
@@ -142,4 +142,9 @@ function loadHTMLProducts(data) {
     });
 
     allProducts.innerHTML = productHtml;
+}
+
+function showProduct(productId) {
+    // Перенаправляем пользователя на новую страницу с выбранным продуктом
+    window.location.href = `/products/${productId}`;
 }
