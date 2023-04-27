@@ -56,6 +56,10 @@ app.get("/shop", function (req, res){
     res.sendFile(parentDir + "/client/ShopPage/index.html");
 })
 
+app.get("/contacts", function (req, res){
+    res.sendFile(parentDir + "/client/ContactPage/index.html");
+})
+
 app.get('/products/:id', (req, res) => {
     res.sendFile(parentDir + '/client/ProductPage/product.html');
 });

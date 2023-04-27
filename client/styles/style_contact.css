@@ -78,46 +78,76 @@ header{
     width: 40%;
 }
 h1{
-    font-family: "Inter Semi Bold";
     font-weight:1000;
     color: #4a4a4a;
     cursor:default;
     padding-top: 70px;
 }
-p1{
-    padding-top: 20px;
-    text-decoration: underline;
+.link-to-shop{
+    text-decoration: none;
     cursor: pointer;
     color: #858583;
+    width: 78%;
+    border-bottom: 2px solid;
 }
-p2{
+.link-to-shop:hover{
+    transition: 0.5s;
+    color: lightgray;
+}
+.contacts{
     margin-top: 20px;
     color: #858583;
+    height: 130px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
-.input-name{
+form{
     margin-top: 20px;
-    width: 100px;
+    display: flex;
+    flex-direction: column;
+    height: 230px;
+    justify-content: space-between;
 }
-.input-email{
+.form-fields{
+    display: flex;
+    justify-content: space-between;
+}
+.form-fields > input{
+    border: none;
+    background: none;
+    border-bottom: 1px solid;
+    width: 40%;
+    font-size: 20px;
+}
+.form-fields > input:hover, textarea:hover{
+    border-bottom: 3px solid;
+}
+textarea{
     margin-top: 20px;
-    float: right;
-}
-.textarea{
-    height: 60px;
-
+    background: none;
+    border: none;
+    width: 300px;
+    height: 100px;
+    resize: none;
+    border-bottom: 1px solid;
+    font-size: 15px;
 }
 button{
-    margin-top:20px ;
-    font-family: "Inter", regular;
+    margin-top:20px;
     font-size: 18px;
     background-color: #4A4A4A;
     height: 40px;
     width: 300px;
     border: 0;
     color: #FFFFFF;
+    cursor: pointer;
+}
+button:hover{
+    transition: 0.5s;
+    background: lightgray;
 }
 p3{
-    font-family: "Inter Medium";
     margin-top: 60px;
     text-decoration: underline;
     color: #858583;
@@ -140,7 +170,7 @@ p7{
 }
 .introduction-phrase{
     display: flex;
-    width: 45%;
+    width: 50%;
     flex-direction: column;
 }
 footer{

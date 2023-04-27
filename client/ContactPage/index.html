@@ -42,19 +42,24 @@
     <div class="introduction-container">
         <div class="introduction-phrase">
             <h1>КОНТАКТИ</h1>
-            <p1>ВІДВІДАЙТЕ НАШ МАГАЗИН</p1>
-            <p2>Адреса: 500 Terry Francine Street
-                Сан-Франциско, Каліфорнія 94158
-                Телефон: 123-456-7890
-                Електронна адреса: info@my-domain.com</p2>
-            <input class="input-name" type="text" />
-            <input class="input-email" type="text" />
-            <textarea class="textarea">
+            <a href="/shop" class="link-to-shop">ВІДВІДАЙТЕ НАШ МАГАЗИН</a>
+            <div class="contacts">
+                <span>Адреса: 500 Terry Francine Street Сан-Франциско, Каліфорнія 94158</span>
+                <span>Телефон: 123-456-7890</span>
+                <span>Електронна адреса: info@my-domain.com</span>
+            </div>
 
-            </textarea>
-            <button>
-                Надіслати
-            </button>
+            <form action="">
+                <div class="form-fields">
+                    <input id="user_name" type="text" placeholder="Ім'я"/>
+                    <input id="user_email" type="email" placeholder="Email"/>
+                </div>
+
+                <textarea rows="40" placeholder="Уведіть ваше повідомлення..."></textarea>
+                <button type="submit">Надіслати</button>
+            </form>
+
+
             <p3>МАГАЗИНИ</p3>
             <p4>
                 Магазин 1
