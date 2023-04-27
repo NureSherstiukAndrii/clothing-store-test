@@ -1,0 +1,113 @@
+html{
+    font-family: 'Montserrat', sans-serif;
+}
+body{
+    margin: 0px;
+    padding: 0px;
+}
+header{
+    background: white;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
+    position: fixed;
+    z-index: 1;
+}
+.header-content{
+    display: flex;
+    width: 85%;
+    justify-content: space-between;
+}
+.logo{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 10%;
+}
+.navigation{
+    display: flex;
+    align-items: center;
+    width: 70%;
+    justify-content: space-between;
+}
+.navigation-block{
+    display: flex;
+    list-style: none;
+    width: 70%;
+    justify-content: space-around;
+}
+.navigation-block-btn{
+    text-decoration: none;
+    color: black;
+}
+.navigation-block-btn:hover{
+    cursor: pointer;
+    transition: 0.3s;
+    color: gray;
+}
+.navigation-account-links{
+    display: flex;
+    width: 20%;
+    justify-content: space-between;
+    align-items: center;
+}
+.navigation-account-links > div > span{
+    margin-left: 10px;
+}
+.navigation-account-links > div > a{
+    text-decoration: none;
+    color: black;
+    margin-left: 10px;
+}
+.measure{
+    padding-right: 200px;
+    padding-left: 200px;
+    width: 1100px;
+    height: 500px;
+}
+.table-text{
+    color: #FFFFFF;
+}
+.size-table{
+    margin-top: 100px;
+    padding-bottom: 200px;
+    background-color: #4A4A4A;
+}
+.table{
+    margin-top: 70px;
+    margin-left: 350px;
+    width: 800px;
+    height: 300px;
+}
+h1{
+    font-family: "Inter Semi Bold";
+    font-weight:1000;
+    color: #4a4a4a;
+    cursor:default;
+    padding-top: 70px;
+    text-align: center;
+}
+
+footer{
+    position: relative;
+    border-top: 2px solid;
+    width: 100%;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.mail > a{
+    text-decoration: none;
+    color: black;
+}
+.mail > a:hover{
+    transition: 0.3s;
+    color: lightgray;
+}
+.social-media{
+    width: 7%;
+    display: flex;
+    justify-content: space-between;
+}
