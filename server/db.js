@@ -17,6 +17,16 @@ class DbService {
         return instance ? instance : new DbService();
     }
 
+    // async getFilesFromStorage() {
+    //     try {
+    //         const [files] = await bucket.getFiles();
+    //         console.log('files', files);
+    //         return files;
+    //     } catch (err) {
+    //         console.error('ERROR:', err);
+    //     }
+    // }
+
     async getAllProducts() {
         try {
             const pool = new sql.ConnectionPool(config);
@@ -41,11 +51,37 @@ class DbService {
         }
     }
 
+    async getProduct(id) {
+        try {
+            const pool = new sql.ConnectionPool(config);
+            const response = await new Promise((resolve, reject) => {
+                pool.connect().then(() => {
+                    const request = new sql.Request(pool);
+                    request.query(`SELECT * FROM Products WHERE id = ${id}`).then((result, err) => {
+                        if(err){
+                            reject(new Error(err.message));
+                        }
+                        resolve(result.recordset);
+                        pool.close();
+                    }).catch((err) => {
+                        console.error(err);
+                        pool.close();
+                    });
+                })
+            })
+            return response
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
-    async addTour(id, name) {
+
+
+
+    async addProduct(name, sex, price, description, type_of_product,type,size,rating, season,collection_name, images) {
         try {
             await sql.connect(config);
-            const result = await sql.query`INSERT INTO MyTable (Id, Name) VALUES (${id}, ${name})`;
+            const result = await sql.query`EXEC InsertProduct ${sex}, ${name} , ${price}, ${description}, ${type_of_product},${type}, ${size} ,${rating}, ${season},${collection_name}, ${images}`;
         } catch (error) {
             console.log(error);
         } finally {
@@ -80,6 +116,35 @@ class DbService {
             sql.close();
         }
     }
+
+    async getProductImages(){
+        try {
+            const pool = new sql.ConnectionPool(config);
+            return await new Promise((resolve, reject) => {
+                pool.connect().then(() => {
+                    const request = new sql.Request(pool);
+                    request.query("SELECT * FROM Product_img;").then((result, err) => {
+                        if (err) {
+                            reject(new Error(err.message));
+                        }
+                        resolve(result.recordset);
+                        pool.close();
+                    }).catch((err) => {
+                        console.error(err);
+                        pool.close();
+                    });
+                })
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
+
+
+
+
 }
 
 module.exports = DbService;
