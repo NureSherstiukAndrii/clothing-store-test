@@ -42,17 +42,3 @@ function loadProduct(data1) {
 
     product.innerHTML = productHtmll;
 }
-
-// fetch(`/product/${productId}`)
-//     .then(response => response.json())
-//     .then(product => {
-//         const productHtml = `
-//       <h1>${product.Name}</h1>
-//       <img src="${product.Images[0]}" alt="${product.Name}">
-//       <p>${product.Description}</p>
-//       <h2>${product.Price}</h2>
-//       <button>Buy Now</button>
-//     `;
-//         document.getElementById('product').innerHTML = productHtml;
-//     })
-//     .catch(error => console.error(error));
