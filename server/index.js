@@ -60,6 +60,18 @@ app.get("/contacts", function (req, res){
     res.sendFile(parentDir + "/client/ContactPage/index.html");
 })
 
+app.get("/login", function (req, res){
+    res.sendFile(parentDir + "/client/LogInPage/index.html");
+})
+
+app.get("/registration", function (req, res){
+    res.sendFile(parentDir + "/client/RegistrationPage/index.html");
+})
+
+app.get("/size", function (req, res){
+    res.sendFile(parentDir + "/client/SizeChartPage/index.html");
+})
+
 app.get('/products/:id', (req, res) => {
     res.sendFile(parentDir + '/client/ProductPage/product.html');
 });
