@@ -1,0 +1,165 @@
+html{
+    font-family: 'Montserrat', sans-serif;
+}
+body{
+    margin: 0px;
+    padding: 0px;
+}
+header{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
+    position: fixed;
+    z-index: 1;
+    background: white;
+}
+.header-content{
+    display: flex;
+    width: 85%;
+    justify-content: space-between;
+}
+.logo{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 10%;
+}
+.navigation{
+    display: flex;
+    align-items: center;
+    width: 70%;
+    justify-content: space-between;
+}
+.navigation-block{
+    display: flex;
+    list-style: none;
+    width: 70%;
+    justify-content: space-around;
+}
+.navigation-block-btn{
+    text-decoration: none;
+    color: black;
+}
+.navigation-block-btn:hover{
+    cursor: pointer;
+    transition: 0.3s;
+    color: gray;
+}
+.navigation-account-links{
+    display: flex;
+    width: 20%;
+    justify-content: space-between;
+    align-items: center;
+}
+.navigation-account-links > div > span{
+    margin-left: 10px;
+}
+.navigation-account-links > div > a{
+    text-decoration: none;
+    color: black;
+    margin-left: 10px;
+}
+
+.main{
+    height: 540px;
+    display: flex;
+    justify-content: center;
+}
+
+.registration{
+    width: 30%;
+    height: 70%;
+    padding-top: 116px;
+    text-align: center;
+}
+
+.title{
+    
+}
+
+.registration-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.registration-form input{
+    margin-top: 30px;
+    border: none;
+    border-bottom: 2px solid;
+}
+
+input:focus {
+    outline: none;
+}
+
+input[type="email"] {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    width: 100%;
+}
+
+input[type="password"] {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    width: 100%;
+}
+
+input[type="text"] {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    width: 100%;
+}
+
+input[type="submit"] {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    width: 100%;
+    height: 50px;
+    color: white;
+    background-color:  #B46A51;
+    border: none;
+}
+
+.login{
+    padding-top: 25px;
+}
+
+.registration-link{
+    text-decoration: none;
+    color: black;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+}
+
+footer{
+    position: relative;
+    border-top: 2px solid;
+    top: 100px;
+    width: 100%;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.mail > a{
+    text-decoration: none;
+    color: black;
+}
+.mail > a:hover{
+    transition: 0.3s;
+    color: lightgray;
+}
+.social-media{
+    width: 7%;
+    display: flex;
+    justify-content: space-between;
+}

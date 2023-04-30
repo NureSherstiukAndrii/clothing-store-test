@@ -1,0 +1,78 @@
+<!doctype html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type='text/css'  href="../styles/style_registration.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <title>Registration</title>
+</head>
+<body>
+
+<header>
+   <div class="header-content">
+       <div class="logo">
+           <a href="/"><img src="../img/logo.png" alt="logo"></a>
+           <span>Our logo</span>
+       </div>
+
+       <div class="navigation">
+           <div class="navigation-block">
+               <a href="/about" class="navigation-block-btn">Про нас</a>
+               <a href="/shop" class="navigation-block-btn">Магазин</a>
+               <a href="/size" class="navigation-block-btn">Розмірна сітка</a>
+               <a href="/contacts" class="navigation-block-btn">Зв'язок з нами</a>
+           </div>
+           <div class="navigation-account-links">
+               <div style="display: flex">
+                   <img src="../img/account.png" alt="account"><a href="/login">Увійти</a>
+               </div>
+               <div>
+                   <a href=""><img src="../img/basket.png" alt="basket"></a><span>0</span>
+               </div>
+           </div>
+       </div>
+   </div>
+</header>
+<div class="main">
+    <div class="registration">
+        <div class="title">
+            <h1>
+                Реєстрація
+            </h1>
+        </div>
+        <div class="registration-form">
+            <form>
+                <input type="text" id = "name" name = "name" placeholder="Ім'я" required>
+                <input type="email" id = "email" name = "email" placeholder="Електронна пошта" required>
+                <input type="password" id = "password" name = "password" placeholder="Пароль" pattern=".{8,}" title="Пароль має містити принаймні 8 символів" required>
+                <input type="submit" value="Авторизація">
+            </form>
+        </div>
+        <div class="login">
+            <a href="" class = "registration-link" >Авторизація</a>
+        </div>
+    </div>
+</div>
+
+
+<footer>
+    <img src="../img/logo.png" alt="logo">
+
+    <div class="mail">
+        <span>Свої питання пишить нам на пошту: </span>
+        <a href="mailto:ourchop@gmail.com">ourchop@gmail.com</a>
+    </div>
+
+    <div class="social-media">
+        <img src="../img/instagram.png" alt="insta">
+        <img src="../img/telegram.png" alt="tg">
+        <img src="../img/tiktok.png" alt="tiktok">
+    </div>
+</footer>
+
+</body>
+</html>
