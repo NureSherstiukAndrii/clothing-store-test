@@ -81,12 +81,12 @@ header{
     height: 300px;
 }
 h1{
-    font-family: "Inter Semi Bold";
     font-weight:1000;
     color: #4a4a4a;
     cursor:default;
     padding-top: 70px;
     text-align: center;
+    margin: 0;
 }
 
 footer{
