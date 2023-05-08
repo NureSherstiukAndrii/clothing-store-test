@@ -124,6 +124,17 @@ app.post('/insertProductJSON', (req, res) => {
         .catch((err) => console.log(err));
 });
 
+app.post('/insertNewUser', (req, res) => {
+    const {name, mail, password} = req.body;
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.insertNewUser(name, mail, password);
+
+    result
+        .then((data) => {res.json({ data: data });})
+        .catch((err) => console.log(err));
+});
+
 app.post('/insertProductFiles', multer.array('images', 4), (req, res) => {
     const files = req.files;
     for (let i = 0; i < files.length; i++) {

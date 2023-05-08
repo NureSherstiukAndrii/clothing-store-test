@@ -140,10 +140,28 @@ class DbService {
         }
     }
 
-
-
-
-
+    async insertNewUser(_name, _mail, _password){
+        try {
+            const pool = new sql.ConnectionPool(config);
+            return await new Promise((resolve, reject) => {
+                pool.connect().then(() => {
+                    const request = new sql.Request(pool);
+                    request.query(`INSERT INTO Users ([Name], e_mail, [password]) VALUES ('${_name}', '${_mail}', '${_password}');`).then((result, err) => {
+                        if (err) {
+                            reject(new Error(err.message));
+                        }
+                        resolve(result.recordset);
+                        pool.close();
+                    }).catch((err) => {
+                        console.error(err);
+                        pool.close();
+                    });
+                })
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
 }
 
