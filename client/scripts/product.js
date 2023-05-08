@@ -21,14 +21,6 @@ function loadProduct(data1) {
     data1.forEach(({Id, Name, sex, price, description, type_of_product,type,size,rating, season,collection_name, img}) => {
 
 
-        // productHtmll += `<div class='product'">`;
-        // productHtmll += `<h2 id='product_name-${Name}'>${Name}</h2>`;
-        // productHtmll += `<span id='product_price-${price}'>$ ${price}</span>`
-        // productHtmll += `<div>`
-        // productHtmll += `<button class="delete-product-btn" data-id=${Id}>Видалити</button>`;
-        // productHtmll += `<button class="edit-product-btn" data-id=${Id}>Змінити</button>`;
-        // productHtmll += `</div>`
-        // productHtmll += "</div>";
         productHtmll += `<!doctype html>`;
         productHtmll += `<head>`;
         productHtmll += `<meta charset="UTF-8">`;
@@ -69,7 +61,7 @@ function loadProduct(data1) {
         productHtmll += `<div class="product-info">`;
         productHtmll += `<div class = "left">`;
         productHtmll += `<div class="title">`;
-        productHtmll += `<a href="#" class = "title-link">Home </a>/ ${type}`;
+        productHtmll += `<a href="/" class = "title-link">Home </a>/ ${type}`;
         productHtmll += `</div>`;
         productHtmll += `<div class="clothes-photo">`;
         productHtmll += `<img class = "photo" src="../img/product-photo.png" alt="">`;
@@ -81,7 +73,7 @@ function loadProduct(data1) {
         productHtmll += `${Name}`;
         productHtmll += `</h2>`;
         productHtmll += `<p>`;
-        productHtmll += `Id товару: ${Id}`;
+        productHtmll += `Код товару: ${Id}`;
         productHtmll += `</p>`;
         productHtmll += `</div>`;
         productHtmll += `<div class="form">`;
@@ -91,13 +83,10 @@ function loadProduct(data1) {
         productHtmll += `<form>`;
         productHtmll += `Розмір <br>`;
         productHtmll += `<select id="size" name="size">`;
-        productHtmll += `<optgroup label="Оберіть розмір">`;
-        productHtmll += `<option value="" disabled selected hidden>Оберіть розмір</option>`;
-        productHtmll += `</optgroup>`;
         productHtmll += `<option value="s">S</option>`;
         productHtmll += `<option value="m">M</option>`;
         productHtmll += `<option value="l">L</option>`;
-        productHtmll += `<option value="xl">L</option>`;
+        productHtmll += `<option value="xl">XL</option>`;
         productHtmll += `</optgroup>`;
         productHtmll += `</select>`;
         productHtmll += `<br> <br>`;
@@ -105,11 +94,10 @@ function loadProduct(data1) {
         productHtmll += `<input type="number" id="quantity" name="quantity" min="1" max="10" value="1">`;
         productHtmll += `<br> <br>`;
         productHtmll += `<input type="submit" value="Додати до кошика">`;
-        productHtmll += `<br> <br>`;
-        productHtmll += `Опис товару`;
         productHtmll += `</form>`;
         productHtmll += `</div>`;
         productHtmll += `<div class="description">`;
+        productHtmll += `<h2>Опис товару</h2>`;
         productHtmll += `${description}`;
         productHtmll += `</div>`;
         productHtmll += `</div>`;
