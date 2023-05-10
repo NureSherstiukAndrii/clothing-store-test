@@ -128,12 +128,36 @@ app.post('/insertNewUser', (req, res) => {
     const {name, mail, password} = req.body;
     const db = dbService.getDbServiceInstance();
 
-    const result = db.insertNewUser(name, mail, password);
+    let result = db.insertNewUser(name, mail, password)
+
 
     result
-        .then((data) => {res.json({ data: data });})
-        .catch((err) => console.log(err));
+        .then((data) => {
+            // Успешно добавлено
+            res.json({ success: true, message: 'Пользователь успешно добавлен в базу данных.' });
+        })
+        .catch((error) => {
+            // Ошибка добавления пользователя
+            if (error.code === '23505') {
+                res.status(400).json({ success: false, message: 'Почта уже используется другим пользователем.' });
+            } else {
+                console.error(error);
+                res.status(500).json({ success: false, message: 'Произошла ошибка при добавлении пользователя.' });
+            }
+        });
 });
+
+app.post('/loginUser', (req, res) => {
+    const {mail, password} = req.body;
+    const db = dbService.getDbServiceInstance();
+
+    let result = db.checkUser(mail, password);
+
+    result
+        // .then((data) => console.log(data))
+        .then((data) => {res.json({ data: data })})
+        .catch((err) => console.log(err));
+})
 
 app.post('/insertProductFiles', multer.array('images', 4), (req, res) => {
     const files = req.files;
