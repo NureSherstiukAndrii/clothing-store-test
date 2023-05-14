@@ -1,4 +1,8 @@
-
+const isAdmin = localStorage.getItem('role');
+const addProduct = document.getElementById('addProductBtn')
+if (isAdmin === 'false'){
+    addProduct.style.display = 'none'
+}
 document.addEventListener("DOMContentLoaded", function () {
     fetch("http://localhost:3000/getAllProducts")
         .then((response) => response.json())
@@ -141,8 +145,8 @@ function loadHTMLProducts(data) {
         productHtml += `<h2 id='product_name-${Name}'>${Name}</h2>`;
         productHtml += `<span id='product_price-${price}'>$ ${price}</span>`
         productHtml += `<div>`
-        productHtml += `<button class="delete-product-btn" data-id=${Id}>Видалити</button>`;
-        productHtml += `<button class="edit-product-btn" data-id=${Id}>Змінити</button>`;
+        productHtml += isAdmin === 'true' ? `<button class="delete-product-btn" data-id=${Id}>Видалити</button>` : '';
+        productHtml += isAdmin === 'true' ? `<button class="edit-product-btn" data-id=${Id}>Змінити</button>` : '';
         productHtml += `</div>`
         productHtml += "</div>";
 

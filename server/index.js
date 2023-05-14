@@ -3,6 +3,7 @@ const app = express();
 const path = require('path');
 const cloud_img = require("./cloud_img");
 const Multer = require('multer');
+const jwt = require('jsonwebtoken');
 
 const { Storage } = require('@google-cloud/storage');
 const storage = new Storage({
@@ -32,6 +33,18 @@ const multer = Multer({
         fileSize: 5 * 1024 * 1024 // 5 MB
     }
 });
+
+app.post('/loginUser', (req, res) => {
+    const {mail, password} = req.body;
+    const db = dbService.getDbServiceInstance();
+
+    let result = db.checkUser(mail, password);
+
+    result
+        .then(data => {res.json(data)})
+        .catch(err => console.log(err));
+})
+
 
 app.get('/api/cloud-img', async (req, res) => {
     try {
@@ -74,6 +87,20 @@ app.get("/size", function (req, res){
 
 app.get('/products/:id', (req, res) => {
     res.sendFile(parentDir + '/client/ProductPage/product.html');
+});
+
+app.get('/personals/:id', async (req, res) => {
+    res.sendFile(parentDir + '/client/PersonalPage/index.html');
+});
+
+app.get('/person/:id', (req, res) => {
+    const userId = req.params.id;
+    const db = dbService.getDbServiceInstance();
+    let result = db.getUser(userId);
+
+    result
+        .then((data) => {res.json({ data: data });})
+        .catch((err) => console.log(err));
 });
 
 app.get('/product/:id', (req, res) => {
@@ -146,18 +173,6 @@ app.post('/insertNewUser', (req, res) => {
             }
         });
 });
-
-app.post('/loginUser', (req, res) => {
-    const {mail, password} = req.body;
-    const db = dbService.getDbServiceInstance();
-
-    let result = db.checkUser(mail, password);
-
-    result
-        // .then((data) => console.log(data))
-        .then((data) => {res.json({ data: data })})
-        .catch((err) => console.log(err));
-})
 
 app.post('/insertProductFiles', multer.array('images', 4), (req, res) => {
     const files = req.files;

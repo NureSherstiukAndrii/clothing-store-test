@@ -18,7 +18,7 @@ function loadProduct(data1) {
 
     let productHtmll = "";
 
-    data1.forEach(({Id, Name, sex, price, description, type_of_product,type,size,rating, season,collection_name, img}) => {
+    data1.forEach(({Id, Name, price, description,type, img}) => {
 
 
         productHtmll += `<!doctype html>`;

@@ -1,0 +1,68 @@
+.wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background: #858583;
+    height: 80vh;
+    width: 80%;
+    margin: auto;
+    position: relative;
+    top: 60px;
+    border-radius: 8px;
+}
+.user-data{
+    background: #FFFFFF;
+    height: 90%;
+    width: 40%;
+    font-size: 17px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: inherit;
+    border-radius: 7px;
+}
+.user-data > img{
+    width: 400px;
+}
+.user-data > form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+}
+.user-data-details{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.user-data-details > input{
+    border: none;
+    padding: 7px;
+    font-size: 17px;
+}
+
+.user-data-details > input:focus {
+    outline: none;
+    background: #B46A51;
+}
+#check_password{
+    position: absolute;
+    right: 15px;
+    bottom: 45px;
+    width: 20px;
+    height: 20px;
+}
+#check_password:active{
+    padding: 20px;
+}
+.user-data > span{
+    font-size: 12px;
+}
+.favorites{
+    display: flex;
+    flex-direction: column;
+    background: aliceblue;
+    height: 250px;
+    width: 40%;
+}

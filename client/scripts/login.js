@@ -23,18 +23,18 @@ enter.addEventListener('click', event => {
     })
         .then(response => response.json())
         .then(data => {
-            const userData = data.data;
-            console.log(userData);
-            if (userData === null){
+            const userData = data;
+            if (userData === null) {
                 alert('Невірний логін чи пароль');
-            }
-            else{
-                alert(`Вітаємо ${userData.Name}`)
-                location.href = '/'
+            } else {
+                alert(`Вітаємо ${userData.user.Name}`)
+                localStorage.setItem('role', data.user.is_admin);
+                localStorage.setItem('userId',data.user.Id)
+                // Перенаправить пользователя на защищенную страницу
+                window.location.href = '/'
             }
         })
-    .catch(error => {
-        console.error(error);
-    });
-
+        .catch(error => {
+            console.error(error);
+        });
     })

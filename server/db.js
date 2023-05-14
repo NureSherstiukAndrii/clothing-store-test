@@ -1,5 +1,5 @@
 const sql = require('mssql');
-const {resolve} = require("path");
+const jwt = require('jsonwebtoken');
 let instance = null;
 
 const config = {
@@ -76,7 +76,30 @@ class DbService {
         }
     }
 
-
+    async getUser(id) {
+        try {
+            const pool = new sql.ConnectionPool(config);
+            const response = await new Promise((resolve, reject) => {
+                pool.connect().then(() => {
+                    const request = new sql.Request(pool);
+                    request.query(`SELECT * FROM Users WHERE id = ${id}`).then((result, err) => {
+                        if(err){
+                            reject(new Error(err.message));
+                        }
+                        console.log(result.recordset);
+                        resolve(result.recordset);
+                        pool.close();
+                    }).catch((err) => {
+                        console.error(err);
+                        pool.close();
+                    });
+                })
+            })
+            return response
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
 
     async addProduct(name, sex, price, description, type_of_product,type,size,rating, season,collection_name, images) {
@@ -159,10 +182,10 @@ class DbService {
         try {
             await sql.connect(config);
             const result = await sql.query`SELECT * FROM Users WHERE e_mail = ${_mail} AND password = ${_password}`;
-
             if (result.recordset.length > 0) {
-                const user = result.recordset[0]; // Отримуємо першого користувача з результату
-                return user;
+                const token = jwt.sign({ name : result.recordset[0].Name, role: result.recordset[0].is_admin}, 'секретный_ключ', { expiresIn: '1h' });
+                const user = result.recordset[0];
+                return {user: user, token: token};
             } else {
                 return null;
             }

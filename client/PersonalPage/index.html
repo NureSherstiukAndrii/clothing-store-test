@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../styles/style_about.css">
+    <link rel="stylesheet" href="../styles/personal_page.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <title>Личний кабинет</title>
+</head>
+<body>
+
+<header>
+    <div class="header-content">
+        <div class="logo">
+            <a href="/"><img src="../img/logo.png" alt="logo"></a>
+            <span>Our logo</span>
+        </div>
+
+        <div class="navigation">
+            <div class="navigation-block">
+                <a href="/about" class="navigation-block-btn">Про нас</a>
+                <a href="/shop" class="navigation-block-btn">Магазин</a>
+                <a href="/size" class="navigation-block-btn">Розмірна сітка</a>
+                <a href="/contacts" class="navigation-block-btn">Зв'язок з нами</a>
+            </div>
+            <div class="navigation-account-links">
+                <div style="display: flex">
+                    <a href="/personalPage"><img src="../img/account.png" alt="account"></a>
+                    <a href="/login" id="enter-btn">Увійти</a>
+                    <a href="/login" id="exit-btn">Вийти</a>
+                </div>
+                <div>
+                    <a href=""><img src="../img/basket.png" alt="basket"></a><span>0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div id="profileData" class="wrapper"></div>
+
+
+
+<footer>
+    <img src="../img/logo.png" alt="logo">
+
+    <div class="mail">
+        <span>Свої питання пишить нам на пошту: </span>
+        <a href="mailto:ourchop@gmail.com">ourchop@gmail.com</a>
+    </div>
+
+    <div class="social-media">
+        <img src="../img/instagram.png" alt="insta">
+        <img src="../img/telegram.png" alt="tg">
+        <img src="../img/tiktok.png" alt="tiktok">
+    </div>
+</footer>
+<script>
+
+
+
+
+    const userId = localStorage.getItem('userId');
+
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch(`http://localhost:3000/person/${userId}`)
+            .then((response) => response.json())
+            .then((response) => loadUser(response.data))
+
+    });
+
+    function loadUser(data1) {
+        const profile = document.getElementById('profileData')
+
+        if (data1.length === 0) {
+            profile.innerHTML = "<a href='/login'>Авторизуйтесь</a>";
+            return;
+        }
+
+        let profileHtmll = "";
+
+        data1.forEach(({Id, Name, password, e_mail, reg_date}) => {
+
+        profileHtmll = `
+            <div class="user-data">
+
+            <img src="../img/profile.png" alt="user-img">
+
+                <form>
+                    <h2>Особисті дані:</h2>
+                    <div class="user-data-details">
+                        <label for="name">Ім'я</label>
+                        <input type="text" id="name" value="${Name}">
+                    </div>
+                    <div class="user-data-details">
+                        <label for="email">Пошта</label>
+                        <input type="text" id="email" value="${e_mail}">
+                    </div>
+                    <div class="user-data-details">
+                        <label for="password">Пароль</label>
+                        <input type="password" id="password" value="${password}">
+                        <input type="checkbox" id="check_password">
+                    </div>
+
+                    <button type="submit">Зберегти зміни</button>
+                </form>
+
+                <span>Аккаунт створений - ${reg_date.slice(0,10)}</span>
+            </div>
+
+            <div class="favorites">
+                <div>FDFDSFSF</div>
+            </div>
+        `
+
+
+            // fetch(`/api/cloud-img?filename=${images[0]}`)
+            //     .then(response => response.json())
+            //     .then(data => {
+            //         const img = document.getElementById(`my-image-${Id}`);
+            //         img.src = data.url;
+            //     })
+            //     .catch(error => console.error(error));
+        });
+
+        profile.innerHTML = profileHtmll;
+        const checker = document.getElementById('check_password');
+        const password = document.getElementById('password')
+        checker.addEventListener('click', () =>{
+            if (checker.checked) {
+                password.type = 'text'
+                return;
+            }
+            password.type = 'password'
+        })
+    }
+
+
+
+</script>
+
+</body>
+</html>
