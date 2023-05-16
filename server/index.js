@@ -114,6 +114,20 @@ app.get("/getRecentClothes", function(request, response){
     });
 });
 
+app.get("/getTopClothes", function(request, response){
+    const db = dbService.getDbServiceInstance();
+    let products = db.getTopClothes();
+    let images = db.getProductImages();
+
+    let result;
+
+    Promise.all([products, images]).then(([p, i]) => {
+        result = addImagesToProducts(p, i);
+
+        response.json({data: result});
+    });
+});
+
 function addImagesToProducts(products, images) {
     for (let i = 0; i < products.length; i++) {
         const productImages = [];
