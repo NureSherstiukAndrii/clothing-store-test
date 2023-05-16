@@ -169,3 +169,9 @@ footer{
     display: flex;
     justify-content: space-between;
 }
+
+.popular-clothes-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}

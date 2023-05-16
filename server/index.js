@@ -100,6 +100,20 @@ app.get("/getAllProducts", function(request, response){
     });
 });
 
+app.get("/getRecentClothes", function(request, response){
+    const db = dbService.getDbServiceInstance();
+    let products = db.getRecentClothes();
+    let images = db.getProductImages();
+
+    let result;
+
+    Promise.all([products, images]).then(([p, i]) => {
+        result = addImagesToProducts(p, i);
+
+        response.json({data: result});
+    });
+});
+
 function addImagesToProducts(products, images) {
     for (let i = 0; i < products.length; i++) {
         const productImages = [];
@@ -132,7 +146,10 @@ app.post('/insertNewUser', (req, res) => {
 
     result
         .then((data) => {res.json({ data: data });})
-        .catch((err) => console.log(err));
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json({ error: err.message });
+        });
 });
 
 app.post('/insertProductFiles', multer.array('images', 4), (req, res) => {

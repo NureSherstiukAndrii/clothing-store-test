@@ -140,8 +140,33 @@ class DbService {
         }
     }
 
-    async insertNewUser(_name, _mail, _password){
+    async getRecentClothes(){
         try {
+            const pool = new sql.ConnectionPool(config);
+            return await new Promise((resolve, reject) => {
+                pool.connect().then(() => {
+                    const request = new sql.Request(pool);
+                    request.query("SELECT TOP 4 * FROM Products ORDER BY date_added DESC;").then((result, err) => {
+                        if (err) {
+                            reject(new Error(err.message));
+                        }
+                        console.log(result);
+                        resolve(result.recordset);
+                        pool.close();
+                    }).catch((err) => {
+                        console.error(err);
+                        pool.close();
+                    });
+                })
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async insertNewUser(_name, _mail, _password) {
+        try {
+            console.log('Inserting user into database...');
             const pool = new sql.ConnectionPool(config);
             return await new Promise((resolve, reject) => {
                 pool.connect().then(() => {
@@ -153,7 +178,7 @@ class DbService {
                         resolve(result.recordset);
                         pool.close();
                     }).catch((err) => {
-                        console.error(err);
+                        console.log(reject(new Error(err.message)));
                         pool.close();
                     });
                 })
