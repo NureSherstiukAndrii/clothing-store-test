@@ -1,0 +1,33 @@
+.cart-wrap{
+    background-color: lightgray;
+    height: 100vh;
+    overflow: hidden;
+    transition: width 0.5s ease-out;
+    width: 0;
+    position: fixed;
+    right: 0;
+    z-index: 1;
+}
+.cart-header{
+    background: deepskyblue;
+    display: flex;
+    align-items: center;
+    height: 15%;
+    justify-content: center;
+}
+.icon{
+    cursor: pointer;
+    background: none;
+    border: none;
+    position: absolute;
+    left: 20px;
+}
+#open{
+    cursor: pointer;
+}
+.icon.active {
+    transform: rotate(180deg);
+}
+.cart-wrap.active {
+    width: 400px;
+}

@@ -6,6 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="../styles/style_contact.css">
+    <link rel="stylesheet" href="../styles/cart.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
@@ -28,14 +29,27 @@
             </div>
             <div class="navigation-account-links">
                 <div style="display: flex">
-                    <img src="../img/account.png" alt="account"><a href="/login">Увійти</a>
+                    <a href="/personalPage"><img src="../img/account.png" alt="account"></a>
+                    <a href="/login" id="enter-btn">Увійти</a>
+                    <a href="/login" id="exit-btn">Вийти</a>
                 </div>
                 <div>
-                    <a href=""><img src="../img/basket.png" alt="basket"></a><span>0</span>
+                    <a id="open"><img src="../img/basket.png" alt="basket"></a><span>0</span>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="cart-wrap" id="cart-container">
+        <div class="cart-header">
+            <button class="icon" id="close"><img src="../img/cart-arrow.png" alt=""></button>
+            <h2>Cart</h2>
+        </div>
+        <div id="cart"></div>
+
+
+    </div>
+
 </header>
 
 <div class="introduction">
@@ -49,14 +63,14 @@
                 <span>Електронна адреса: info@my-domain.com</span>
             </div>
 
-            <form action="">
+            <form>
                 <div class="form-fields">
-                    <input id="user_name" type="text" placeholder="Ім'я"/>
-                    <input id="user_email" type="email" placeholder="Email"/>
+                    <input type="text" placeholder="Ім'я" id="userName"/>
+                    <input type="text" placeholder="Email" id="userEmail"/>
                 </div>
 
-                <textarea rows="40" placeholder="Уведіть ваше повідомлення..."></textarea>
-                <button type="submit">Надіслати</button>
+                <textarea rows="40" placeholder="Уведіть ваше повідомлення..." id="userMail"></textarea>
+                <button type="submit" id="sendMail" class="sending">Надіслати</button>
             </form>
 
 
@@ -104,5 +118,8 @@
         <img src="../img/tiktok.png" alt="tiktok">
     </div>
 </footer>
+
+<script src="../scripts/contacts.js"></script>
+<script src="../scripts/cart.js"></script>
 </body>
 </html>

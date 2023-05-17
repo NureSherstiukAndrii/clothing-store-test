@@ -4,6 +4,10 @@ const path = require('path');
 const cloud_img = require("./cloud_img");
 const Multer = require('multer');
 const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
+
+require('dotenv').config();
+
 
 const { Storage } = require('@google-cloud/storage');
 const storage = new Storage({
@@ -33,6 +37,36 @@ const multer = Multer({
         fileSize: 5 * 1024 * 1024 // 5 MB
     }
 });
+
+// app.post('/sendEmail', (req, res) => {
+//     const { userName, userEmail, userMail, userPassword } = req.body;
+//
+//     // Настройте транспорт для отправки письма
+//     const transporter = nodemailer.createTransport({
+//         service: 'Gmail',
+//         auth: {
+//             user: userEmail,
+//             pass: userPassword,
+//         },
+//     });
+//
+// // Определите параметры письма
+//     const mailOptions = {
+//         from: userEmail, // Адрес отправителя
+//         to: process.env.EMAIL_USERNAME, // Адрес получателя
+//         subject: 'Тема письма',
+//         text: userMail,
+//     };
+//
+// // Отправьте письмо
+//     transporter.sendMail(mailOptions, (error, info) => {
+//         if (error) {
+//             console.error(error);
+//         } else {
+//             console.log('Письмо успешно отправлено: ' + info.response);
+//         }
+//     });
+// });
 
 app.post('/loginUser', (req, res) => {
     const {mail, password} = req.body;
@@ -201,6 +235,7 @@ app.post('/insertNewUser', (req, res) => {
             }
         });
 });
+
 
 app.post('/insertProductFiles', multer.array('images', 4), (req, res) => {
     const files = req.files;

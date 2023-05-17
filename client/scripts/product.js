@@ -47,11 +47,13 @@ function loadProduct(data1) {
         productHtmll += `<a href="/contacts" class="navigation-block-btn">Зв'язок з нами</a>`;
         productHtmll += `</div>`;
         productHtmll += `<div class="navigation-account-links">`;
-        productHtmll += `<div style="display: flex">`;
-        productHtmll += `<img src="../img/account.png" alt="account"><a href="/login">Увійти</a>`;
-        productHtmll += `</div>`;
+        productHtmll += `<div style="display: flex">
+                    <a href="/personalPage"><img src="../img/account.png" alt="account"></a>
+                    <a href="/login" id="enter-btn">Увійти</a>
+                    <a href="/login" id="exit-btn">Вийти</a>
+                        </div>`;
         productHtmll += `<div>`;
-        productHtmll += `<a href=""><img src="../img/basket.png" alt="basket"></a><span>0</span>`;
+        productHtmll += `<a id="open"><img src="../img/basket.png" alt="basket"></a><span>0</span>`;
         productHtmll += `</div>`;
         productHtmll += `</div>`;
         productHtmll += `</div>`;

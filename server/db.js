@@ -173,6 +173,30 @@ class DbService {
         }
     }
 
+    async getUser(id) {
+        try {
+            const pool = new sql.ConnectionPool(config);
+            const response = await new Promise((resolve, reject) => {
+                pool.connect().then(() => {
+                    const request = new sql.Request(pool);
+                    request.query(`SELECT * FROM Users WHERE id = ${id}`).then((result, err) => {
+                        if(err){
+                            reject(new Error(err.message));
+                        }
+                        resolve(result.recordset);
+                        pool.close();
+                    }).catch((err) => {
+                        console.error(err);
+                        pool.close();
+                    });
+                })
+            })
+            return response
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     // async insertNewUser(_name, _mail, _password){
     //     try {
     //         const pool = new sql.ConnectionPool(config);
@@ -228,7 +252,6 @@ class DbService {
                         if (err) {
                             reject(new Error(err.message));
                         }
-                        console.log(result);
                         resolve(result.recordset);
                         pool.close();
                     }).catch((err) => {

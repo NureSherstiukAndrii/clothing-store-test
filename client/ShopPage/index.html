@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles/style_shopPage.css">
     <link rel="stylesheet" href="../styles/modal.css">
+    <link rel="stylesheet" href="../styles/cart.css">
     <title>Shop</title>
 </head>
 <body>
@@ -119,7 +120,9 @@
             </div>
             <div class="navigation-account-links">
                 <div style="display: flex">
-                    <img src="../img/account.png" alt="account"><a href="/login">Увійти</a>
+                    <a href="/personalPage"><img src="../img/account.png" alt="account"></a>
+                    <a href="/login" id="enter-btn">Увійти</a>
+                    <a href="/login" id="exit-btn">Вийти</a>
                 </div>
                 <div>
                     <a id="open"><img src="../img/basket.png" alt="basket"></a><span>0</span>
@@ -211,24 +214,25 @@
 </div>
 
 
-<!--<footer>-->
-<!--    <img src="../img/logo.png" alt="logo">-->
+<footer>
+    <img src="../img/logo.png" alt="logo">
 
-<!--    <div class="mail">-->
-<!--        <span>Свої питання пишить нам на пошту: </span>-->
-<!--        <a href="mailto:ourchop@gmail.com">ourchop@gmail.com</a>-->
-<!--    </div>-->
+    <div class="mail">
+        <span>Свої питання пишить нам на пошту: </span>
+        <a href="mailto:ourchop@gmail.com">ourchop@gmail.com</a>
+    </div>
 
-<!--    <div class="social-media">-->
-<!--        <img src="../img/instagram.png" alt="insta">-->
-<!--        <img src="../img/telegram.png" alt="tg">-->
-<!--        <img src="../img/tiktok.png" alt="tiktok">-->
-<!--    </div>-->
-<!--</footer>-->
+    <div class="social-media">
+        <img src="../img/instagram.png" alt="insta">
+        <img src="../img/telegram.png" alt="tg">
+        <img src="../img/tiktok.png" alt="tiktok">
+    </div>
+</footer>
 
 
 <script src="../scripts/shop_script.js"></script>
 <script src="../scripts/modal.js"></script>
+<script src="../scripts/cart.js"></script>
 
 </body>
 </html>
