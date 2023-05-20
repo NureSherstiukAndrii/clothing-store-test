@@ -173,3 +173,8 @@ footer{
     display: flex;
     justify-content: space-between;
 }
+#loader {
+    display: none;
+    padding-top: 10%;
+    justify-content: center;
+}

@@ -264,6 +264,19 @@ class DbService {
             console.log(error);
         }
     }
+    
+    async addToCart_Fav(_name, _mail, _password) {
+        try {
+            await sql.connect(config);
+            const res = await sql.query`INSERT INTO Users ([Name], e_mail, [password]) VALUES ('${_name}', '${_mail}', '${_password}');`;
+            return res; // Возвращаем успешный результат в виде промиса
+        } catch (error) {
+            console.log(error);
+            throw error; // Пробрасываем ошибку для ее обработки в catch блоке
+        } finally {
+            sql.close();
+        }
+    }
 }
 
 module.exports = DbService;

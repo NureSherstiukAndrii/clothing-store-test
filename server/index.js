@@ -5,9 +5,8 @@ const cloud_img = require("./cloud_img");
 const Multer = require('multer');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
-
-require('dotenv').config();
-
+const cookieParser = require('cookie-parser');
+const router = require('../server/router/authRouter')
 
 const { Storage } = require('@google-cloud/storage');
 const storage = new Storage({
@@ -28,6 +27,8 @@ app.use('/styles', express.static(path.join(parentDir, 'client/styles'), {
 
 app.use(express.static(path.join(parentDir, '/client')))
 app.use(express.json());
+app.use(cookieParser())
+app.use('/api', router)
 
 const cloudImg = new cloud_img();
 
@@ -107,13 +108,13 @@ app.get("/contacts", function (req, res){
     res.sendFile(parentDir + "/client/ContactPage/index.html");
 })
 
-app.get("/login", function (req, res){
-    res.sendFile(parentDir + "/client/LogInPage/index.html");
-})
-
-app.get("/registration", function (req, res){
-    res.sendFile(parentDir + "/client/RegistrationPage/index.html");
-})
+// app.get("/login", function (req, res){
+//     res.sendFile(parentDir + "/client/LogInPage/index.html");
+// })
+//
+// app.get("/registration", function (req, res){
+//     res.sendFile(parentDir + "/client/RegistrationPage/index.html");
+// })
 
 app.get("/size", function (req, res){
     res.sendFile(parentDir + "/client/SizeChartPage/index.html");
@@ -123,19 +124,19 @@ app.get('/products/:id', (req, res) => {
     res.sendFile(parentDir + '/client/ProductPage/product.html');
 });
 
-app.get('/personals/:id', async (req, res) => {
-    res.sendFile(parentDir + '/client/PersonalPage/index.html');
-});
-
-app.get('/person/:id', (req, res) => {
-    const userId = req.params.id;
-    const db = dbService.getDbServiceInstance();
-    let result = db.getUser(userId);
-
-    result
-        .then((data) => {res.json({ data: data });})
-        .catch((err) => console.log(err));
-});
+// app.get('/personals/:id', async (req, res) => {
+//     res.sendFile(parentDir + '/client/PersonalPage/index.html');
+// });
+//
+// app.get('/person/:id', (req, res) => {
+//     const userId = req.params.id;
+//     const db = dbService.getDbServiceInstance();
+//     let result = db.getUser(userId);
+//
+//     result
+//         .then((data) => {res.json({ data: data });})
+//         .catch((err) => console.log(err));
+// });
 
 app.get('/product/:id', (req, res) => {
     const productId = req.params.id;
