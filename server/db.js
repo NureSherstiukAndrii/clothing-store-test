@@ -76,6 +76,30 @@ class DbService {
         }
     }
 
+    async getProductForName(product_name) {
+        try {
+            const pool = new sql.ConnectionPool(config);
+            const response = await new Promise((resolve, reject) => {
+                pool.connect().then(() => {
+                    const request = new sql.Request(pool);
+                    request.query(`SELECT size FROM Products WHERE Name = '${product_name}'`).then((result, err) => {
+                        if(err){
+                            reject(new Error(err.message));
+                        }
+                        resolve(result.recordset);
+                        pool.close();
+                    }).catch((err) => {
+                        console.error(err);
+                        pool.close();
+                    });
+                })
+            })
+            return response
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 
 
 
@@ -264,17 +288,74 @@ class DbService {
             console.log(error);
         }
     }
-    
-    async addToCart_Fav(_name, _mail, _password) {
+
+    async addIntoCart_Fav(userId, productId, is_cart) {
         try {
             await sql.connect(config);
-            const res = await sql.query`INSERT INTO Users ([Name], e_mail, [password]) VALUES ('${_name}', '${_mail}', '${_password}');`;
-            return res; // Возвращаем успешный результат в виде промиса
+            const result = await sql.query`INSERT INTO Cart_Fav (u_id, p_id, is_cart) VALUES ('${userId}', '${productId}', '${is_cart}')`;
         } catch (error) {
             console.log(error);
-            throw error; // Пробрасываем ошибку для ее обработки в catch блоке
         } finally {
             sql.close();
+        }
+    }
+
+    async deleteFromCart_Fav(id){
+        try {
+            await sql.connect(config);
+            const result = await sql.query`DELETE FROM Cart_Fav WHERE Id = ${id}`;
+        } catch (error) {
+            console.log(error);
+        } finally {
+            sql.close();
+        }
+    }
+
+    async getAllProductsFromCart(id) {
+        try {
+            const pool = new sql.ConnectionPool(config);
+            const response = await new Promise((resolve, reject) => {
+                pool.connect().then(() => {
+                    const request = new sql.Request(pool);
+                    request.query(`SELECT * FROM Cart_Fav WHERE u_id = ${id} AND is_cart = 1`).then((result, err) => {
+                        if(err){
+                            reject(new Error(err.message));
+                        }
+                        resolve(result.recordset);
+                        pool.close();
+                    }).catch((err) => {
+                        console.error(err);
+                        pool.close();
+                    });
+                })
+            })
+            return response
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async getAllProductsFromFav(id) {
+        try {
+            const pool = new sql.ConnectionPool(config);
+            const response = await new Promise((resolve, reject) => {
+                pool.connect().then(() => {
+                    const request = new sql.Request(pool);
+                    request.query(`SELECT * FROM Cart_Fav WHERE u_id = ${id} AND is_cart = 0`).then((result, err) => {
+                        if(err){
+                            reject(new Error(err.message));
+                        }
+                        resolve(result.recordset);
+                        pool.close();
+                    }).catch((err) => {
+                        console.error(err);
+                        pool.close();
+                    });
+                })
+            })
+            return response
+        } catch (error) {
+            console.log(error);
         }
     }
 }

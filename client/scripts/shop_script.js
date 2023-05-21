@@ -113,17 +113,19 @@ addProductInput.addEventListener('click', event => {
 });
 
 function loadHTMLProducts(data) {
+    const uniqueNamesArray = Array.from(new Set(data.map(item => item.Name)));
+    const uniqueObjectsArray = uniqueNamesArray.map(name => data.find(item => item.Name === name));
 
     const allProducts = document.getElementById('products')
 
-    if (data.length === 0) {
+    if (uniqueObjectsArray.length === 0) {
         allProducts.innerHTML = "<h1>Товарів немає</h1>";
         return;
     }
 
     let productHtml = "";
 
-    data.forEach(({Id, Name, price, images}) => {
+    uniqueObjectsArray.forEach(({Id, Name, price, images}) => {
 
 
         productHtml += `<div class='product' onclick="showProduct(${Id})">`;

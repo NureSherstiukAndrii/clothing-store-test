@@ -69,16 +69,16 @@ const multer = Multer({
 //     });
 // });
 
-app.post('/loginUser', (req, res) => {
-    const {mail, password} = req.body;
-    const db = dbService.getDbServiceInstance();
-
-    let result = db.checkUser(mail, password);
-
-    result
-        .then(data => {res.json(data)})
-        .catch(err => console.log(err));
-})
+// app.post('/loginUser', (req, res) => {
+//     const {mail, password} = req.body;
+//     const db = dbService.getDbServiceInstance();
+//
+//     let result = db.checkUser(mail, password);
+//
+//     result
+//         .then(data => {res.json(data)})
+//         .catch(err => console.log(err));
+// })
 
 
 app.get('/api/cloud-img', async (req, res) => {
@@ -122,7 +122,7 @@ app.get("/size", function (req, res){
 
 app.get('/products/:id', (req, res) => {
     res.sendFile(parentDir + '/client/ProductPage/product.html');
-});
+})
 
 // app.get('/personals/:id', async (req, res) => {
 //     res.sendFile(parentDir + '/client/PersonalPage/index.html');
@@ -214,28 +214,28 @@ app.post('/insertProductJSON', (req, res) => {
         .catch((err) => console.log(err));
 });
 
-app.post('/insertNewUser', (req, res) => {
-    const {name, mail, password} = req.body;
-    const db = dbService.getDbServiceInstance();
-
-    let result = db.insertNewUser(name, mail, password)
-
-
-    result
-        .then((data) => {
-            // Успешно добавлено
-            res.json({ success: true, message: 'Пользователь успешно добавлен в базу данных.' });
-        })
-        .catch((error) => {
-            // Ошибка добавления пользователя
-            if (error.code === '23505') {
-                res.status(400).json({ success: false, message: 'Почта уже используется другим пользователем.' });
-            } else {
-                console.error(error);
-                res.status(500).json({ success: false, message: 'Произошла ошибка при добавлении пользователя.' });
-            }
-        });
-});
+// app.post('/insertNewUser', (req, res) => {
+//     const {name, mail, password} = req.body;
+//     const db = dbService.getDbServiceInstance();
+//
+//     let result = db.insertNewUser(name, mail, password)
+//
+//
+//     result
+//         .then((data) => {
+//             // Успешно добавлено
+//             res.json({ success: true, message: 'Пользователь успешно добавлен в базу данных.' });
+//         })
+//         .catch((error) => {
+//             // Ошибка добавления пользователя
+//             if (error.code === '23505') {
+//                 res.status(400).json({ success: false, message: 'Почта уже используется другим пользователем.' });
+//             } else {
+//                 console.error(error);
+//                 res.status(500).json({ success: false, message: 'Произошла ошибка при добавлении пользователя.' });
+//             }
+//         });
+// });
 
 
 app.post('/insertProductFiles', multer.array('images', 4), (req, res) => {
@@ -279,6 +279,59 @@ app.post('/insertProductFiles', multer.array('images', 4), (req, res) => {
 //     const {id, name} = request.body;
 //     const db = dbService.getDbServiceInstance();
 //     const result = db.editTour(+id, name);
+//     result
+//         .then((data) => response.json({ success: data }))
+//         .catch((err) => console.log(err));
+// });
+
+
+app.post('/insertIntoCart', (req, res) => {
+    const {userId, productId, is_cart} = req.body;
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.addIntoCart_Fav(userId, productId, is_cart)
+
+    result
+        .then((data) => {res.json({ data: data });})
+        .catch((err) => console.log(err));
+});
+
+app.post('/insertIntoFav', (req, res) => {
+    const {userId, productId, is_cart} = req.body;
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.addIntoCart_Fav(userId, productId, is_cart)
+
+    result
+        .then((data) => {res.json({ data: data });})
+        .catch((err) => console.log(err));
+});
+
+// app.get("/getCart/:id", function(request, response){
+//     const { id } = request.query;
+//     const db = dbService.getDbServiceInstance();
+//     const result = db.getAllProductsFromCart(id);
+//
+//     result
+//         .then((data) => {response.json({ data: data });})
+//         .catch((err) => console.log(err));
+// });
+
+app.get("/getAllProductsSizeForName", (request, response) => {
+    const productName = request.query.product;
+    const db = dbService.getDbServiceInstance();
+    const result = db.getProductForName(productName);
+
+    result
+        .then((data) => response.json(data))
+        .catch((err) => console.log(err));
+});
+// app.delete("/deleteFromCart_Fav/:id", (request, response) => {
+//     const { id } = request.params;
+//     const db = dbService.getDbServiceInstance();
+//
+//     const result = db.deleteFromCart_Fav(id);
+//
 //     result
 //         .then((data) => response.json({ success: data }))
 //         .catch((err) => console.log(err));
