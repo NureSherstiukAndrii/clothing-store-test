@@ -1,10 +1,11 @@
 const { Storage } = require('@google-cloud/storage');
+require('dotenv').config();
 const storage = new Storage({
-    projectId: 'dogwood-garden-382315',
-    keyFilename: './dogwood-garden-382315-f58b3243e2e9.json',
+    projectId: process.env.project_id, 
+    keyFilename: process.env.keyFilename,
 });
 
-const bucketName = 'nure_bucket';
+const bucketName = process.env.bucketName;
 
 
 async function getFilesFromStorage() {
