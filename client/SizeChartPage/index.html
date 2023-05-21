@@ -57,13 +57,136 @@
   <img class="measure" src="../img/measure.png" alt="">
 </div>
 
-<div class="size-table">
-  <h1 class="table-text">Таблиця розмірів для жінок</h1>
-  <div class="size-table-women">
-    <img class="table" src="../img/Table.png" alt="">
+<div class="culc-size">
+  <div class="modal-trigger">
+    <p>Не можете визначитися з розміром? Введіть свої параметри та наша система розрахує оптимальний розмір.</p>
+    <button class="open-modal-btn">Розрахувати розмір</button>
   </div>
 </div>
+<!-- Модальное окно -->
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Введіть свій зріст та вагу та оберіть стать</h2>
+    <div class="input-block">
+      <label for="height">Зріст (см):</label>
+      <input type="number" id="height" required min="150" max="200">
+    </div>
+    <div class="input-block">
+      <label for="weight">Вага (кг):</label>
+      <input type="number" id="weight" required min="50" max="90">
+    </div>    
+    <div class="input-block">
+      <label>Стать:</label>
+      <label for="male">
+        <input type="radio" name="gender" id="male" value="male" required> Чоловік
+      </label>
+      <label for="female">
+        <input type="radio" name="gender" id="female" value="female" required> Жінка
+      </label>
+    </div>
+    <button id="calculate-btn">Розрахувати</button>
+    <div id="result"></div>
+  </div>
+</div>
+<div class="size-table">
+    <div class="size-table-women">
+        <h2 class = "women-text">Таблиця розмірів для жінок</h2>
+        <div class="table">
+            <table>
+                <tr>
+                  <th>Розмір</th>
+                  <th>Зріст (см)</th>
+                  <th>Вага (кг)</th>
+                  <th>Об'єм грудей (см)</th>
+                  <th>Об'єм талії (см)</th>
+                  <th>Об'єм бедер (см)</th>
+                </tr>
+                <tr>
+                  <td>S</td>
+                  <td>150-160</td>
+                  <td>50-60</td>
+                  <td>80-85</td>
+                  <td>65-70</td>
+                  <td>90-95</td>
+                </tr>
+                <tr>
+                  <td>M</td>
+                  <td>160-170</td>
+                  <td>55-65</td>
+                  <td>90-95</td>
+                  <td>75-80</td>
+                  <td>100-105</td>
+                </tr>
+                <tr>
+                  <td>L</td>
+                  <td>170-180</td>
+                  <td>60-70</td>
+                  <td>100-105</td>
+                  <td>80-85</td>
+                  <td>105-110</td>
+                </tr>
+                <tr>
+                  <td>XL</td>
+                  <td>180-190</td>
+                  <td>65+</td>
+                  <td>100-110</td>
+                  <td>90-95</td>
+                  <td>110-120</td>
+                </tr>
+            </table>
+        </div>
+    </div> 
+    <div class="size-table-men">
+        <h2 class = "men-text">Таблиця розмірів для чоловіків</h2>
+        <div class="table">
+            <table>
+                <tr>
+                  <th>Розмір</th>
+                  <th>Зріст (см)</th>
+                  <th>Вага (кг)</th>
+                  <th>Об'єм грудей (см)</th>
+                  <th>Об'єм талії (см)</th>
+                  <th>Об'єм бедер (см)</th>
+                </tr>
+                <tr>
+                  <td>S</td>
+                  <td>155-165</td>
+                  <td>50-60</td>
+                  <td>80-85</td>
+                  <td>65-70</td>
+                  <td>90-95</td>
+                </tr>
+                <tr>
+                  <td>M</td>
+                  <td>165-175</td>
+                  <td>60-70</td>
+                  <td>90-95</td>
+                  <td>75-80</td>
+                  <td>100-105</td>
+                </tr>
+                <tr>
+                  <td>L</td>
+                  <td>175-185</td>
+                  <td>65-75</td>
+                  <td>100-105</td>
+                  <td>80-85</td>
+                  <td>105-110</td>
+                </tr>
+                <tr>
+                  <td>XL</td>
+                  <td>185-195</td>
+                  <td>70+</td>
+                  <td>100-110</td>
+                  <td>90-95</td>
+                  <td>110-120</td>
+                </tr>
+            </table>
+        </div>
+    </div> 
+</div>
 
+  
 <footer>
   <img src="../img/logo.png" alt="logo">
 
@@ -79,6 +202,7 @@
   </div>
 </footer>
 
+<script src="../scripts/get_size.js"></script>
 <script src="../scripts/cart.js"></script>
 
 </body>
