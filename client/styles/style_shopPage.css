@@ -116,9 +116,11 @@ header{
     width: 100%;
     justify-content: space-around;
 }
+
 .filters{
     width: 12%;
 }
+
 .clothes{
     display: flex;
     flex-wrap: wrap;
@@ -139,20 +141,50 @@ header{
     width: 300px;
 }
 .collection-container{
-    max-height: 0;
+    padding-top: 20px;
+    max-height: 0px;
     transition: max-height 0.52s ease-out;
     overflow: hidden;
     top: 30px;
+    display: flex; 
+    flex-direction: column;
 }
+.collection-container label{
+    margin-bottom: 10px;
+}
+
 .collection-container > div{
     margin: 10px 0px;
 }
 #filter-categories{
     display: flex;
-    height: 40%;
     flex-direction: column;
     padding-left: 0px;
 }
+
+.submit-btn {
+    width: 100%;
+    background-color: #B46A51;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.reset-btn{
+    width: 100%;
+    margin-top: 20px;
+    background-color: white;
+    color: rgb(0, 0, 0);
+    padding: 10px 20px;
+    border: 4px solid;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
 li{
     display: flex;
     justify-content: space-between;

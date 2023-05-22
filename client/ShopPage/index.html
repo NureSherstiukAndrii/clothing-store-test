@@ -165,50 +165,76 @@
     </select>
 
    <div class="main-content">
-       <div class="filters">
+       <form id = "filters-form" class="filters">
            <div style="border-bottom: 1px solid; font-size: 20px; font-weight: bold;">Фільтрувати за</div>
            <ul id="filter-categories">
-               <li>
+                <li>
+                    <div class="filter-category">
+                        <span>Статтю</span>
+                        <span class="close-open">&#9660;</span>
+                    </div>
+                    <div class="collection-container">
+                        <label for="gender-male">
+                            <input type="checkbox" id="gender-male" name="gender" value="male">
+                            Чоловікам
+                        </label>
+                        <label for="gender-female">
+                            <input type="checkbox" id="gender-female" name="gender" value="female">
+                            Жінкам
+                        </label>
+                    </div> 
+                </li>
+                <li>
+                    <div class="filter-category">
+                        <span>Ціні</span>
+                        <span class="close-open">&#9660;</span>
+                    </div>
+                    <div class="collection-container">
+                        <label for="price-from">От:<input type="text" id="price-from" name="price-from"></label>
+                        <label for="price-to">До:<input type="text" id="price-to" name="price-to"></label>
+                    </div>
+                </li>
+                <li>
+                    <div class="filter-category">
+                        <span>Розміром</span>
+                        <span class="close-open">&#9660;</span>
+                    </div>
+                    <div class="collection-container">
+                        <label for="size-m"><input type="checkbox" id="size-m" name="size" value="M"/>M</label>
+                        <label for="size-l"><input type="checkbox" id="size-l" name="size" value="L"/>L</label>
+                        <label for="size-xl"><input type="checkbox" id="size-xl" name="size" value="XL"/>XL</label>
+                        <label for="size-xxl"><input type="checkbox" id="size-xxl" name="size" value="XXL"/>XXL</label>
+                    </div>
+                </li>
+                <li>
                    <div class="filter-category">
-                       <span>Коллекции</span>
+                       <span>Типом одягу</span>
                        <span class="close-open">&#9660;</span>
                    </div>
                    <div class="collection-container">
-                       <div>nike</div>
-                       <div>adidas</div>
-                       <div>puma</div>
-                       <div>zara</div>
+                        <label for="type-t-shirt"><input type="checkbox" id="type-t-shirt" name="type" value="t-shirt"/>Футболки</label>
+                        <label for="type-jeans"><input type="checkbox" id="type-jeans" name="type" value="jeans"/>Джинси</label>
+                        <label for="type-jacket"><input type="checkbox" id="type-jacket" name="type" value="jacket"/>Куртки</label>
+                        <label for="type-hoodie"><input type="checkbox" id="type-hoodie" name="type" value="hoodie"/>Худі</label>
                    </div>
-               </li>
-               <li>
-                   <div class="filter-category">
-                       <span>Цене</span>
-                       <span class="close-open">&#9660;</span>
-                   </div>
-                   <div class="collection-container">
-                       <label for="price-from">От:<input type="text" id="price-from"/></label>
-                       <label for="price-to">До:<input type="text" id="price-to"/></label>
-                   </div>
-               </li>
-
-               <li>
-                   <div class="filter-category">
-                       <span>Размеру</span>
-                       <span class="close-open">&#9660;</span>
-                   </div>
-                   <div class="collection-container">
-                       <label for="size-m">M<input type="checkbox" id="size-m"/></label>
-                       <label for="size-l">L<input type="checkbox" id="size-l"/></label>
-                       <label for="size-xl">XL<input type="checkbox" id="size-xl"/></label>
-                       <label for="size-xxl">XXL<input type="checkbox" id="size-xxl"/></label>
-                   </div>
-               </li>
-
+                 </li>
+                <li>
+                    <div class="filter-category">
+                        <span>Сезоном</span>
+                        <span class="close-open">&#9660;</span>
+                    </div>
+                    <div class="collection-container">
+                        <label for="season-summer"><input type="checkbox" id="season-summer" name="season" value="summer"/>Літо</label>
+                        <label for="season-spring"><input type="checkbox" id="season-spring" name="season" value="spring"/>Весна</label>
+                        <label for="season-autumn"><input type="checkbox" id="season-autumn" name="season" value="autumn"/>Осінь</label>
+                        <label for="season-winter"><input type="checkbox" id="season-winter" name="season" value="winter"/>Зима</label>
+                    </div>
+                </li>    
            </ul>
-       </div>
-
+           <input type="submit" value="Застосувати фільтри" class = "submit-btn">
+           <input type="button" value="Скинути фільтри" id="reset-btn" class = "reset-btn">
+        </form>
        <div id="products" class="clothes">
-
        </div>
    </div>
 </div>
