@@ -72,7 +72,7 @@ function loadProduct(data1) {
         productHtmll += `<input type="number" id="quantity" name="quantity" min="1" max="${amount}" value="1">`;
         productHtmll += `<br> <br>`;
         productHtmll += `<input type="submit" value="Додати до кошика" id="addToCart">`;
-        productHtmll += `<input id="heart" type="checkbox"/>`
+        productHtmll += `<div class="heart"><div/>`
         productHtmll += `</form>`;
         productHtmll += `</div>`;
         productHtmll += `<div class="description">`;

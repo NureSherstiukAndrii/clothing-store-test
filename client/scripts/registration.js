@@ -15,7 +15,8 @@ addUser.addEventListener('click', event => {
     const password = passwordInput.value;
     passwordInput.value = "";
 
-    fetch('/insertNewUser', {
+    console.log(mail);
+    fetch('/api/registration', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -43,22 +44,4 @@ addUser.addEventListener('click', event => {
         .catch((error) => {
             alert("Пользователь уже зарегестрирован");
         });
-
-        // fetch('/insertNewUser', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({
-        //         name: name,
-        //         mail: mail,
-        //         password: password,
-        //     }),
-        //
-        // })
-        //     .then((response) => console.log(response))
-        //     .then(data => console.log(data))
-        //     .catch(error => {
-        //         console.error(error);
-        //     });
 })

@@ -10,17 +10,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-const filter_block = document.getElementsByClassName('filter-category');
-[...filter_block].forEach(block => {
-    block.addEventListener('click', function(event) {
-        console.log(event);
-        if (this.tagName === 'DIV') {
-            this.classList.toggle('active');
-        }
-    })
-})
-
-
 const addProductInput = document.getElementById('addProductInput');
 
 addProductInput.addEventListener('click', event => {
@@ -106,7 +95,6 @@ addProductInput.addEventListener('click', event => {
         body: formData,
     })
         .then((response) => response.json())
-        // .then(() => location.reload())
         .catch(error => {
             console.error(error);
         });

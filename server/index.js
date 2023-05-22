@@ -3,32 +3,20 @@ const app = express();
 const path = require('path');
 const cloud_img = require("./cloud_img");
 const Multer = require('multer');
-const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer');
 const cookieParser = require('cookie-parser');
-const router = require('../server/router/authRouter')
-
-const { Storage } = require('@google-cloud/storage');
-const storage = new Storage({
-    projectId: 'dogwood-garden-382315',
-    keyFilename: './dogwood-garden-382315-f58b3243e2e9.json',
-});
-const bucketName = 'nure_bucket';
-const bucket = storage.bucket(bucketName);
+const router = require('../server/router/authRouter');
+const pageRouter = require('../server/router/pageRouter')
+const errorMiddleware = require('./middlewares/errorMiddleware')
 
 const dbService = require("./db");
-
 const parentDir = path.resolve(__dirname, '..');
-
-app.use('/styles', express.static(path.join(parentDir, 'client/styles'), {
-    headers: { 'Content-Type': 'text/css' }
-}));
-
 
 app.use(express.static(path.join(parentDir, '/client')))
 app.use(express.json());
-app.use(cookieParser())
-app.use('/api', router)
+app.use(cookieParser());
+app.use('/api', router);
+app.use('/', pageRouter)
+app.use(errorMiddleware);
 
 const cloudImg = new cloud_img();
 
@@ -39,46 +27,9 @@ const multer = Multer({
     }
 });
 
-// app.post('/sendEmail', (req, res) => {
-//     const { userName, userEmail, userMail, userPassword } = req.body;
-//
-//     // Настройте транспорт для отправки письма
-//     const transporter = nodemailer.createTransport({
-//         service: 'Gmail',
-//         auth: {
-//             user: userEmail,
-//             pass: userPassword,
-//         },
-//     });
-//
-// // Определите параметры письма
-//     const mailOptions = {
-//         from: userEmail, // Адрес отправителя
-//         to: process.env.EMAIL_USERNAME, // Адрес получателя
-//         subject: 'Тема письма',
-//         text: userMail,
-//     };
-//
-// // Отправьте письмо
-//     transporter.sendMail(mailOptions, (error, info) => {
-//         if (error) {
-//             console.error(error);
-//         } else {
-//             console.log('Письмо успешно отправлено: ' + info.response);
-//         }
-//     });
-// });
-
-// app.post('/loginUser', (req, res) => {
-//     const {mail, password} = req.body;
-//     const db = dbService.getDbServiceInstance();
-//
-//     let result = db.checkUser(mail, password);
-//
-//     result
-//         .then(data => {res.json(data)})
-//         .catch(err => console.log(err));
-// })
+app.use('/styles', express.static(path.join(parentDir, 'client/styles'), {
+    headers: { 'Content-Type': 'text/css' }
+}));
 
 
 app.get('/api/cloud-img', async (req, res) => {
@@ -91,52 +42,23 @@ app.get('/api/cloud-img', async (req, res) => {
     }
 });
 
-
-app.get("/", function (req, res){
-    res.sendFile( parentDir + "/client/HomePage/index.html");
-})
-
-app.get("/about", function (req, res){
-    res.sendFile(parentDir + "/client/AboutUsPage/index.html");
-})
-
-app.get("/shop", function (req, res){
-    res.sendFile(parentDir + "/client/ShopPage/index.html");
-})
-
-app.get("/contacts", function (req, res){
-    res.sendFile(parentDir + "/client/ContactPage/index.html");
-})
-
-// app.get("/login", function (req, res){
-//     res.sendFile(parentDir + "/client/LogInPage/index.html");
-// })
-//
-// app.get("/registration", function (req, res){
-//     res.sendFile(parentDir + "/client/RegistrationPage/index.html");
-// })
-
-app.get("/size", function (req, res){
-    res.sendFile(parentDir + "/client/SizeChartPage/index.html");
-})
-
 app.get('/products/:id', (req, res) => {
     res.sendFile(parentDir + '/client/ProductPage/product.html');
 })
 
-// app.get('/personals/:id', async (req, res) => {
-//     res.sendFile(parentDir + '/client/PersonalPage/index.html');
-// });
-//
-// app.get('/person/:id', (req, res) => {
-//     const userId = req.params.id;
-//     const db = dbService.getDbServiceInstance();
-//     let result = db.getUser(userId);
-//
-//     result
-//         .then((data) => {res.json({ data: data });})
-//         .catch((err) => console.log(err));
-// });
+app.get('/personals/:id', async (req, res) => {
+    res.sendFile(parentDir + '/client/PersonalPage/index.html');
+});
+
+app.get('/person/:id', (req, res) => {
+    const userId = req.params.id;
+    const db = dbService.getDbServiceInstance();
+    let result = db.getUser(userId);
+
+    result
+        .then((data) => {res.json({ data: data });})
+        .catch((err) => console.log(err));
+});
 
 app.get('/product/:id', (req, res) => {
     const productId = req.params.id;
@@ -213,30 +135,6 @@ app.post('/insertProductJSON', (req, res) => {
         .then((data) => {res.json({ data: data });})
         .catch((err) => console.log(err));
 });
-
-// app.post('/insertNewUser', (req, res) => {
-//     const {name, mail, password} = req.body;
-//     const db = dbService.getDbServiceInstance();
-//
-//     let result = db.insertNewUser(name, mail, password)
-//
-//
-//     result
-//         .then((data) => {
-//             // Успешно добавлено
-//             res.json({ success: true, message: 'Пользователь успешно добавлен в базу данных.' });
-//         })
-//         .catch((error) => {
-//             // Ошибка добавления пользователя
-//             if (error.code === '23505') {
-//                 res.status(400).json({ success: false, message: 'Почта уже используется другим пользователем.' });
-//             } else {
-//                 console.error(error);
-//                 res.status(500).json({ success: false, message: 'Произошла ошибка при добавлении пользователя.' });
-//             }
-//         });
-// });
-
 
 app.post('/insertProductFiles', multer.array('images', 4), (req, res) => {
     const files = req.files;
@@ -326,6 +224,7 @@ app.get("/getAllProductsSizeForName", (request, response) => {
         .then((data) => response.json(data))
         .catch((err) => console.log(err));
 });
+
 // app.delete("/deleteFromCart_Fav/:id", (request, response) => {
 //     const { id } = request.params;
 //     const db = dbService.getDbServiceInstance();
@@ -336,5 +235,12 @@ app.get("/getAllProductsSizeForName", (request, response) => {
 //         .then((data) => response.json({ success: data }))
 //         .catch((err) => console.log(err));
 // });
+
+
+app.get("/applyFilters", (req,res) =>{
+    const filters = req.query;
+    console.log(filters);
+});
+
 
 app.listen(3000);
