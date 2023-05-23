@@ -359,7 +359,7 @@ class DbService {
         }
     }
 
-    async getProductsWithFilters(trueGender, trueSize, trueTypes, trueSeasons, priceFrom, priceTo) {
+    async getProductsWithFilters(trueGender, trueSize, trueTypes, trueSeasons, priceFrom, priceTo,sortingValue) {
         try {
             const pool = new sql.ConnectionPool(config);
             const response = await new Promise((resolve, reject) => {
@@ -392,6 +392,22 @@ class DbService {
                         priceFrom === '' ? priceFrom  = 0 : priceFrom;
                         priceTo === '' ? priceTo = 1000000 : priceTo;
                         query += ` AND (price BETWEEN ${priceFrom} AND ${priceTo})`;
+                    }
+
+                    if (sortingValue !== ''){
+                        if (sortingValue === 'fromLowPrice') {
+                            sortingValue = 'price'
+                        }
+                        if (sortingValue === 'fromHighPrice') {
+                            sortingValue = 'price DESC'
+                        }
+                        if (sortingValue === 'date_added') {
+                            sortingValue = 'date_added DESC'
+                        }
+                        if (sortingValue === 'rating') {
+                            sortingValue = 'rating DESC'
+                        }
+                        query += ` ORDER BY ${sortingValue}`;
                     }
 
                     request.query(query).then((result, err) => {

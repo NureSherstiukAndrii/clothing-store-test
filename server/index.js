@@ -241,22 +241,15 @@ app.get("/getAllProductsSizeForName", (request, response) => {
 
 
 app.get("/applyFilters", (req,res) =>{
-    const {priceFrom, priceTo, gender, sizes, types, seasons} = req.query;
-    // console.log(priceFrom);
-    // console.log(priceTo);
-    // console.log(gender);
-    // console.log(sizes);
-    // console.log(types);
-    // console.log(seasons);
+    const {priceFrom, priceTo, gender, sizes, types, seasons, orderBy} = req.query;
     const db = dbService.getDbServiceInstance();
 
-    const products = db.getProductsWithFilters(gender, sizes, types, seasons, priceFrom, priceTo);
+    const products = db.getProductsWithFilters(gender, sizes, types, seasons, priceFrom, priceTo, orderBy);
     let images = db.getProductImages();
 
 
     Promise.all([products, images]).then(([p, i]) => {
         let result = addImagesToProducts(p, i);
-        console.log(result);
         res.json({data: result});
     });
 
