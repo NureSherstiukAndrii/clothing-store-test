@@ -143,15 +143,3 @@ function showProduct(productId) {
     // Перенаправляем пользователя на новую страницу с выбранным продуктом
     window.location.href = `/products/${productId}`;
 }
-
-// Находим кнопку сброса по идентификатору
-var resetButton = document.getElementById('reset-btn');
-
-// Обработчик события клика на кнопку сброса
-resetButton.addEventListener('click', function() {
-  // Находим форму по идентификатору
-  var filtersForm = document.getElementById('filters-form');
-  
-  // Сбрасываем значения всех полей формы
-  filtersForm.reset();
-});

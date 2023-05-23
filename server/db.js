@@ -82,7 +82,7 @@ class DbService {
             const response = await new Promise((resolve, reject) => {
                 pool.connect().then(() => {
                     const request = new sql.Request(pool);
-                    request.query(`SELECT size FROM Products WHERE Name = '${product_name}'`).then((result, err) => {
+                    request.query(`SELECT Distinct size FROM Products WHERE Name = '${product_name}'`).then((result, err) => {
                         if(err){
                             reject(new Error(err.message));
                         }
@@ -342,6 +342,59 @@ class DbService {
                 pool.connect().then(() => {
                     const request = new sql.Request(pool);
                     request.query(`SELECT * FROM Cart_Fav WHERE u_id = ${id} AND is_cart = 0`).then((result, err) => {
+                        if(err){
+                            reject(new Error(err.message));
+                        }
+                        resolve(result.recordset);
+                        pool.close();
+                    }).catch((err) => {
+                        console.error(err);
+                        pool.close();
+                    });
+                })
+            })
+            return response
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async getProductsWithFilters(trueGender, trueSize, trueTypes, trueSeasons, priceFrom, priceTo) {
+        try {
+            const pool = new sql.ConnectionPool(config);
+            const response = await new Promise((resolve, reject) => {
+                pool.connect().then(() => {
+                    const request = new sql.Request(pool);
+
+                    let query = `SELECT * FROM Products WHERE 1=1`;
+
+                    if (trueGender) {
+                        const genders = trueGender.split(',').map(g => `'${g}'`).join(', ');
+                        query += ` AND (gender IN (${genders}))`;
+                    }
+
+                    if (trueSize) {
+                        const sizes = trueSize.split(',').map(g => `'${g}'`).join(', ');
+                        query += ` AND (size IN (${sizes}))`;
+                    }
+
+                    if (trueTypes) {
+                        const types = trueTypes.split(',').map(g => `'${g}'`).join(', ');
+                        query += ` AND (type_of_product IN (${types}))`;
+                    }
+
+                    if (trueSeasons) {
+                        const seasons = trueSeasons.split(',').map(g => `'${g}'`).join(', ');
+                        query += ` AND (season IN (${seasons}))`;
+                    }
+
+                    if (priceTo !== '' || priceFrom !== '') {
+                        priceFrom === '' ? priceFrom  = 0 : priceFrom;
+                        priceTo === '' ? priceTo = 1000000 : priceTo;
+                        query += ` AND (price BETWEEN ${priceFrom} AND ${priceTo})`;
+                    }
+
+                    request.query(query).then((result, err) => {
                         if(err){
                             reject(new Error(err.message));
                         }

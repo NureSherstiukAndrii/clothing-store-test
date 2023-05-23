@@ -63,16 +63,67 @@ applyFilters.addEventListener('click', (event) => {
         '&types=' + encodeURIComponent(types.join(','))+
         '&seasons=' + encodeURIComponent(seasons.join(','));
 
+    console.log(queryParams);
+
     fetch('/applyFilters' + queryParams)
-        .then(response => {
-            if (response.ok) {
-                console.log('GET-запрос успешно выполнен.');
-            } else {
-                console.error('Ошибка при выполнении GET-запроса.');
-            }
-        })
+        .then((response) => response.json())
+        .then((response) => loadHTMLProducts2(response.data))
         .catch(error => {
             console.error('Ошибка при выполнении GET-запроса:', error);
         });
 })
+
+function loadHTMLProducts2(data) {
+    const uniqueNamesArray = Array.from(new Set(data.map(item => item.Name)));
+    const uniqueObjectsArray = uniqueNamesArray.map(name => data.find(item => item.Name === name));
+
+    const allProducts = document.getElementById('products')
+
+    if (uniqueObjectsArray.length === 0) {
+        allProducts.innerHTML = "<h1>Товарів немає</h1>";
+        return;
+    }
+
+    let productHtml = "";
+
+    uniqueObjectsArray.forEach(({Id, Name, price, images}) => {
+
+        console.log(images);
+        productHtml += `<div class='product' onclick="showProduct(${Id})">`;
+        productHtml += `<img id="my-image-${Id}" src="" alt="product ${Id}"/>`;
+        productHtml += `<h2 id='product_name-${Name}'>${Name}</h2>`;
+        productHtml += `<span id='product_price-${price}'>$ ${price}</span>`
+        productHtml += `<div>`
+        productHtml += isAdmin === 'true' ? `<button class="delete-product-btn" data-id=${Id}>Видалити</button>` : '';
+        productHtml += isAdmin === 'true' ? `<button class="edit-product-btn" data-id=${Id}>Змінити</button>` : '';
+        productHtml += `</div>`
+        productHtml += "</div>";
+
+
+        fetch(`/api/cloud-img?filename=${images[0]}`)
+            .then(response => response.json())
+            .then(data => {
+                const img = document.getElementById(`my-image-${Id}`);
+                img.src = data.url;
+            })
+            .catch(error => console.error(error));
+    });
+
+    allProducts.innerHTML = productHtml;
+}
+
+function showProduct(productId) {
+    // Перенаправляем пользователя на новую страницу с выбранным продуктом
+    window.location.href = `/products/${productId}`;
+}
+
+let resetButton = document.getElementById('reset-btn');
+
+resetButton.addEventListener('click', function() {
+    let filtersForm = document.getElementById('filters-form');
+    filtersForm.reset();
+    fetch("http://localhost:3000/getAllProducts")
+        .then((response) => response.json())
+        .then((response) => loadHTMLProducts(response.data))
+});
 
