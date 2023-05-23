@@ -38,8 +38,8 @@ function loadProduct(data1) {
     }
 
     let productHtmll = "";
-
-    data1.forEach(({Id, Name, price, description,type_of_product,amount, img}) => {
+    console.log(data1);
+    data1.forEach(({Id, Name, price, description,type_of_product, amount, images, season}) => {
         productHtmll += `<div class = "main">`;
         productHtmll += `<div class="product-info">`;
         productHtmll += `<div class = "left">`;
@@ -47,7 +47,7 @@ function loadProduct(data1) {
         productHtmll += `<a href="/" class = "title-link">Home </a>/ ${type_of_product}`;
         productHtmll += `</div>`;
         productHtmll += `<div class="clothes-photo">`;
-        productHtmll += `<img class = "photo" src="../img/product-photo.png" alt="">`;
+        productHtmll += `<img id="my-image-${Id}" class = "photo" src="" alt="">`;
         productHtmll += `</div>`;
         productHtmll += `</div>`;
         productHtmll += `<div class="right">`;
@@ -78,19 +78,23 @@ function loadProduct(data1) {
         productHtmll += `<div class="description">`;
         productHtmll += `<h2>Опис товару</h2>`;
         productHtmll += `${description}`;
+        productHtmll += `<br> <br>`;
+        productHtmll += `<div id="season">`;
+        productHtmll += `Рекомендована пора року: ${season}`;
+        productHtmll += `</div>`;
         productHtmll += `</div>`;
         productHtmll += `</div>`;
         productHtmll += `</div>`;
         productHtmll += `</div>`;
 
 
-        // fetch(`/api/cloud-img?filename=${images[0]}`)
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         const img = document.getElementById(`my-image-${Id}`);
-        //         img.src = data.url;
-        //     })
-        //     .catch(error => console.error(error));
+        fetch(`/api/cloud-img?filename=${images[0]}`)
+            .then(response => response.json())
+            .then(data => {
+                const img = document.getElementById(`my-image-${Id}`);
+                img.src = data.url;
+            })
+            .catch(error => console.error(error));
     });
         product.innerHTML = productHtmll;
 

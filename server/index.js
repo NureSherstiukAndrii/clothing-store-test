@@ -63,11 +63,14 @@ app.get('/person/:id', (req, res) => {
 app.get('/product/:id', (req, res) => {
     const productId = req.params.id;
     const db = dbService.getDbServiceInstance();
-    let result = db.getProduct(productId);
 
-    result
-        .then((data) => {res.json({ data: data });})
-        .catch((err) => console.log(err));
+    let product = db.getProduct(productId);
+    let images = db.getProductImages();
+
+    Promise.all([product, images]).then(([p, i]) => {
+        let result = addImagesToProducts(p, i);
+        res.json({data: result});
+    });
 });
 
 app.get("/getAllProducts", function(request, response){
