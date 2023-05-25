@@ -66,3 +66,7 @@
     height: 250px;
     width: 40%;
 }
+#goToLog{
+display: none;
+text-align: center
+}

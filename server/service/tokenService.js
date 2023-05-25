@@ -12,8 +12,8 @@ const config = {
 };
 
 class TokenService {
-    generateTokens(payload){
-        const accessToken = jwt.sign(payload, 'jwt-access-secret', {expiresIn: '30m'})
+    generateTokens(payload) {
+        const accessToken = jwt.sign(payload, 'jwt-access-secret', {expiresIn: '30s'})
         const refreshToken = jwt.sign(payload, 'jwt-refresh-secret', {expiresIn: '30d'})
         return {
             accessToken,
@@ -21,58 +21,50 @@ class TokenService {
         }
     }
 
-    validateAccessToken(token){
-        try{
-            const userData = jwt.verify(token, 'jwt-access-secret')
+    validateAccessToken(token) {
+        try {
+            const userData = jwt.verify(token, 'jwt-access-secret');
             return userData
-        }
-        catch (e){
+        } catch (e) {
             return null;
         }
     }
 
-    validateRefreshToken(token){
-        try{
-            const userData = jwt.verify(token, 'jwt-refresh-secret')
+    validateRefreshToken(token) {
+        try {
+            const userData = jwt.verify(token, 'jwt-refresh-secret');
+            console.log('Verify TOKEN22222 userData', userData);
             return userData
-        }
-        catch (e){
+        } catch (e) {
             return null;
         }
     }
 
-    async saveToken(userId, refreshToken){
+    async saveToken(userId, refreshToken) {
         await sql.connect(config);
         const tokenData = await sql.query`SELECT token FROM Users WHERE id = ${userId}`
-        if(tokenData){
+        if (tokenData) {
             await sql.query`UPDATE Users SET token = ${refreshToken} WHERE id = ${userId}`
         }
 
-        // const token = await sql.query`UPDATE Users SET token = ${refreshToken} WHERE id = ${userId}`
+        const token = await sql.query`UPDATE Users SET token = ${refreshToken} WHERE id = ${userId}`
         return tokenData;
     }
 
-    async removeToken(refreshToken){
+    async removeToken(refreshToken) {
         await sql.connect(config);
-        const tokenData = await sql.query`UPDATE Users SET token = ${refreshToken} WHERE token = ${refreshToken}`;
+        const tokenData = await sql.query`UPDATE Users SET token = '' WHERE token = ${refreshToken}`;
     }
 
 
-
-
-    async findToken(refreshToken){
+    async findToken(refreshToken) {
         await sql.connect(config);
         const tokenData = await sql.query`SELECT token FROM Users WHERE token = ${refreshToken}`;
 
-        tokenData.then(async (result) => {
-            if (result.recordset.length > 0) {
-                return result;
-            } else {
-                return null;
-            }
-        }).catch((error) => {
-            console.log('token error', error);
-        });
+        if (tokenData.recordset.length > 0) {
+            return tokenData;
+        }
+        return null;
     }
 }
 

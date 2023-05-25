@@ -54,8 +54,12 @@
 
 </header>
 
-<div id="profileData" class="wrapper"></div>
-
+<div id="profileData" class="wrapper">
+    <div id="goToLog">
+        <h1>Для того щоб користуватися особостим кабінетом вам потрібно</h1>
+        <a href="/login">Авторизуватися</a>
+    </div>
+</div>
 
 
 <footer>
@@ -72,89 +76,10 @@
         <img src="../img/tiktok.png" alt="tiktok">
     </div>
 </footer>
-<script>
 
-
-
-
-    const userId = localStorage.getItem('userId');
-
-    document.addEventListener("DOMContentLoaded", function () {
-        fetch(`http://localhost:3000/person/${userId}`)
-            .then((response) => response.json())
-            .then((response) => loadUser(response.data))
-
-    });
-
-    function loadUser(data1) {
-        const profile = document.getElementById('profileData')
-
-        if (data1.length === 0) {
-            profile.innerHTML = "<a href='/login'>Авторизуйтесь</a>";
-            return;
-        }
-
-        let profileHtmll = "";
-
-        data1.forEach(({Id, Name, password, e_mail, reg_date}) => {
-
-        profileHtmll = `
-            <div class="user-data">
-
-            <img src="../img/profile.png" alt="user-img">
-
-                <form>
-                    <h2>Особисті дані:</h2>
-                    <div class="user-data-details">
-                        <label for="name">Ім'я</label>
-                        <input type="text" id="name" value="${Name}">
-                    </div>
-                    <div class="user-data-details">
-                        <label for="email">Пошта</label>
-                        <input type="text" id="email" value="${e_mail}">
-                    </div>
-                    <div class="user-data-details">
-                        <label for="password">Пароль</label>
-                        <input type="password" id="password" value="${password}">
-                        <input type="checkbox" id="check_password">
-                    </div>
-
-                    <button type="submit">Зберегти зміни</button>
-                </form>
-
-                <span>Аккаунт створений - ${reg_date.slice(0,10)}</span>
-            </div>
-
-            <div class="favorites">
-                <div>FDFDSFSF</div>
-            </div>
-        `
-
-
-            // fetch(`/api/cloud-img?filename=${images[0]}`)
-            //     .then(response => response.json())
-            //     .then(data => {
-            //         const img = document.getElementById(`my-image-${Id}`);
-            //         img.src = data.url;
-            //     })
-            //     .catch(error => console.error(error));
-        });
-
-        profile.innerHTML = profileHtmll;
-        const checker = document.getElementById('check_password');
-        const password = document.getElementById('password')
-        checker.addEventListener('click', () =>{
-            if (checker.checked) {
-                password.type = 'text'
-                return;
-            }
-            password.type = 'password'
-        })
-    }
-
-
-
-</script>
+<script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+<script src="../scripts/validateToken.js"></script>
+<script src="../scripts/personalPage.js"></script>
 <script src="../scripts/cart.js"></script>
 
 </body>

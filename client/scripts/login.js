@@ -1,5 +1,5 @@
 const enter = document.getElementById('enter');
-
+const accessToken = localStorage.getItem('accessToken')
 enter.addEventListener('click', event => {
     event.preventDefault();
 
@@ -11,10 +11,11 @@ enter.addEventListener('click', event => {
     const password = passwordInput.value;
     passwordInput.value = "";
 
-    fetch('/loginUser', {
+    fetch('/api/login', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
         },
         body: JSON.stringify({
             mail: mail,
@@ -23,18 +24,18 @@ enter.addEventListener('click', event => {
     })
         .then(response => response.json())
         .then(data => {
-            const userData = data;
-            if (userData === null) {
-                alert('Невірний логін чи пароль');
+            console.log(data.user);
+            if (data.accessToken) {
+                localStorage.setItem('accessToken', data.accessToken);
+                localStorage.setItem('userId', data.user.id);
+
+                window.location.href = '/';
             } else {
-                alert(`Вітаємо ${userData.user.Name}`)
-                localStorage.setItem('role', data.user.is_admin);
-                localStorage.setItem('userId',data.user.Id)
-                // Перенаправить пользователя на защищенную страницу
-                window.location.href = '/'
+                alert('Токен не найден');
             }
         })
         .catch(error => {
             console.error(error);
         });
-    })
+
+})

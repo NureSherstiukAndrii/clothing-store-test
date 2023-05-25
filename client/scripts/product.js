@@ -1,5 +1,15 @@
 const productId = window.location.pathname.split('/')[2];
+const userId = localStorage.getItem('accessToken');
 
+const enterBtn = document.getElementById('enter-btn')
+const exitBtn = document.getElementById('exit-btn')
+
+if(userId){
+    enterBtn.style.display = 'none'
+}
+else{
+    exitBtn.style.display = 'none'
+}
 
 document.addEventListener("DOMContentLoaded", function () {
     const loader = document.getElementById("loader");

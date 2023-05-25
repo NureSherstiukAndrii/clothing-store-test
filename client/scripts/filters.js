@@ -8,67 +8,11 @@ const filter_block = document.getElementsByClassName('filter-category');
 })
 
 
-const applyFilters = document.getElementById('applyFilters');
-
-applyFilters.addEventListener('click', (event) => {
-    event.preventDefault()
-
-    const priceFrom = document.getElementById('price-from').value;
-    const priceTo = document.getElementById('price-to').value;
-
-    const genderCheckboxes = document.querySelectorAll('input[name="gender"]:checked');
-    const gender = [];
-
-    for (let i = 0; i < genderCheckboxes.length; i++) {
-        gender.push(genderCheckboxes[i].value);
-    }
-
-    const sizeCheckboxes = document.querySelectorAll('input[name="size"]:checked');
-    const sizes = [];
-
-    for (let i = 0; i < sizeCheckboxes.length; i++) {
-        sizes.push(sizeCheckboxes[i].value);
-    }
-
-
-    const typeCheckboxes = document.querySelectorAll('input[name="type"]:checked');
-    const types = [];
-
-    for (let i = 0; i < typeCheckboxes.length; i++) {
-        types.push(typeCheckboxes[i].value);
-    }
-
-
-    const seasonCheckboxes = document.querySelectorAll('input[name="season"]:checked');
-    const seasons = [];
-
-    for (let i = 0; i < seasonCheckboxes.length; i++) {
-        seasons.push(seasonCheckboxes[i].value);
-    }
-
-    const queryParams = '?priceFrom=' + encodeURIComponent(priceFrom) +
-        '&priceTo=' + encodeURIComponent(priceTo) +
-        '&gender=' + encodeURIComponent(gender.join(',')) +
-        '&sizes=' + encodeURIComponent(sizes.join(','))+
-        '&types=' + encodeURIComponent(types.join(','))+
-        '&seasons=' + encodeURIComponent(seasons.join(','))+
-        '&orderBy=' + '';
-
-    fetch('/applyFilters' + queryParams)
-        .then((response) => response.json())
-        .then((response) => loadHTMLProducts2(response.data))
-        .catch(error => {
-            console.error('Ошибка при выполнении GET-запроса:', error);
-        });
-})
-
-const sorting = document.querySelector('#sorting');
-
-sorting.addEventListener('click', (event) => {
+const filterHandler = (event) => {
     event.preventDefault();
 
-    const sortingValue = document.querySelector('#sorting option:checked').value;
-
+    const sortingValue = document.querySelector('#sorting > option:checked').value;
+    console.log(sortingValue);
 
     const priceFrom = document.getElementById('price-from').value;
     const priceTo = document.getElementById('price-to').value;
@@ -117,7 +61,16 @@ sorting.addEventListener('click', (event) => {
         .catch(error => {
             console.error('Ошибка при выполнении GET-запроса:', error);
         });
-})
+}
+
+const applyFilters = document.getElementById('applyFilters');
+
+applyFilters.addEventListener('click', filterHandler);
+
+const sortingSelect = document.querySelector('#sorting');
+
+sortingSelect.addEventListener('change', filterHandler);
+
 
 function loadHTMLProducts2(data) {
     const uniqueNamesArray = Array.from(new Set(data.map(item => item.Name)));

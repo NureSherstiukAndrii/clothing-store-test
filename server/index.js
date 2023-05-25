@@ -7,6 +7,9 @@ const cookieParser = require('cookie-parser');
 const router = require('../server/router/authRouter');
 const pageRouter = require('../server/router/pageRouter')
 const errorMiddleware = require('./middlewares/errorMiddleware')
+const validateToken = require("./middlewares/authMiddleware");
+
+
 
 const dbService = require("./db");
 const parentDir = path.resolve(__dirname, '..');
@@ -40,6 +43,10 @@ app.get('/api/cloud-img', async (req, res) => {
         console.error(err);
         res.status(500).json({error: 'Internal Server Error'});
     }
+});
+
+app.get('/validate-token', validateToken, (req, res) => {
+    res.sendStatus(200);
 });
 
 app.get('/products/:id', (req, res) => {
@@ -252,7 +259,6 @@ app.get("/applyFilters", (req,res) =>{
         let result = addImagesToProducts(p, i);
         res.json({data: result});
     });
-
 });
 
 

@@ -16,53 +16,50 @@ const config = {
 
 class UserService {
     async registration(name, mail, password){
+        const hashPassword = await bcrypt.hash(password, 3);
         await sql.connect(config);
-        const candidate = sql.query`SELECT * FROM Users WHERE e_mail = ${mail} AND password = ${password}`
 
-        candidate.then(async (result) => {
-            if (result.recordset.length > 0) {
-                throw ApiError.BadRequest(`Пользователь с почтовым адресом ${mail} уже существует`);
-            } else {
-                const hashPassword = await bcrypt.hash(password, 3)
-                const user = await sql.query`INSERT INTO Users ([Name], e_mail, [password]) VALUES ('${name}', '${mail}', '${hashPassword}');`
-                const userDto = new UserDto(user.recordset)
-                console.log('userDto', userDto);
-                const tokens = tokenService.generateTokens({...userDto})
-                await tokenService.saveToken(user.recordset[0].id, tokens.refreshToken)
+        const candidate = await sql.query`SELECT * FROM Users WHERE e_mail = ${mail} AND password = ${password}`;
+        if (candidate.recordset.length > 0) {
+            throw ApiError.BadRequest(`Пользователь с почтовым адресом ${mail} уже существует`);
+        }
 
-                return{...tokens, user: userDto }
-            }
-        }).catch((error) => {
-            console.log('candidate error', error);
-        });
+        const user = await sql.query`INSERT INTO Users (Name, e_mail, password) VALUES (${name}, ${mail}, ${hashPassword});`;
+
+        const newUser = await sql.query`SELECT * FROM Users WHERE e_mail = ${mail}`;
+
+        const userDto = new UserDto(newUser.recordset[0]);
+
+        const tokens = tokenService.generateTokens({...userDto});
+        await tokenService.saveToken(userDto.id, tokens.refreshToken);
+
+        return {...tokens, user: userDto };
     }
 
     async login(mail, password){
-        await sql.connect(config);
-        const user = sql.query`SELECT * FROM Users WHERE e_mail = ${mail} AND password = ${password}`
 
-        user.then(async (result) => {
-        if (result.recordset.length > 0) {
+        await sql.connect(config);
+        const user = await sql.query`SELECT * FROM Users WHERE e_mail = ${mail}`
+
+
+
+        if(user.recordset.length === 0) {
             throw ApiError.BadRequest(`Пользователь с ${mail} не найден`);
-        } else {
-            const isPassEquals = await bcrypt.compare(password, result.recordset[0].password)
+        }
+
+            const isPassEquals = await bcrypt.compare(password, user.recordset[0].password)
             if(!isPassEquals){
                 throw ApiError.BadRequest(`Неверный пароль`);
             }
-            const userDto = new UserDto(user.recordset)
+            const userDto = new UserDto(user.recordset[0])
             const tokens = tokenService.generateTokens({...userDto})
-            await tokenService.saveToken(user.recordset[0].id, tokens.refreshToken)
+            await tokenService.saveToken(userDto.id, tokens.refreshToken)
 
             return{...tokens, user: userDto }
-        }
-    }).catch((error) => {
-    console.log('candidate error', error);
-        });
     }
 
     async logout(refreshToken){
         const token = await tokenService.removeToken(refreshToken);
-        return token;
     }
 
     async refresh(refreshToken){
@@ -77,7 +74,7 @@ class UserService {
             throw ApiError.UnauthorizedError();
         }
         const user = await sql.query`SELECT * FROM Users WHERE id = ${userData.id}`
-        const userDto = new UserDto(user.recordset)
+        const userDto = new UserDto(user.recordset[0])
         const tokens = tokenService.generateTokens({...userDto})
         await tokenService.saveToken(user.recordset[0].id, tokens.refreshToken)
 
