@@ -1,20 +1,3 @@
-const userId = localStorage.getItem('accessToken');
-
-const enterBtn = document.getElementById('enter-btn')
-const exitBtn = document.getElementById('exit-btn')
-
-if(userId){
-    enterBtn.style.display = 'none'
-}
-else{
-    exitBtn.style.display = 'none'
-}
-
-const isAdmin = localStorage.getItem('role');
-const addProduct = document.getElementById('addProductBtn')
-if (isAdmin === 'false'){
-    addProduct.style.display = 'none'
-}
 document.addEventListener("DOMContentLoaded", function () {
     fetch("http://localhost:3000/getAllProducts")
         .then((response) => response.json())
@@ -97,7 +80,6 @@ addProductInput.addEventListener('click', event => {
 
     })
         .then((response) => response.json())
-        // .then(() => location.reload())
         .catch(error => {
             console.error(error);
         });
@@ -111,6 +93,15 @@ addProductInput.addEventListener('click', event => {
             console.error(error);
         });
 });
+
+let decodedToken;
+const addProduct = document.getElementById('addProductBtn')
+if(token) {
+    decodedToken = jwt_decode(token);
+}
+if (decodedToken?.role === 'U' || decodedToken === undefined){
+    addProduct.style.display = 'none'
+}
 
 function loadHTMLProducts(data) {
     const uniqueNamesArray = Array.from(new Set(data.map(item => item.Name)));
@@ -133,8 +124,8 @@ function loadHTMLProducts(data) {
         productHtml += `<h2 id='product_name-${Name}'>${Name}</h2>`;
         productHtml += `<span id='product_price-${price}'>$ ${price}</span>`
         productHtml += `<div>`
-        productHtml += isAdmin === 'true' ? `<button class="delete-product-btn" data-id=${Id}>Видалити</button>` : '';
-        productHtml += isAdmin === 'true' ? `<button class="edit-product-btn" data-id=${Id}>Змінити</button>` : '';
+        productHtml += decodedToken?.role === 'A' ? `<button class="delete-product-btn" data-id=${Id}>Видалити</button>` : '';
+        productHtml += decodedToken?.role === 'A' ? `<button class="edit-product-btn" data-id=${Id}>Змінити</button>` : '';
         productHtml += `</div>`
         productHtml += "</div>";
 
@@ -152,6 +143,5 @@ function loadHTMLProducts(data) {
 }
 
 function showProduct(productId) {
-    // Перенаправляем пользователя на новую страницу с выбранным продуктом
     window.location.href = `/products/${productId}`;
 }

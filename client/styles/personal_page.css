@@ -34,12 +34,14 @@
 .user-data-details{
     display: flex;
     width: 100%;
+    align-items: center;
     justify-content: space-between;
 }
 .user-data-details > input{
     border: none;
     padding: 7px;
     font-size: 17px;
+    width: 250px;
 }
 
 .user-data-details > input:focus {
@@ -69,4 +71,18 @@
 #goToLog{
 display: none;
 text-align: center
+}
+#goToLog > a{
+    text-decoration: none;
+    background: wheat;
+    border: 2px solid;
+    padding: 6px;
+    border-radius: 5px;
+    color: black;
+    cursor: pointer;
+}
+#goToLog > a:hover{
+    transition: 0.4s;
+    background: #B46A51;
+    color: white;
 }

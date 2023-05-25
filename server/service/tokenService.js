@@ -13,7 +13,7 @@ const config = {
 
 class TokenService {
     generateTokens(payload) {
-        const accessToken = jwt.sign(payload, 'jwt-access-secret', {expiresIn: '30s'})
+        const accessToken = jwt.sign(payload, 'jwt-access-secret', {expiresIn: '15m'})
         const refreshToken = jwt.sign(payload, 'jwt-refresh-secret', {expiresIn: '30d'})
         return {
             accessToken,

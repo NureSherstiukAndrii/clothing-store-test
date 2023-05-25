@@ -136,6 +136,12 @@ header{
     margin: 10px;
     justify-content: space-between;
 }
+.product:hover{
+    transition: 0.5s;
+    cursor: pointer;
+    filter: brightness(0.7);
+    transform: scale(1.05);
+}
 .product > img{
     height: 300px;
     width: 300px;

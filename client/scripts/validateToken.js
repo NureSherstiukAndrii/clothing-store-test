@@ -1,6 +1,6 @@
 const token = localStorage.getItem('accessToken');
-const enterBtn = document.getElementById('enter-btn')
-const exitBtn = document.getElementById('exit-btn')
+const enterBtn = document.getElementById('enter-btn');
+const exitBtn = document.getElementById('exit-btn');
 
 window.addEventListener('DOMContentLoaded', async () => {
     try {

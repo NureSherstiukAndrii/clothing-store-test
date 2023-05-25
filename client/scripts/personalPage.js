@@ -3,8 +3,6 @@ if(token) {
     decodedToken = jwt_decode(token);
 }
 
-console.log(typeof decodedToken);
-
 document.addEventListener("DOMContentLoaded", function () {
     if(typeof decodedToken === "object"){
         fetch(`http://localhost:3000/person/${decodedToken?.id}`)

@@ -250,7 +250,7 @@ class DbService {
             return await new Promise((resolve, reject) => {
                 pool.connect().then(() => {
                     const request = new sql.Request(pool);
-                    request.query("SELECT TOP 4 * FROM Products ORDER BY date_added DESC;").then((result, err) => {
+                    request.query(`SELECT TOP 4 * FROM Products ORDER BY date_added DESC;`).then((result, err) => {
                         if (err) {
                             reject(new Error(err.message));
                         }
