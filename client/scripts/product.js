@@ -1,5 +1,8 @@
 const productId = window.location.pathname.split('/')[2];
-
+let decodedToken;
+if(token) {
+    decodedToken = jwt_decode(token);
+}
 document.addEventListener("DOMContentLoaded", function () {
     const loader = document.getElementById("loader");
     loader.style.display = "flex";
@@ -16,7 +19,20 @@ document.addEventListener("DOMContentLoaded", function () {
             loadProduct(response.data);
             loader.style.display = "none";
         });
+
+    if (decodedToken !== undefined)
+    fetch(`http://localhost:3000/getCart/${decodedToken?.id}`)
+        .then(response => response.json())
+        .then(data => loadCart(data))
+        .catch(error => {
+            console.error('Произошла ошибка:', error);
+        });
 });
+
+function loadCart(data){
+    console.log(data);
+}
+
 
 function addOption(data) {
     const selectProductSize = document.getElementById('size');
@@ -37,7 +53,7 @@ function loadProduct(data1) {
     }
 
     let productHtmll = "";
-    console.log(data1);
+
     data1.forEach(({Id, Name, price, description,type_of_product, amount, images, season}) => {
         productHtmll += `<div class = "main">`;
         productHtmll += `<div class="product-info">`;
@@ -103,23 +119,20 @@ function loadProduct(data1) {
     addToCart.addEventListener('click', event => {
         event.preventDefault();
 
-        const userId = localStorage.getItem('userId')
-
-
         fetch('/insertIntoCart', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                userId: userId,
+                userId: decodedToken.id,
                 productId: parseInt(productId.match(/\d+/)),
                 is_cart:1
             }),
 
         })
             .then((response) => response.json())
-            // .then(() => location.reload())
+            .then(() => location.reload())
             .catch(error => {
                 console.error(error);
             });
@@ -130,14 +143,14 @@ function loadProduct(data1) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                userId: userId,
+                userId: decodedToken.id,
                 productId: parseInt(productId.match(/\d+/)),
                 is_cart:0
             }),
 
         })
             .then((response) => response.json())
-            // .then(() => location.reload())
+            .then(() => location.reload())
             .catch(error => {
                 console.error(error);
             });

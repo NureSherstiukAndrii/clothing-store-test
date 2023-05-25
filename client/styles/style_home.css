@@ -96,7 +96,7 @@ header{
     transition: 0.4s;
     background: #333333;
     color: white;
-    border: none;
+    border: 1px solid black;
 }
 
 .main-categories{

@@ -32,5 +32,14 @@ router.get("/size", function (req, res){
     res.sendFile(parentDir + "/client/SizeChartPage/index.html");
 })
 
+router.get('/products/:id', (req, res) => {
+    res.sendFile(parentDir + '/client/ProductPage/product.html');
+})
+
+router.get('/personals/:id', async (req, res) => {
+    res.sendFile(parentDir + '/client/PersonalPage/index.html');
+});
+
+
 
 module.exports = router;

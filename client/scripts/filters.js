@@ -73,6 +73,7 @@ sortingSelect.addEventListener('change', filterHandler);
 
 
 function loadHTMLProducts2(data) {
+    const isAdmin = decodedToken?.role === "A";
     const uniqueNamesArray = Array.from(new Set(data.map(item => item.Name)));
     const uniqueObjectsArray = uniqueNamesArray.map(name => data.find(item => item.Name === name));
 
@@ -92,8 +93,8 @@ function loadHTMLProducts2(data) {
         productHtml += `<h2 id='product_name-${Name}'>${Name}</h2>`;
         productHtml += `<span id='product_price-${price}'>$ ${price}</span>`
         productHtml += `<div>`
-        productHtml += isAdmin === 'true' ? `<button class="delete-product-btn" data-id=${Id}>Видалити</button>` : '';
-        productHtml += isAdmin === 'true' ? `<button class="edit-product-btn" data-id=${Id}>Змінити</button>` : '';
+        productHtml += isAdmin ? `<button class="delete-product-btn" data-id=${Id}>Видалити</button>` : '';
+        productHtml += isAdmin ? `<button class="edit-product-btn" data-id=${Id}>Змінити</button>` : '';
         productHtml += `</div>`
         productHtml += "</div>";
 
@@ -111,7 +112,6 @@ function loadHTMLProducts2(data) {
 }
 
 function showProduct(productId) {
-    // Перенаправляем пользователя на новую страницу с выбранным продуктом
     window.location.href = `/products/${productId}`;
 }
 

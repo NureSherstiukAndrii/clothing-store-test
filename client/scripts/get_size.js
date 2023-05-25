@@ -1,15 +1,3 @@
-const userId = localStorage.getItem('accessToken');
-
-const enterBtn = document.getElementById('enter-btn')
-const exitBtn = document.getElementById('exit-btn')
-
-if(userId){
-  enterBtn.style.display = 'none'
-}
-else{
-  exitBtn.style.display = 'none'
-}
-
 var modal = document.getElementById("myModal");
 var btn = document.getElementsByClassName("open-modal-btn")[0];
 var span = document.getElementsByClassName("close")[0];

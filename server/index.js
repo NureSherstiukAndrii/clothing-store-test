@@ -49,14 +49,6 @@ app.get('/validate-token', validateToken, (req, res) => {
     res.sendStatus(200);
 });
 
-app.get('/products/:id', (req, res) => {
-    res.sendFile(parentDir + '/client/ProductPage/product.html');
-})
-
-app.get('/personals/:id', async (req, res) => {
-    res.sendFile(parentDir + '/client/PersonalPage/index.html');
-});
-
 app.get('/person/:id', (req, res) => {
     const userId = req.params.id;
     const db = dbService.getDbServiceInstance();
@@ -215,15 +207,16 @@ app.post('/insertIntoFav', (req, res) => {
         .catch((err) => console.log(err));
 });
 
-// app.get("/getCart/:id", function(request, response){
-//     const { id } = request.query;
-//     const db = dbService.getDbServiceInstance();
-//     const result = db.getAllProductsFromCart(id);
-//
-//     result
-//         .then((data) => {response.json({ data: data });})
-//         .catch((err) => console.log(err));
-// });
+app.get("/getCart/:id", function(request, response){
+    const { id } = request.params;
+    console.log(id);
+    const db = dbService.getDbServiceInstance();
+    const result = db.getAllProductsFromCart(id);
+
+    result
+        .then((data) => response.json(data))
+        .catch((err) => console.log(err));
+});
 
 app.get("/getAllProductsSizeForName", (request, response) => {
     const productName = request.query.product;
