@@ -2,3 +2,16 @@
 node_modules
 server/.env
 server/json-google-cloud.json
+
+# .NET MAUI
+**/bin/
+**/obj/
+**/*.apk
+**/*.ap_*
+**/*.aab
+**/*.ipa
+**/*.app
+**/*.appx
+**/*.appxbundle
+**/*.msix
+**/*.msixbundle
