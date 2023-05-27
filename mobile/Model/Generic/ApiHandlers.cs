@@ -21,17 +21,17 @@ namespace mobile.Model.Generic
         {
             try
             {
-
+                var userData = GetAuthDataFromPreferences();
+                if (userData == null)
+                    throw new Exception("Not authorized");
+                var link = $"{Config.BASE_URL}/api/refresh";
+                return null;
             }
             catch (Exception ex)
             {
-
+                return ReturnException(ex);
             }
-            var userData = GetAuthDataFromPreferences();
-            if (userData == null)
-                throw new Exception("Not authorized");
-            var link = $"{Config.BASE_URL}/api/refresh";
-            return null;
+            
         }
         public static async Task<JObject> GetUserData()
         {
