@@ -1,0 +1,1 @@
+C:\Users\Emil_\Documents\GitHub\clothing-store-test\mobile\mobile.csproj;x64

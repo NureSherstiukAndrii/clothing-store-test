@@ -33,7 +33,7 @@ class TokenService {
     validateRefreshToken(token) {
         try {
             const userData = jwt.verify(token, 'jwt-refresh-secret');
-            console.log('Verify TOKEN22222 userData', userData);
+            // console.log('Verify TOKEN22222 userData', userData);
             return userData
         } catch (e) {
             return null;

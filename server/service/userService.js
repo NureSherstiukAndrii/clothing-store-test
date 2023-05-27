@@ -15,7 +15,7 @@ const config = {
 };
 
 class UserService {
-    async registration(name, mail, password){
+    async registration(name, mail, password, role) {
         const hashPassword = await bcrypt.hash(password, 3);
         await sql.connect(config);
 
@@ -23,72 +23,80 @@ class UserService {
         if (candidate.recordset.length > 0) {
             throw ApiError.BadRequest(`Пользователь с почтовым адресом ${mail} уже существует`);
         }
+        const query = role ? `INSERT INTO Users (Name, e_mail, password, role) VALUES ('${name}', '${mail}', '${hashPassword}', '${role}')`
+            : `INSERT INTO Users (Name, e_mail, password) VALUES ('${name}', '${mail}', '${hashPassword}')`;
 
-        const user = await sql.query`INSERT INTO Users (Name, e_mail, password) VALUES (${name}, ${mail}, ${hashPassword});`;
+        // console.log("query : ", query)
+        const user = await sql.query(query);
 
         const newUser = await sql.query`SELECT * FROM Users WHERE e_mail = ${mail}`;
 
         const userDto = new UserDto(newUser.recordset[0]);
 
-        const tokens = tokenService.generateTokens({...userDto});
+        const tokens = tokenService.generateTokens({ ...userDto });
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
 
-        return {...tokens, user: userDto };
+        return { ...tokens, user: userDto };
     }
 
-    async login(mail, password){
+    async login(mail, password) {
 
         await sql.connect(config);
         const user = await sql.query`SELECT * FROM Users WHERE e_mail = ${mail}`
 
 
 
-        if(user.recordset.length === 0) {
+        if (user.recordset.length === 0) {
             throw ApiError.BadRequest(`Пользователь с ${mail} не найден`);
         }
 
-            const isPassEquals = await bcrypt.compare(password, user.recordset[0].password)
-            if(!isPassEquals){
-                throw ApiError.BadRequest(`Неверный пароль`);
-            }
-            const userDto = new UserDto(user.recordset[0])
-            const tokens = tokenService.generateTokens({...userDto})
-            await tokenService.saveToken(userDto.id, tokens.refreshToken)
+        const isPassEquals = await bcrypt.compare(password, user.recordset[0].password)
+        if (!isPassEquals) {
+            throw ApiError.BadRequest(`Неверный пароль`);
+        }
+        const userDto = new UserDto(user.recordset[0])
+        const tokens = tokenService.generateTokens({ ...userDto })
+        await tokenService.saveToken(userDto.id, tokens.refreshToken)
 
-            return{...tokens, user: userDto }
+        return { ...tokens, user: userDto }
     }
 
-    async logout(refreshToken){
+    async logout(refreshToken) {
         const token = await tokenService.removeToken(refreshToken);
     }
 
-    async refresh(refreshToken){
-        if(!refreshToken){
+    async refresh(refreshToken) {
+        if (!refreshToken) {
             throw ApiError.UnauthorizedError()
         }
 
         const userData = tokenService.validateRefreshToken(refreshToken);
         const tokenFromDb = tokenService.findToken(refreshToken);
 
-        if(!userData || !tokenFromDb){
+        if (!userData || !tokenFromDb) {
             throw ApiError.UnauthorizedError();
         }
+        await sql.connect(config);
         const user = await sql.query`SELECT * FROM Users WHERE id = ${userData.id}`
         const userDto = new UserDto(user.recordset[0])
-        const tokens = tokenService.generateTokens({...userDto})
+        const tokens = tokenService.generateTokens({ ...userDto })
         await tokenService.saveToken(user.recordset[0].id, tokens.refreshToken)
 
-        return{...tokens, user: userDto }
+        return { ...tokens, user: userDto }
 
     }
 
-    async getAllUsers(){
-        await sql.connect(config);
-        const users = await sql.query`SELECT * FROM Users`
-        users.then(async result =>{
+    async getAllUsers() {
+        try {
+            const pool = await sql.connect(config);
+            const result = await pool.request().query('SELECT * FROM Users');
             return result.recordset;
-        })
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
     }
+
 }
 
 

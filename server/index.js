@@ -8,7 +8,7 @@ const router = require('../server/router/authRouter');
 const pageRouter = require('../server/router/pageRouter')
 const errorMiddleware = require('./middlewares/errorMiddleware')
 const validateToken = require("./middlewares/authMiddleware");
-
+const mobileApi = require('./mobile-api')
 
 
 const dbService = require("./db");
@@ -19,6 +19,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use('/api', router);
 app.use('/', pageRouter)
+app.use('/mobileapi', mobileApi);
 app.use(errorMiddleware);
 
 const cloudImg = new cloud_img();
@@ -38,10 +39,10 @@ app.use('/styles', express.static(path.join(parentDir, 'client/styles'), {
 app.get('/api/cloud-img', async (req, res) => {
     try {
         const url = await cloudImg.getImgUrl(req.query.filename);
-        res.json({url});
+        res.json({ url });
     } catch (err) {
         console.error(err);
-        res.status(500).json({error: 'Internal Server Error'});
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 
@@ -55,7 +56,7 @@ app.get('/person/:id', (req, res) => {
     let result = db.getUser(userId);
 
     result
-        .then((data) => {res.json({ data: data });})
+        .then((data) => { res.json({ data: data }); })
         .catch((err) => console.log(err));
 });
 
@@ -68,11 +69,11 @@ app.get('/product/:id', (req, res) => {
 
     Promise.all([product, images]).then(([p, i]) => {
         let result = addImagesToProducts(p, i);
-        res.json({data: result});
+        res.json({ data: result });
     });
 });
 
-app.get("/getAllProducts", function(request, response){
+app.get("/getAllProducts", function (request, response) {
     const db = dbService.getDbServiceInstance();
     let products = db.getAllProducts();
     let images = db.getProductImages();
@@ -80,13 +81,13 @@ app.get("/getAllProducts", function(request, response){
     let result;
 
     Promise.all([products, images]).then(([p, i]) => {
-       result = addImagesToProducts(p, i);
+        result = addImagesToProducts(p, i);
 
-       response.json({data: result});
+        response.json({ data: result });
     });
 });
 
-app.get("/getRecentClothes", function(request, response){
+app.get("/getRecentClothes", function (request, response) {
     const db = dbService.getDbServiceInstance();
     let products = db.getRecentClothes();
     let images = db.getProductImages();
@@ -96,11 +97,11 @@ app.get("/getRecentClothes", function(request, response){
     Promise.all([products, images]).then(([p, i]) => {
         result = addImagesToProducts(p, i);
 
-        response.json({data: result});
+        response.json({ data: result });
     });
 });
 
-app.get("/getTopClothes", function(request, response){
+app.get("/getTopClothes", function (request, response) {
     const db = dbService.getDbServiceInstance();
     let products = db.getTopClothes();
     let images = db.getProductImages();
@@ -110,7 +111,7 @@ app.get("/getTopClothes", function(request, response){
     Promise.all([products, images]).then(([p, i]) => {
         result = addImagesToProducts(p, i);
 
-        response.json({data: result});
+        response.json({ data: result });
     });
 });
 
@@ -128,13 +129,13 @@ function addImagesToProducts(products, images) {
 }
 
 app.post('/insertProductJSON', (req, res) => {
-    const {name, sex, price, description, type_of_product,type,size,rating, season,collection_name, img} = req.body;
+    const { name, sex, price, description, type_of_product, type, size, rating, season, collection_name, img } = req.body;
     const db = dbService.getDbServiceInstance();
 
-    const result = db.addProduct(name, sex, price, description, type_of_product,type,size,rating, season,collection_name, img)
+    const result = db.addProduct(name, sex, price, description, type_of_product, type, size, rating, season, collection_name, img)
 
     result
-        .then((data) => {res.json({ data: data });})
+        .then((data) => { res.json({ data: data }); })
         .catch((err) => console.log(err));
 });
 
@@ -186,28 +187,28 @@ app.post('/insertProductFiles', multer.array('images', 4), (req, res) => {
 
 
 app.post('/insertIntoCart', (req, res) => {
-    const {userId, productId, is_cart} = req.body;
+    const { userId, productId, is_cart } = req.body;
     const db = dbService.getDbServiceInstance();
 
     const result = db.addIntoCart_Fav(userId, productId, is_cart)
 
     result
-        .then((data) => {res.json({ data: data });})
+        .then((data) => { res.json({ data: data }); })
         .catch((err) => console.log(err));
 });
 
 app.post('/insertIntoFav', (req, res) => {
-    const {userId, productId, is_cart} = req.body;
+    const { userId, productId, is_cart } = req.body;
     const db = dbService.getDbServiceInstance();
 
     const result = db.addIntoCart_Fav(userId, productId, is_cart)
 
     result
-        .then((data) => {res.json({ data: data });})
+        .then((data) => { res.json({ data: data }); })
         .catch((err) => console.log(err));
 });
 
-app.get("/getCart/:id", function(request, response){
+app.get("/getCart/:id", function (request, response) {
     const { id } = request.params;
     console.log(id);
     const db = dbService.getDbServiceInstance();
@@ -240,8 +241,8 @@ app.get("/getAllProductsSizeForName", (request, response) => {
 // });
 
 
-app.get("/applyFilters", (req,res) =>{
-    const {priceFrom, priceTo, gender, sizes, types, seasons, orderBy} = req.query;
+app.get("/applyFilters", (req, res) => {
+    const { priceFrom, priceTo, gender, sizes, types, seasons, orderBy } = req.query;
     const db = dbService.getDbServiceInstance();
 
     const products = db.getProductsWithFilters(gender, sizes, types, seasons, priceFrom, priceTo, orderBy);
@@ -250,9 +251,11 @@ app.get("/applyFilters", (req,res) =>{
 
     Promise.all([products, images]).then(([p, i]) => {
         let result = addImagesToProducts(p, i);
-        res.json({data: result});
+        res.json({ data: result });
     });
 });
 
 
-app.listen(3000);
+app.listen(3000, () => {
+    console.log(`Listen at port 3000 : ${new Date().toLocaleString()}`);
+});
