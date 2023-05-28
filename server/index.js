@@ -12,6 +12,7 @@ const validateToken = require("./middlewares/authMiddleware");
 
 
 const dbService = require("./db");
+const dbForCart = require("./dbForCart")
 const parentDir = path.resolve(__dirname, '..');
 
 app.use(express.static(path.join(parentDir, '/client')))
@@ -114,6 +115,32 @@ app.get("/getTopClothes", function(request, response){
     });
 });
 
+app.get("/getCart/:id", function(request, response){
+    const { id } = request.params;
+    const db = dbService.getDbServiceInstance();
+    let products = db.getAllProductsFromCart(id);
+    let images = db.getProductImages();
+
+    let result;
+
+    Promise.all([products, images]).then(([p, i]) => {
+        result = addImagesToProducts(p, i);
+        response.json(result);
+    });
+});
+
+app.delete("/deleteFromCart", (request, response) => {
+    const {userId, product_id} = request.query;
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.deleteFromCart_Fav(userId, product_id);
+
+    result
+        .then((data) => response.json({ success: data }))
+        .catch((err) => console.log(err));
+});
+
+
 function addImagesToProducts(products, images) {
     for (let i = 0; i < products.length; i++) {
         const productImages = [];
@@ -207,16 +234,6 @@ app.post('/insertIntoFav', (req, res) => {
         .catch((err) => console.log(err));
 });
 
-app.get("/getCart/:id", function(request, response){
-    const { id } = request.params;
-    console.log(id);
-    const db = dbService.getDbServiceInstance();
-    const result = db.getAllProductsFromCart(id);
-
-    result
-        .then((data) => response.json(data))
-        .catch((err) => console.log(err));
-});
 
 app.get("/getAllProductsSizeForName", (request, response) => {
     const productName = request.query.product;

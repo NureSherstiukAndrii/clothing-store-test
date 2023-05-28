@@ -1,8 +1,4 @@
 const productId = window.location.pathname.split('/')[2];
-let decodedToken;
-if(token) {
-    decodedToken = jwt_decode(token);
-}
 document.addEventListener("DOMContentLoaded", function () {
     const loader = document.getElementById("loader");
     loader.style.display = "flex";
@@ -19,20 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
             loadProduct(response.data);
             loader.style.display = "none";
         });
-
-    if (decodedToken !== undefined)
-    fetch(`http://localhost:3000/getCart/${decodedToken?.id}`)
-        .then(response => response.json())
-        .then(data => loadCart(data))
-        .catch(error => {
-            console.error('Произошла ошибка:', error);
-        });
 });
-
-function loadCart(data){
-    console.log(data);
-}
-
 
 function addOption(data) {
     const selectProductSize = document.getElementById('size');
@@ -128,24 +111,6 @@ function loadProduct(data1) {
                 userId: decodedToken.id,
                 productId: parseInt(productId.match(/\d+/)),
                 is_cart:1
-            }),
-
-        })
-            .then((response) => response.json())
-            .then(() => location.reload())
-            .catch(error => {
-                console.error(error);
-            });
-
-        fetch('/insertIntoFav', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                userId: decodedToken.id,
-                productId: parseInt(productId.match(/\d+/)),
-                is_cart:0
             }),
 
         })

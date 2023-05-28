@@ -1,5 +1,4 @@
 const sql = require('mssql');
-const jwt = require('jsonwebtoken');
 let instance = null;
 
 const config = {
@@ -27,6 +26,29 @@ class DbService {
     //         console.error('ERROR:', err);
     //     }
     // }
+    async getAllProductsFromCart(id) {
+        try {
+            const pool = new sql.ConnectionPool(config);
+            const response = await new Promise((resolve, reject) => {
+                pool.connect().then(() => {
+                    const request = new sql.Request(pool);
+                    request.query(`SELECT Products.Id, Name, price FROM Products INNER JOIN Cart_Fav ON Products.id = Cart_Fav.p_id WHERE u_id = ${id} AND is_cart = 1;`).then((result, err) => {
+                        if(err){
+                            reject(new Error(err.message));
+                        }
+                        resolve(result.recordset);
+                        pool.close();
+                    }).catch((err) => {
+                        console.error(err);
+                        pool.close();
+                    });
+                })
+            })
+            return response
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     async getAllProducts() {
         try {
@@ -165,38 +187,6 @@ class DbService {
         }
     }
 
-    async insertNewUser(_name, _mail, _password) {
-        try {
-            await sql.connect(config);
-            const res = await sql.query`INSERT INTO Users ([Name], e_mail, [password]) VALUES ('${_name}', '${_mail}', '${_password}');`;
-            return res; // Возвращаем успешный результат в виде промиса
-        } catch (error) {
-            console.log(error);
-            throw error; // Пробрасываем ошибку для ее обработки в catch блоке
-        } finally {
-            sql.close();
-        }
-    }
-
-    async checkUser(_mail, _password) {
-        try {
-            await sql.connect(config);
-            const result = await sql.query`SELECT * FROM Users WHERE e_mail = ${_mail} AND password = ${_password}`;
-            if (result.recordset.length > 0) {
-                const token = jwt.sign({ name : result.recordset[0].Name, role: result.recordset[0].is_admin}, 'секретный_ключ', { expiresIn: '1h' });
-                const user = result.recordset[0];
-                return {user: user, token: token};
-            } else {
-                return null;
-            }
-        } catch (error) {
-            console.log(error);
-            throw error;
-        } finally {
-            sql.close();
-        }
-    }
-
     async getUser(id) {
         try {
             const pool = new sql.ConnectionPool(config);
@@ -220,29 +210,6 @@ class DbService {
             console.log(error);
         }
     }
-
-    // async insertNewUser(_name, _mail, _password){
-    //     try {
-    //         const pool = new sql.ConnectionPool(config);
-    //         return await new Promise((resolve, reject) => {
-    //             pool.connect().then(() => {
-    //                 const request = new sql.Request(pool);
-    //                 request.query(`INSERT INTO Users ([Name], e_mail, [password]) VALUES ('${_name}', '${_mail}', '${_password}');`).then((result, err) => {
-    //                     if (err) {
-    //                         reject(new Error(err.message));
-    //                     }
-    //                     resolve(result.recordset);
-    //                     pool.close();
-    //                 }).catch((err) => {
-    //                     console.error(err);
-    //                     pool.close();
-    //                 });
-    //             })
-    //         })
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
 
     async getRecentClothes(){
         try {
@@ -292,7 +259,7 @@ class DbService {
     async addIntoCart_Fav(userId, productId, is_cart) {
         try {
             await sql.connect(config);
-            const result = await sql.query`INSERT INTO Cart_Fav (u_id, p_id, is_cart) VALUES ('${userId}', '${productId}', '${is_cart}')`;
+            const result = await sql.query`INSERT INTO Cart_Fav (u_id, p_id, is_cart) VALUES (${userId}, ${productId}, ${is_cart})`;
         } catch (error) {
             console.log(error);
         } finally {
@@ -300,10 +267,10 @@ class DbService {
         }
     }
 
-    async deleteFromCart_Fav(id){
+    async deleteFromCart_Fav(u_id, p_id){
         try {
             await sql.connect(config);
-            const result = await sql.query`DELETE FROM Cart_Fav WHERE Id = ${id}`;
+            const result = await sql.query`DELETE FROM Cart_Fav WHERE u_id = ${u_id} AND p_id = ${p_id}`;
         } catch (error) {
             console.log(error);
         } finally {
@@ -311,29 +278,6 @@ class DbService {
         }
     }
 
-    async getAllProductsFromCart(id) {
-        try {
-            const pool = new sql.ConnectionPool(config);
-            const response = await new Promise((resolve, reject) => {
-                pool.connect().then(() => {
-                    const request = new sql.Request(pool);
-                    request.query(`SELECT * FROM Cart_Fav WHERE u_id = ${id} AND is_cart = 1`).then((result, err) => {
-                        if(err){
-                            reject(new Error(err.message));
-                        }
-                        resolve(result.recordset);
-                        pool.close();
-                    }).catch((err) => {
-                        console.error(err);
-                        pool.close();
-                    });
-                })
-            })
-            return response
-        } catch (error) {
-            console.log(error);
-        }
-    }
 
     async getAllProductsFromFav(id) {
         try {

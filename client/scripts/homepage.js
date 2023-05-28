@@ -1,8 +1,3 @@
-let decodedToken;
-if(token) {
-    decodedToken = jwt_decode(token);
-}
-
 const loadProducts = (data, documentId) =>{
     const isAdmin = decodedToken?.role === "A";
 

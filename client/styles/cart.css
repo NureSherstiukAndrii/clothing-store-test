@@ -31,3 +31,27 @@
 .cart-wrap.active {
     width: 400px;
 }
+.cart-product{
+    display: flex;
+    position: relative;
+    border: 1px solid;
+    margin-top: 15px;
+}
+.product-img{
+    height: 150px;
+    width: 150px;
+}
+.delete-from-cart-btn{
+    position: absolute;
+    right: 2px;
+    top: 4px;
+}
+.delete-from-cart-btn:hover{
+    cursor: pointer;
+    filter: opacity(0.5);
+    transition: 0.4s;
+}
+.cart-product > div{
+    text-align: center;
+    width: 80%;
+}

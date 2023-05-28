@@ -94,7 +94,7 @@ addProductInput.addEventListener('click', event => {
         });
 });
 
-let decodedToken;
+
 const addProduct = document.getElementById('addProductBtn')
 if(token) {
     decodedToken = jwt_decode(token);
