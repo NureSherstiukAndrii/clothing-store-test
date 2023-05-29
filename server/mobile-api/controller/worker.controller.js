@@ -14,10 +14,11 @@ class WorkerController {
             const workerData = await userService.registration(name, mail, password, 'W')
             return res.json(workerData)
         } catch (e) {
-            next(e)
+            next(e);
         }
     }
-    async loginWorker(req, res, next) {
+
+    async changeWorker(req, res, next) {
 
     }
 }

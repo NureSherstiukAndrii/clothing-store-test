@@ -4,7 +4,8 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:mobile"
-    Shell.FlyoutBehavior="Disabled"
+    Shell.FlyoutBehavior="Flyout"
+    Shell.TabBarIsVisible="False"
     xmlns:view="clr-namespace:mobile.View">
 
     <ShellContent
@@ -12,19 +13,34 @@
         Shell.FlyoutBehavior="Disabled"
         Title="Loading"
         ContentTemplate="{DataTemplate view:LoadingView}"
-        Route="LoadingPage" />
-    
+        Route="LoadingView"/>
+
     <ShellContent
         FlyoutItemIsVisible="False"
         Shell.FlyoutBehavior="Disabled"
         Title="Login"
         ContentTemplate="{DataTemplate view:LoginView}"
-        Route="LoginPage"
-        />
+        Route="LoginView"/>
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        FlyoutItemIsVisible="False"
+        Shell.FlyoutBehavior="Disabled"
+        Title="Signup"
+        ContentTemplate="{DataTemplate view:SignupView}"
+        Route="SignupView"/>
+
+    <FlyoutItem Route="MainPage" FlyoutDisplayOptions="AsMultipleItems">
+        <ShellContent Title="Main" ContentTemplate="{DataTemplate view:MainView}"/>
+        <ShellContent Title="Loading" ContentTemplate="{DataTemplate view:LoadingView}"/>
+    </FlyoutItem>
+
+    <Shell.FlyoutHeader/>
+
+    <Shell.FlyoutFooter>
+        <StackLayout>
+            <Button Margin="10" Text="Sign Out" BackgroundColor="Gray"
+                    Command="{Binding SignOutCommand}"/>
+        </StackLayout>
+    </Shell.FlyoutFooter>
 
 </Shell>

@@ -8,7 +8,7 @@ namespace mobile
 {
     public static class Config
     {
-        public const string BASE_URL = " https://6f74-46-229-61-1.ngrok-free.app";
+        public const string BASE_URL = "https://8e6d-46-229-61-1.ngrok-free.app";
         public const string PREFERENCES_NAME = "userData";
     }
 }

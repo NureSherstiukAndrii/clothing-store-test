@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="mobile.View.WorkerAccountView"
+             Title="WorkerAccountView">
+    <StackLayout>
+        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Margin="10">
+            <Entry Placeholder="Введите запрос" x:Name="SearchEntry" HorizontalOptions="FillAndExpand"/>
+            <Button Text="Фильтры"/>
+            <Button/>
+        </StackLayout>
+
+        <ListView ItemsSource="{Binding Orders}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding CustomerName}" VerticalOptions="Center"/>
+                            <Label Text="{Binding OrderNumber}" VerticalOptions="Center"/>
+                            <Label Text="{Binding OrderedItemCount}" VerticalOptions="Center"/>
+                            <Label Text="{Binding OrderPrice}" VerticalOptions="Center"/>
+                            <Button Text="Детальнее" VerticalOptions="Center"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>

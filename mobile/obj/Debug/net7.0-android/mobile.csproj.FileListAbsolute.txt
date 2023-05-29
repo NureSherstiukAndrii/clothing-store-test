@@ -960,6 +960,8 @@ C:\Users\Emil_\Documents\GitHub\clothing-store-test\mobile\obj\Debug\net7.0-andr
 C:\Users\Emil_\Documents\GitHub\clothing-store-test\mobile\obj\Debug\net7.0-android\android\assets\CommunityToolkit.Mvvm.pdb
 C:\Users\Emil_\Documents\GitHub\clothing-store-test\mobile\obj\Debug\net7.0-android\android\assets\Flurl.dll
 C:\Users\Emil_\Documents\GitHub\clothing-store-test\mobile\obj\Debug\net7.0-android\android\assets\Flurl.Http.dll
+C:\Users\Emil_\Documents\GitHub\clothing-store-test\mobile\obj\Debug\net7.0-android\android\assets\Newtonsoft.Json.dll
+C:\Users\Emil_\Documents\GitHub\clothing-store-test\mobile\obj\Debug\net7.0-android\resizetizer\r\drawable\user_logo.png
 C:\Users\Emil_\Documents\GitHub\clothing-store-test\mobile\obj\Debug\net7.0-android\android\assets\mscorlib.dll
 C:\Users\Emil_\Documents\GitHub\clothing-store-test\mobile\obj\Debug\net7.0-android\android\assets\System.Collections.Concurrent.dll
 C:\Users\Emil_\Documents\GitHub\clothing-store-test\mobile\obj\Debug\net7.0-android\android\assets\System.Data.Common.dll
@@ -973,5 +975,3 @@ C:\Users\Emil_\Documents\GitHub\clothing-store-test\mobile\obj\Debug\net7.0-andr
 C:\Users\Emil_\Documents\GitHub\clothing-store-test\mobile\obj\Debug\net7.0-android\android\assets\System.Runtime.Extensions.dll
 C:\Users\Emil_\Documents\GitHub\clothing-store-test\mobile\obj\Debug\net7.0-android\android\assets\System.Runtime.Serialization.Formatters.dll
 C:\Users\Emil_\Documents\GitHub\clothing-store-test\mobile\obj\Debug\net7.0-android\android\assets\System.Xml.dll
-C:\Users\Emil_\Documents\GitHub\clothing-store-test\mobile\obj\Debug\net7.0-android\android\assets\Newtonsoft.Json.dll
-C:\Users\Emil_\Documents\GitHub\clothing-store-test\mobile\obj\Debug\net7.0-android\resizetizer\r\drawable\user_logo.png

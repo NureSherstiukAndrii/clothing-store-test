@@ -25,6 +25,9 @@ public static class MauiProgram
         builder.Services.AddSingleton<LoginView>();
 		builder.Services.AddSingleton<LoginViewModel>();
 
+		builder.Services.AddSingleton<MainView>();
+		builder.Services.AddSingleton<MainViewModel>();
+
 #if DEBUG
         builder.Logging.AddDebug();
 #endif

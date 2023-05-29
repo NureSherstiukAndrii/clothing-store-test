@@ -1,0 +1,34 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:mobile"
+             x:Class="mobile.View.MainView">
+
+
+    <StackLayout>
+        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Margin="10">
+            <Entry Placeholder="Customer name" Text="{Binding SearchText}" HorizontalOptions="FillAndExpand"/>
+            <Button Text="Filters" Command="{Binding FiltersCommand}"/>
+            <Button Command="{Binding SearchCommand}" Text="🔍" FontSize="20"/>
+        </StackLayout>
+
+        <ScrollView>
+            <ListView ItemsSource="{Binding Orders}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal">
+                                <!--<Label Text="{Binding [Customer name]}" VerticalOptions="Center"/>
+                                <Label Text="{Binding [OrderNumber]}" VerticalOptions="Center"/>
+                                <Label Text="{Binding [OrderedItemCount]}" VerticalOptions="Center"/>
+                                <Label Text="{Binding [OrderPrice]}" VerticalOptions="Center"/>-->
+                                <Button Text="Детальнее" Command="{Binding BindingContext.DetailCommand, Source={x:Reference Name=OrdersListView}}" CommandParameter="{Binding .}" VerticalOptions="Center"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollView>
+
+    </StackLayout>
+
+</ContentPage>

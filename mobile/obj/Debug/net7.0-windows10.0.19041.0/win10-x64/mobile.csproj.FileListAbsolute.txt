@@ -322,3 +322,8 @@ C:\Users\Emil_\Documents\GitHub\clothing-store-test\mobile\obj\Debug\net7.0-wind
 C:\Users\Emil_\Documents\GitHub\clothing-store-test\mobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\qualifiers.txt.intermediate
 C:\Users\Emil_\Documents\GitHub\clothing-store-test\mobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\MultipleQualifiersPerDimensionFound.txt
 C:\Users\Emil_\Documents\GitHub\clothing-store-test\mobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\ProjectArchitectures.txt
+C:\Users\Emil_\Documents\GitHub\clothing-store-test\mobile\bin\Debug\net7.0-windows10.0.19041.0\win10-x64\CommunityToolkit.Mvvm.dll
+C:\Users\Emil_\Documents\GitHub\clothing-store-test\mobile\bin\Debug\net7.0-windows10.0.19041.0\win10-x64\Flurl.dll
+C:\Users\Emil_\Documents\GitHub\clothing-store-test\mobile\bin\Debug\net7.0-windows10.0.19041.0\win10-x64\Flurl.Http.dll
+C:\Users\Emil_\Documents\GitHub\clothing-store-test\mobile\bin\Debug\net7.0-windows10.0.19041.0\win10-x64\Newtonsoft.Json.dll
+C:\Users\Emil_\Documents\GitHub\clothing-store-test\mobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\user_logo.scale-100.png

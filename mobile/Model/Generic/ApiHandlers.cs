@@ -25,52 +25,79 @@ namespace mobile.Model.Generic
                 if (userData == null)
                     throw new Exception("Not authorized");
                 var link = $"{Config.BASE_URL}/api/refresh";
-                return null;
+                var refreshToken = userData["refreshToken"].ToString();
+                var responce = await link.WithCookie("refreshToken", refreshToken).PostAsync();
+                var content = await responce.ResponseMessage.Content.ReadAsStringAsync();
+                var jsonObject = JObject.Parse(content);
+
+                SaveUserDataToPreferences(content);
+
+                return AddStatusCodeToJObject(jsonObject, 200);
             }
             catch (Exception ex)
             {
                 return ReturnException(ex);
             }
-            
+
+        }
+
+        static async Task<JObject> GetData()
+        {
+            try
+            {
+                var link = $"{Config.BASE_URL}/api";
+                var accessToken = GetAuthDataFromPreferences()["accessToken"].ToString();
+                var responce = await link.WithHeader("authorization", "Bearer " + accessToken).GetAsync();
+                var content = await responce.ResponseMessage.Content.ReadAsStringAsync();
+                var jsonObject = JObject.Parse(content);
+
+                jsonObject = AddStatusCodeToJObject(jsonObject, 200);
+                return jsonObject;
+            }
+            catch (Exception ex)
+            {
+                return ReturnException(ex);
+            }
         }
         public static async Task<JObject> GetUserData()
         {
             try
             {
-                var result = await RefreshInterceptor(async () =>
-                {
-                    try
-                    {
-                        var link = $"{Config.BASE_URL}/api/user";
-                        var responce = await link.WithHeader("authorization", "Bearer " + GetAuthDataFromPreferences()["accessToken"]).GetAsync();
-                        var content = await responce.ResponseMessage.Content.ReadAsStringAsync();
-                        var jsonObject = JObject.Parse(content);
-
-                        jsonObject = AddStatusCodeToJObject(jsonObject, 200);
-                        return jsonObject;
-                    }
-                    catch (Exception ex)
-                    {
-                        return ReturnException(ex);
-                    }
-                });
+                var result = await RefreshInterceptor(GetData);
 
                 return result;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return ReturnException(ex);
             }
-
         }
-        public static async Task<JObject> RefreshInterceptor( Func<Task<JObject>> callback)
+        public static async Task<JObject> Logout()
+        {
+            try
+            {
+                var link = $"{Config.BASE_URL}/api/logout";
+                var responce = await link.GetAsync();
+                var content = await responce.ResponseMessage.Content.ReadAsStringAsync();
+                var jsonObject = JObject.Parse(content);
+
+                jsonObject = AddStatusCodeToJObject(jsonObject, 200);
+                return jsonObject;
+            }
+            catch (Exception ex)
+            {
+                return ReturnException(ex);
+            }
+        }
+        public static async Task<JObject> RefreshInterceptor(Func<Task<JObject>> callback)
         {
             try
             {
                 var response = await callback();
                 var content = response.ToString();
 
-                if ((int)response["StatusCode"] != 200) { 
+                if ((int)response["StatusCode"] != 200)
+                {
                     var refreshResult = await Refresh();
                     if ((int)refreshResult["StatusCode"] != 200)
                         throw new Exception("Not authorized");
@@ -99,6 +126,15 @@ namespace mobile.Model.Generic
             if (obj["StatusCode"] == null)
                 obj.Add("StatusCode", statusCode);
             return obj;
+        }
+        public static void RewriteCollection(ICollection<object> newCollection, ICollection<object> oldCollection)
+        {
+            oldCollection.Clear();
+            foreach (var item in newCollection)
+            {
+                if (item != null)
+                    oldCollection.Add(item);
+            }
         }
     }
 }
