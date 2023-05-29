@@ -66,9 +66,6 @@ function loadProduct(data1) {
         productHtmll += `<select id="size" name="size">`;
         productHtmll += `</select>`;
         productHtmll += `<br> <br>`;
-        productHtmll += `Кількість <br>`;
-        productHtmll += `<input type="number" id="quantity" name="quantity" min="1" max="${amount}" value="1">`;
-        productHtmll += `<br> <br>`;
         productHtmll += `<input type="submit" value="Додати до кошика" id="addToCart">`;
         productHtmll += `<div class="heart"><div/>`
         productHtmll += `</form>`;

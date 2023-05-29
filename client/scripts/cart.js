@@ -2,7 +2,7 @@ const open_cart = document.getElementById("open");
 const close_cart = document.getElementById("close");
 const cart_container = document.getElementById("cart-container");
 
-let decodedToken;
+let decodedToken
 if(token) {
     decodedToken = jwt_decode(token);
 }

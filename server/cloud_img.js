@@ -1,22 +1,29 @@
 const { Storage } = require('@google-cloud/storage');
 require('dotenv').config();
-const storage = new Storage({
-    projectId: process.env.project_id, 
-    keyFilename: process.env.keyFilename,
-});
 
-const bucketName = process.env.bucketName;
-
-
-async function getFilesFromStorage() {
-    try {
-        const [files] = await storage.bucket(bucketName).getFiles();
-        console.log('files', files);
-        return files;
-    } catch (err) {
-        console.error('ERROR:', err);
+const storageConfig = {
+    projectId: process.env.PROJECT_ID,
+    credentials: {
+        client_email: process.env.CLIENT_EMAIL,
+        private_key: process.env.PRIVATE_KEY.replace(/\\n/g, '\n'),
     }
-}
+};
+
+const storage = new Storage(storageConfig);
+
+
+const bucketName = process.env.BUCKETNAME;
+
+
+// async function getFilesFromStorage() {
+//     try {
+//         const [files] = await storage.bucket(bucketName).getFiles();
+//         console.log('files', files);
+//         return files;
+//     } catch (err) {
+//         console.error('ERROR:', err);
+//     }
+// }
 
 class Cloud_img{
 

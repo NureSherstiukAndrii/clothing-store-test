@@ -1,11 +1,11 @@
 const sql = require('mssql');
 let instance = null;
-
+require('dotenv').config();
 const config = {
-    user: "dsrdsr7",
-    password: "NAMS9kUgcwgQS@S",
-    server: "dsrdsr7v2.database.windows.net",
-    database: "Internet_ cloth_shop_v2",
+    user: process.env.USER_DB,
+    password: process.env.PASSWORD_DB,
+    server: process.env.SERVER_DB,
+    database: process.env.DATABASE_NAME,
     options: {
         encrypt: true,
         trustServerCertificate: false

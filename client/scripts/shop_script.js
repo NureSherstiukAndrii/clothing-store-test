@@ -4,6 +4,17 @@ document.addEventListener("DOMContentLoaded", function () {
         .then((response) => loadHTMLProducts(response.data))
 });
 
+const addProduct = document.getElementById('addProductBtn')
+
+let tok = localStorage.getItem('accessToken');
+let check;
+if(tok){
+    check = jwt_decode(tok);
+}
+if (check?.role === 'U' || check === undefined){
+    addProduct.style.display = 'none'
+}
+
 
 const addProductInput = document.getElementById('addProductInput');
 
@@ -95,13 +106,6 @@ addProductInput.addEventListener('click', event => {
 });
 
 
-const addProduct = document.getElementById('addProductBtn')
-if(token) {
-    decodedToken = jwt_decode(token);
-}
-if (decodedToken?.role === 'U' || decodedToken === undefined){
-    addProduct.style.display = 'none'
-}
 
 function loadHTMLProducts(data) {
     const uniqueNamesArray = Array.from(new Set(data.map(item => item.Name)));
