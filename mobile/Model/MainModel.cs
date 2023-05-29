@@ -17,8 +17,10 @@ namespace mobile.Model
             try 
             {
                 var link = $"{Config.BASE_URL}/mobileapi/orders/available";
-                var accessToken = ApiHandlers.GetAuthDataFromPreferences()["accessToken"].ToString();
+                string accessToken = ApiHandlers.GetAuthDataFromPreferences()["accessToken"].ToString();
+
                 var responce = await link.WithHeader("authorization", "Bearer " + accessToken).GetAsync();
+
                 var content = await responce.ResponseMessage.Content.ReadAsStringAsync();
                 var jsonArray = JArray.Parse(content);
 
@@ -39,14 +41,21 @@ namespace mobile.Model
         {
             var resp = await ApiHandlers.RefreshInterceptor(GetProductsAsJObject);
             JArray orders = (JArray)resp["Orders"];
+
             var newOrders = new ObservableCollection<Dictionary<string, object>>();
+
             foreach (JObject jsonObject in orders)
             {
+                var x = jsonObject.ToString();
                 Dictionary<string, object> dictionary = jsonObject.ToObject<Dictionary<string, object>>();
                 newOrders.Add(dictionary);
             }
 
-            ApiHandlers.RewriteCollection((ICollection<object>)newOrders, (ICollection<object>)Orders);
+            Orders.Clear();
+            foreach(var order in newOrders)
+            {
+                orders.Add(order);
+            }
         }
     }
 }

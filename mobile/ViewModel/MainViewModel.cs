@@ -13,7 +13,7 @@ namespace mobile.ViewModel
         [RelayCommand]
         async void SearchCommand()
         {
-            //await MainModel.GetProducts(Orders);
+            await MainModel.GetProducts(Orders);
         }
         public ObservableCollection<Dictionary<string, object>> Orders { get; set; } = new ObservableCollection<Dictionary<string, object>>();
     }
