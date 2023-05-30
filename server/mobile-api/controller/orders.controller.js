@@ -40,8 +40,8 @@ class OrdersController {
     }
     async getOrder(req, res, next) {
         try {
-            if (req.user.role != 'W')
-                return next(ApiErrors.UnauthorizedError());
+            // if (req.user.role != 'W')
+            //     return next(ApiErrors.UnauthorizedError());
 
             const id = req.params.id;
             const orderData = await ordersService.getOrder(id);

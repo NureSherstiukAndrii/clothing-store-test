@@ -8,13 +8,13 @@ namespace mobile.Model
     {
         //static async Task<JObject> callback(int id)
         //{
-            
+
         //}
-        public static async Task<JObject>GetOrderData(int id)
+        public static async Task<JObject> GetOrderData(int id)
         {
+            var link = $"{Config.BASE_URL}/mobileapi/orders/{id}";
             var clb = async () =>
             {
-                var link = $"{Config.BASE_URL}/mobileapi/orders/{id}";
                 string accessToken = ApiHandlers.GetAuthDataFromPreferences()["accessToken"].ToString();
                 var responce = await link.WithHeader("authorization", "Bearer " + accessToken).GetAsync();
                 var content = await responce.ResponseMessage.Content.ReadAsStringAsync();
