@@ -5,7 +5,10 @@ const router = express.Router();
 const parentDir = path.resolve(__dirname, '..').replace("\\server", "");
 
 router.get("/", function (req, res) {
-    res.sendFile(parentDir + "/client/HomePage/index.html");
+    // res.sendFile(parentDir + "/client/HomePage/index.html");
+    console.log(req.user)
+    res.render('index', { user: req.user });
+
 })
 
 router.get("/about", function (req, res) {

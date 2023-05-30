@@ -9,7 +9,12 @@ const pageRouter = require('../server/router/pageRouter')
 const errorMiddleware = require('./middlewares/errorMiddleware')
 const validateToken = require("./middlewares/authMiddleware");
 const mobileApi = require('./mobile-api')
-
+const session = require('express-session');
+const passport = require('passport');
+const FileStore = require("session-file-store")(session);
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+// const passportHandler = require('./controllers/passport.controller');
+const { v4: uuidv4 } = require("uuid");
 
 const dbService = require("./db");
 const parentDir = path.resolve(__dirname, '..');
@@ -17,9 +22,84 @@ const parentDir = path.resolve(__dirname, '..');
 app.use(express.static(path.join(parentDir, '/client')))
 app.use(express.json());
 app.use(cookieParser());
+
+// Настройка сессий
+app.use(
+    session({
+        genid: (req) => {
+            // console.log("1. in genid req.sessionID: ", req.sessionID);
+            return uuidv4();
+        },
+        store: new FileStore(),
+        secret: "a private key",
+        //что даёт этот атрибут?
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            maxAge: 60 * 60 * 1000 * 24,
+        }
+    })
+);
+
+// Инициализация Passport и установка сессий
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Настройка Google OAuth 2.0
+passport.use(new GoogleStrategy({
+    clientID: "599431370407-v5796hq8t7u2hnpqok7p2s7esk74dg6v.apps.googleusercontent.com",
+    clientSecret: "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",
+    callbackURL: '/auth/google/callback',
+},
+    function (accessToken, refreshToken, profile, done) {
+        // Здесь вы можете сохранить информацию о пользователе в базу данных или выполнить другие действия
+        // profile содержит информацию о пользователе, включая идентификатор и электронную почту
+
+        const user = {
+            id: profile.id,
+            name: profile.displayName,
+            email: profile.emails[0].value
+        };
+
+        return done(null, user);
+    }
+));
+
+// Сериализация и десериализация пользователей
+passport.serializeUser(function (user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser(function (user, done) {
+    done(null, user);
+});
+
+app.get('/x', (req, res) => {
+    res.send('x');
+});
+
+// Маршрут для авторизации через Google
+app.get('/auth/google',
+    passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+// Маршрут обратного вызова после успешной аутентификации
+app.get('/auth/google/callback',
+    passport.authenticate('google', { failureRedirect: '/login' }),
+    function (req, res) {
+        // Успешная аутентификация, выполните необходимые действия, например, сохраните данные пользователя в сессию или отправьте ответ
+        res.redirect('/')
+    });
+
+// // Маршрут для отображения кнопки авторизации
+// app.get('/', (req, res) => {
+//     res.render('index.html');
+// });
+
+app.set("view engine", "ejs");
 app.use('/api', router);
 app.use('/', pageRouter)
 app.use('/mobileapi', mobileApi);
+// app.use('/passport', passportHandler);
 app.use(errorMiddleware);
 
 const cloudImg = new cloud_img();
@@ -254,6 +334,7 @@ app.get("/applyFilters", (req, res) => {
         res.json({ data: result });
     });
 });
+
 
 
 app.listen(3000, () => {

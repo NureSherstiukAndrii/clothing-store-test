@@ -1,0 +1,128 @@
+<!doctype html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type='text/css'  href="../styles/style_home.css">
+    <link rel="stylesheet" type='text/css'  href="../styles/style_shopPage.css">
+    <link rel="stylesheet" href="../styles/cart.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <title>Home</title>
+</head>
+<body>
+
+<header>
+   <div class="header-content">
+       <div class="logo">
+           <a href="/"><img src="../img/logo.png" alt="logo"></a>
+           <span>Our logo</span>
+       </div>
+
+       <div class="navigation">
+           <div class="navigation-block">
+               <a href="/about" class="navigation-block-btn">Про нас</a>
+               <a href="/shop" class="navigation-block-btn">Магазин</a>
+               <a href="/size" class="navigation-block-btn">Розмірна сітка</a>
+               <a href="/contacts" class="navigation-block-btn">Зв'язок з нами</a>
+           </div>
+           <div class="navigation-account-links">
+               <div style="display: flex">
+                   <a href="/personalPage"><img src="../img/account.png" alt="account"></a>
+                   <a href="/login" id="enter-btn">Увійти</a>
+                   <a href="/login" id="exit-btn">Вийти</a>
+               </div>
+               <div>
+                   <a id="open"><img src="../img/basket.png" alt="basket"></a><span>0</span>
+               </div>
+           </div>
+       </div>
+   </div>
+
+    <div class="cart-wrap" id="cart-container">
+        <div class="cart-header">
+            <button class="icon" id="close"><img src="../img/cart-arrow.png" alt=""></button>
+            <h2>Cart</h2>
+        </div>
+        <div id="cart"></div>
+
+
+    </div>
+
+</header>
+
+
+
+<div class="introduction">
+   <div class="introduction-container">
+       <div class="introduction-phrase">
+           <h1>Представляємо <br>Ваш новий <br> Гардероб</h1>
+          <a href="/shop">Почати Покупки</a>
+       </div>
+   </div>
+    <img src="../img/file-_1_.gif" alt="gif">
+</div>
+
+
+
+<div class="main-categories">
+    <a href="/about" class="category-about">
+        <h1>Ми та наша історія</h1>
+    </a>
+    <a href="/shop" class="category-shop">
+        <h1>Переглянь нашу колекцію</h1>
+    </a>
+    <a href="/size" class="category-size">
+        <h1>Дізнайся свій розмір</h1>
+    </a>
+</div>
+
+
+
+<div class="last-arrivals">
+    <h1>Хіти продажу</h1>
+
+    <div class="popular-clothes-container" id="top_cloths">
+
+    </div>
+</div>
+
+
+
+<div class="popular-clothes">
+    <h1>Останній завіз</h1>
+
+    <div class="popular-clothes-container" id="recent">
+
+    </div>
+</div>
+
+
+
+<footer>
+    <img src="../img/logo.png" alt="logo">
+
+    <div class="mail">
+        <span>Свої питання пишить нам на пошту: </span>
+        <a href="mailto:ourchop@gmail.com">ourchop@gmail.com</a>
+    </div>
+
+    <div class="social-media">
+        <img src="../img/instagram.png" alt="insta">
+        <img src="../img/telegram.png" alt="tg">
+        <img src="../img/tiktok.png" alt="tiktok">
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+<script src="../scripts/validateToken.js"></script>
+<script src ="../scripts/homepage.js"></script>
+<script src="../scripts/cart.js"></script>
+<script src="../scripts/logout.js"></script>
+
+
+
+</body>
+</html>
