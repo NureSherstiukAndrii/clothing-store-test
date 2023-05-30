@@ -1,4 +1,6 @@
-﻿namespace mobile;
+﻿using mobile.View;
+
+namespace mobile;
 
 public partial class AppShell : Shell
 {
@@ -6,6 +8,6 @@ public partial class AppShell : Shell
 	{
 		InitializeComponent();
 
-		//Routing.RegisterRoute(nameof(Login))
+		Routing.RegisterRoute(nameof(DetailsView), typeof(DetailsView));
 	}
 }

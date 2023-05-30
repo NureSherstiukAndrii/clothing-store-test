@@ -1,12 +1,8 @@
 ﻿using Flurl.Http;
 using mobile.Model.Generic;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace mobile.Model
 {
@@ -14,13 +10,11 @@ namespace mobile.Model
     {
         public static async Task<JObject> GetProductsAsJObject()
         {
-            try 
+            try
             {
                 var link = $"{Config.BASE_URL}/mobileapi/orders/available";
                 string accessToken = ApiHandlers.GetAuthDataFromPreferences()["accessToken"].ToString();
-
                 var responce = await link.WithHeader("authorization", "Bearer " + accessToken).GetAsync();
-
                 var content = await responce.ResponseMessage.Content.ReadAsStringAsync();
                 var jsonArray = JArray.Parse(content);
 
@@ -40,22 +34,24 @@ namespace mobile.Model
         public static async Task GetProducts(ObservableCollection<Dictionary<string, object>> Orders)
         {
             var resp = await ApiHandlers.RefreshInterceptor(GetProductsAsJObject);
-            JArray orders = (JArray)resp["Orders"];
+            if ((int)resp["StatusCode"] != 200) return;
 
+            JArray orders = (JArray)resp["Orders"];
             var newOrders = new ObservableCollection<Dictionary<string, object>>();
 
             foreach (JObject jsonObject in orders)
             {
-                var x = jsonObject.ToString();
-                Dictionary<string, object> dictionary = jsonObject.ToObject<Dictionary<string, object>>();
+                var jsonString = jsonObject.ToString();
+                Dictionary<string, object> dictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonString);
                 newOrders.Add(dictionary);
             }
 
             Orders.Clear();
-            foreach(var order in newOrders)
+            foreach (var order in newOrders)
             {
-                orders.Add(order);
+                Orders.Add(order);
             }
+
         }
     }
 }

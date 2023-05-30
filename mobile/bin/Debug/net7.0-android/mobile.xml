@@ -22,6 +22,31 @@
         <member name="P:mobile.ViewModel.BaseViewModel.Title">
             <inheritdoc cref="F:mobile.ViewModel.BaseViewModel.title"/>
         </member>
+        <member name="T:mobile.ViewModel.DetailsViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:mobile.ViewModel.DetailsViewModel.OrderNumber">
+            <inheritdoc cref="F:mobile.ViewModel.DetailsViewModel._OrderNumber"/>
+        </member>
+        <member name="P:mobile.ViewModel.DetailsViewModel.Status">
+            <inheritdoc cref="F:mobile.ViewModel.DetailsViewModel._Status"/>
+        </member>
+        <member name="P:mobile.ViewModel.DetailsViewModel.CustomerName">
+            <inheritdoc cref="F:mobile.ViewModel.DetailsViewModel._CustomerName"/>
+        </member>
+        <member name="P:mobile.ViewModel.DetailsViewModel.OrderedItemCount">
+            <inheritdoc cref="F:mobile.ViewModel.DetailsViewModel._OrderedItemCount"/>
+        </member>
+        <member name="P:mobile.ViewModel.DetailsViewModel.OrderPrice">
+            <inheritdoc cref="F:mobile.ViewModel.DetailsViewModel._OrderPrice"/>
+        </member>
+        <member name="F:mobile.ViewModel.DetailsViewModel.changeStatusCommand">
+            <summary>The backing field for <see cref="P:mobile.ViewModel.DetailsViewModel.ChangeStatusCommand"/>.</summary>
+        </member>
+        <member name="P:mobile.ViewModel.DetailsViewModel.ChangeStatusCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:mobile.ViewModel.DetailsViewModel.ChangeStatus"/>.</summary>
+        </member>
         <member name="T:mobile.ViewModel.LoginViewModel">
             <inheritdoc/>
             <inheritdoc/>
@@ -40,12 +65,19 @@
         </member>
         <member name="T:mobile.ViewModel.MainViewModel">
             <inheritdoc/>
+            <inheritdoc/>
         </member>
-        <member name="F:mobile.ViewModel.MainViewModel.searchCommandCommand">
-            <summary>The backing field for <see cref="P:mobile.ViewModel.MainViewModel.SearchCommandCommand"/>.</summary>
+        <member name="F:mobile.ViewModel.MainViewModel.searchCommand">
+            <summary>The backing field for <see cref="P:mobile.ViewModel.MainViewModel.SearchCommand"/>.</summary>
         </member>
-        <member name="P:mobile.ViewModel.MainViewModel.SearchCommandCommand">
-            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:mobile.ViewModel.MainViewModel.SearchCommand"/>.</summary>
+        <member name="P:mobile.ViewModel.MainViewModel.SearchCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:mobile.ViewModel.MainViewModel.Search"/>.</summary>
+        </member>
+        <member name="F:mobile.ViewModel.MainViewModel.detailCommand">
+            <summary>The backing field for <see cref="P:mobile.ViewModel.MainViewModel.DetailCommand"/>.</summary>
+        </member>
+        <member name="P:mobile.ViewModel.MainViewModel.DetailCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand`1"/> instance wrapping <see cref="M:mobile.ViewModel.MainViewModel.Detail(System.Collections.Generic.Dictionary{System.String,System.Object})"/>.</summary>
         </member>
         <member name="T:mobile.ViewModel.SignupViewModel">
             <inheritdoc/>
@@ -81,6 +113,21 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Title">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Title" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.OrderNumber">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "OrderNumber" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Status">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Status" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CustomerName">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CustomerName" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.OrderedItemCount">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "OrderedItemCount" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.OrderPrice">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "OrderPrice" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Email">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Email" generated properties.</summary>
         </member>
@@ -107,6 +154,21 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Title">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Title" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.OrderNumber">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "OrderNumber" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Status">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Status" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CustomerName">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CustomerName" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.OrderedItemCount">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "OrderedItemCount" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.OrderPrice">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "OrderPrice" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Email">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Email" generated properties.</summary>

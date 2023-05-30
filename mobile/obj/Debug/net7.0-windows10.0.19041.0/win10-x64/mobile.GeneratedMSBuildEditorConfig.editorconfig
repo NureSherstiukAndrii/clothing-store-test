@@ -40,6 +40,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = mobile.Resources.Styles.St
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
 
+[C:/Users/Emil_/Documents/GitHub/clothing-store-test/mobile/View/DetailsView.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = mobile.View.DetailsView.xaml
+build_metadata.AdditionalFiles.TargetPath = View\DetailsView.xaml
+build_metadata.AdditionalFiles.RelativePath = View\DetailsView.xaml
+
 [C:/Users/Emil_/Documents/GitHub/clothing-store-test/mobile/View/LoadingView.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = mobile.View.LoadingView.xaml
@@ -57,12 +63,6 @@ build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = mobile.View.MainView.xaml
 build_metadata.AdditionalFiles.TargetPath = View\MainView.xaml
 build_metadata.AdditionalFiles.RelativePath = View\MainView.xaml
-
-[C:/Users/Emil_/Documents/GitHub/clothing-store-test/mobile/View/OrderDetailsView.xaml]
-build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = mobile.View.OrderDetailsView.xaml
-build_metadata.AdditionalFiles.TargetPath = View\OrderDetailsView.xaml
-build_metadata.AdditionalFiles.RelativePath = View\OrderDetailsView.xaml
 
 [C:/Users/Emil_/Documents/GitHub/clothing-store-test/mobile/View/SignupView.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml

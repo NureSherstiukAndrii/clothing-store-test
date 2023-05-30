@@ -2,8 +2,11 @@ const ApiErrors = require('../../exeptions/apiErrors');
 const utilities = require('../utilities/')
 
 class OrdersService {
-    async getOrders() {
+    async getOrders(id) {
         const sql = await utilities.getConnection();
+
+        const andExpression = id ? `AND O.num = ${id}` : '';
+
         const result = await sql.query(`
         SELECT
             U.Name as 'Customer name',
@@ -15,13 +18,34 @@ class OrdersService {
             INNER JOIN Users U ON O.u_id = U.Id
             INNER JOIN Ordered_items OI ON O.num = OI.order_num
         WHERE
-            O.status = 'Не оброблен'
+            O.status = 'Не оброблен' ${andExpression}
         GROUP BY
             O.num,
             U.Name,
             O.total_price
         `);
         return result.recordset;
+    }
+
+    async getOrder(id) {
+        const sql = await utilities.getConnection();
+        const orderData = await this.getOrders(id);
+
+        // console.log(id)
+
+        const orderItemsData = await sql.query(`
+            SELECT oi.p_id AS product_id, p.Name AS product_name, COUNT(oi.p_id) AS quantity,
+                p.price AS unit_price, SUM(p.price) AS total_price
+            FROM Ordered_items AS oi
+            JOIN Products AS p ON oi.p_id = p.Id
+            WHERE oi.order_num = ${id}
+            GROUP BY oi.p_id, p.Name, p.price;
+        `);
+
+        return {
+            order: orderData,
+            orderItems: orderItemsData.recordsets[0]
+        };
     }
 
     async changeOrderStatus(id, status) {

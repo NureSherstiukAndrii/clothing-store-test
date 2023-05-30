@@ -6,6 +6,7 @@ const router = new Router();
 
 router
     .get('/available', authMiddleware, ordersController.getOrders)
+    .get('/:id', authMiddleware, ordersController.getOrder)
     .patch('/:id', authMiddleware, ordersController.changeOrderStatus)
     .delete('/:id', authMiddleware, ordersController.deleteOrder)
 

@@ -36,7 +36,18 @@ class OrdersController {
             return res.json({ message: `Заказ номер ${id} успешно удален!` });
         } catch (e) {
             next(e)
+        }
+    }
+    async getOrder(req, res, next) {
+        try {
+            if (req.user.role != 'W')
+                return next(ApiErrors.UnauthorizedError());
 
+            const id = req.params.id;
+            const orderData = await ordersService.getOrder(id);
+            return res.json(orderData)
+        } catch (e) {
+            next(e);
         }
     }
 }
