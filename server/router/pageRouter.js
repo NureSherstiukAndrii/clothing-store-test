@@ -40,6 +40,10 @@ router.get('/personals/:id', async (req, res) => {
     res.sendFile(parentDir + '/client/PersonalPage/index.html');
 });
 
+router.get("/cart", function (req, res){
+    res.sendFile(parentDir + "/client/CartPage/index.html");
+})
+
 
 
 module.exports = router;
