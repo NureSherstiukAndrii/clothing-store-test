@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           x:Class="mobile.View.FilterPopupView"
+           xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+           CanBeDismissedByTappingOutsideOfPopup="False"
+           Size="500 300">
+    <Grid Width="500" Height="500">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Text="Minimum price" Grid.Row="0" Grid.Column="0" Margin="10"/>
+        <Entry x:Name="min_price_entry" Grid.Row="1" Grid.Column="0" Margin="10" />
+        
+        <Label Text="Maximum price" Grid.Row="2" Grid.Column="0" Margin="10"/>
+        <Entry x:Name="max_price_entry" Grid.Row="3" Grid.Column="0" Margin="10" />
+
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Text="Order by price : " Grid.Column="0" Margin="10"/>
+            <CheckBox x:Name="orderByPriceCheckBox" Grid.Column="1" Margin="10"/>
+        </Grid>
+        
+        <Grid Grid.Row="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Text="Order by items count : " Grid.Column="0" Margin="10"/>
+            <CheckBox x:Name="orderByCountCheckBox" Grid.Column="1" Margin="10"/>
+        </Grid>
+        <Button Grid.Row="0" Grid.Column="1" Margin="10" Width="30" Height="30" Text="❌" Clicked="Button_Clicked"/>
+    </Grid>
+
+</mct:Popup>

@@ -2,28 +2,47 @@ const ApiErrors = require('../../exeptions/apiErrors');
 const utilities = require('../utilities/')
 
 class OrdersService {
-    async getOrders(id) {
+    async getOrders(id, query) {
         const sql = await utilities.getConnection();
 
-        const andExpression = id ? `AND O.num = ${id}` : '';
+        // console.log(query)
+
+        const andExpression = id ? ` AND O.num = ${id}` : '';
+        const andNameExpression = query && query.name && query.name.length > 0
+            ? ` AND U.Name COLLATE SQL_Latin1_General_CP1_CI_AI LIKE'%${query.name}%'` : '';
+
+        const andMinimumPriceExpression = query && query.min_price && query.min_price > 0
+            ? ` AND O.total_price > ${query.min_price}` : '';
+
+        const andMaximumPriceExpression = query && query.max_price && query.max_price > 0
+            ? ` AND O.total_price < ${query.max_price}` : '';
+
+        const orderByTotalPriceExpression = query && query.orderByTotalPrice
+            ? `ORDER BY O.total_price DESC` : '';
+
+        const orderByCountExpression = query && query.orderByCount
+            ? orderByTotalPriceExpression.length > 0 ? ', COUNT(OI.id) DESC' : 'ORDER BY COUNT(OI.id) DESC' : '';
 
         const result = await sql.query(`
-        SELECT
-            U.Name as 'Customer name',
-            O.num AS OrderNumber,
-            COUNT(OI.id) AS OrderedItemCount,
-            O.total_price AS OrderPrice
-        FROM
-            Orders O
-            INNER JOIN Users U ON O.u_id = U.Id
-            INNER JOIN Ordered_items OI ON O.num = OI.order_num
-        WHERE
-            O.status = 'Не оброблен' ${andExpression}
-        GROUP BY
-            O.num,
-            U.Name,
-            O.total_price
-        `);
+            SELECT
+                U.Name as 'Customer name',
+                O.num AS OrderNumber,
+                COUNT(OI.id) AS OrderedItemCount,
+                O.total_price AS OrderPrice,
+                O.[status] as 'Status'
+            FROM
+                Orders O
+                INNER JOIN Users U ON O.u_id = U.Id
+                INNER JOIN Ordered_items OI ON O.num = OI.order_num
+            WHERE
+                O.status != 'Готово' ${andExpression}${andNameExpression}${andMinimumPriceExpression}${andMaximumPriceExpression}
+            GROUP BY
+                O.num,
+                U.Name,
+                O.total_price,
+                O.[status]
+            ${orderByTotalPriceExpression} ${orderByCountExpression}`);
+
         return result.recordset;
     }
 

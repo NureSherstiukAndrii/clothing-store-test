@@ -5,9 +5,12 @@ const ordersService = require("../service/orders.service");
 class OrdersController {
     async getOrders(req, res, next) {
         try {
-            if (req.user.role != 'W')
-                return next(ApiErrors.UnauthorizedError());
-            const orders = await ordersService.getOrders();
+            // if (req.user.role != 'W')
+            //     return next(ApiErrors.UnauthorizedError());
+
+            const query = { ...req.query };
+
+            const orders = await ordersService.getOrders(undefined, query);
             return res.json(orders);
         } catch (e) {
             next(e)

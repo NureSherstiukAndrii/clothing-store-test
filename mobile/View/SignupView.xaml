@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="mobile.View.SignupView"
+             Title="SignupView"
+             Shell.NavBarIsVisible="False">
+    <ScrollView Margin="25,0"><VerticalStackLayout>
+        <Label 
+            TextColor="Gray"
+            Margin="0,25,0,10"
+            Text="Enter data below"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            FontSize="24"
+            FontAttributes="Bold"/>
+
+        <Label 
+            TextColor="Gray"
+            Margin="15,15,0,0"
+            Text="Email"
+            VerticalOptions="Center" 
+            HorizontalOptions="Start"
+            FontSize="Large"
+            FontAttributes="Bold"/>
+        <Frame BorderColor="Gray" CornerRadius="0" Padding="10,0" Margin="0,10,0,0">
+            <Entry Text="{Binding Email}"/>
+        </Frame>
+
+        <Label 
+            TextColor="Gray"
+            Margin="15,15,0,0"
+            Text="Full name"
+            VerticalOptions="Center" 
+            HorizontalOptions="Start"
+            FontSize="Large"
+            FontAttributes="Bold"/>
+        <Frame BorderColor="Gray" CornerRadius="0" Padding="10,0" Margin="0,10,0,0">
+            <Entry Text="{Binding Name}"/>
+        </Frame>
+
+        <Label 
+            TextColor="Gray"
+            Margin="15,15,0,0"
+            Text="Password"
+            VerticalOptions="Center" 
+            HorizontalOptions="Start"
+            FontSize="Large"
+            FontAttributes="Bold"/>
+        <Frame BorderColor="Gray" CornerRadius="0" Padding="10,0" Margin="0,10,0,0">
+            <Entry IsPassword="True" Text="{Binding Password}"/>
+        </Frame>
+
+        <Label 
+            TextColor="Gray"
+            Margin="15,15,0,0"
+            Text="Confirm password"
+            VerticalOptions="Center" 
+            HorizontalOptions="Start"
+            FontSize="Large"
+            FontAttributes="Bold"/>
+        <Frame BorderColor="Gray" CornerRadius="0" Padding="10,0" Margin="0,10,0,0">
+            <Entry IsPassword="True" Text="{Binding ConfirmPassword}"/>
+        </Frame>
+
+            <Button CornerRadius="0" BackgroundColor="Gray" TextColor="White"
+                    Text="SIGN UP" Margin="0, 25" WidthRequest="150"
+                    Command="{Binding SignupCommand}"/>
+
+            <Grid Margin="0,25">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Label Text="Have account?" TextColor="Gray" VerticalOptions="Center"
+                       FontAttributes="Bold" FontSize="18"/>
+                <Button BackgroundColor="Transparent" FontSize="18" Text="LOG IN"
+                        TextColor="#008BFF" FontAttributes="Bold" Grid.Column="1"
+                        Command="{Binding GoToLoginCommand}"/>
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

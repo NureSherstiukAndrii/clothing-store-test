@@ -5,8 +5,8 @@ const authMiddleware = require("../../middlewares/authMiddleware");
 const router = new Router();
 
 router
-    .get('/available', authMiddleware, ordersController.getOrders)
-    .get('/:id', /*authMiddleware,*/ ordersController.getOrder)
+    .get('/available',  ordersController.getOrders)
+    .get('/:id', authMiddleware, ordersController.getOrder)
     .patch('/:id', authMiddleware, ordersController.changeOrderStatus)
     .delete('/:id', authMiddleware, ordersController.deleteOrder)
 

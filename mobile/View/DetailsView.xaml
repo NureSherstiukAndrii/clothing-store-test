@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="mobile.View.DetailsView"
+             Title="DetailsView">
+
+    <ContentPage.Resources>
+        <Style x:Key="ListViewItemBorderStyle" TargetType="Border">
+            <Setter Property="BackgroundColor" Value="LightBlue" />
+            <Setter Property="Padding" Value="5" />
+        </Style>
+    </ContentPage.Resources>
+
+    <VerticalStackLayout>
+        <Grid HeightRequest="180" Padding="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <!--<RowDefinition Height="*"/>-->
+            </Grid.RowDefinitions>
+
+            <Label Grid.Column="0" VerticalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Status : "/>
+                        <Span Text="{Binding Status}"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label Grid.Column="0" Grid.Row="1" VerticalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Order quantity : "/>
+                        <Span Text="{Binding OrderedItemCount}"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label Grid.Column="1" Grid.Row="1" VerticalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Order price : "/>
+                        <Span Text="{Binding OrderPrice}"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label Grid.Column="1" Grid.Row="0" VerticalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Customer : "/>
+                        <Span Text="{Binding CustomerName}"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label Grid.Row="2" VerticalOptions="Center" Text="SELECT ORDER STATUS:"/>
+            <Picker x:Name="picker" Grid.Column="1" Grid.Row="3"
+                Title="Select a status"
+                SelectedIndex="0"
+                SelectedIndexChanged="picker_SelectedIndexChanged">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Не оброблен</x:String>
+                        <x:String>В процесі</x:String>
+                        <x:String>Відправлений</x:String>
+                        <x:String>Готово</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+        </Grid>
+        <Label Text="Order items : " FontSize="15" Margin="20, -5"/>
+        <ScrollView>
+        <CollectionView ItemsSource="{Binding OrderItems}" SelectionMode="None" Margin="20">
+                <CollectionView.EmptyView>
+                    <Label FontSize="Large" HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center" Text="😞No orders available..." />
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource ListViewItemBorderStyle}">
+                            <Grid Padding="7.5,0" HeightRequest="100">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="5*"/>
+                                    <ColumnDefinition Width="5*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Column="0" VerticalOptions="Center">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Product name : "/>
+                                            <Span Text="{Binding [product_name]}"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Grid.Column="0" Grid.Row="1" VerticalOptions="Center">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Quantity № : "/>
+                                            <Span Text="{Binding [quantity]}"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Grid.Column="1" VerticalOptions="Center">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Unit price : "/>
+                                            <Span Text="{Binding [unit_price]}"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Grid.Column="1" Grid.Row="1" VerticalOptions="Center">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Total price : "/>
+                                            <Span Text="{Binding [total_price]}"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+        <Button CornerRadius="0" BackgroundColor="Gray" TextColor="White"
+                    Text="DELETE ORDER" Margin="0, 25" WidthRequest="150"
+                    Command="{Binding SignupCommand}"/>
+    </VerticalStackLayout>
+</ContentPage>

@@ -7,7 +7,7 @@ const router = new Router;
 
 router
     .post('/', validationMiddleware.validateRegistrationData(), WorkerController.registrateWorker)
-    .patch('/', authMiddleware, WorkerController.changeWorker)
+    .patch('/', authMiddleware, WorkerController.changeWorker);
 // .get('/orders', authMiddleware, WorkerController.getOrders)
 
 module.exports = router;
