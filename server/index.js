@@ -1,13 +1,15 @@
 const express = require("express");
 const app = express();
 const path = require('path');
-const cloud_img = require("./cloud_img");
+// const cloud_img = require("./cloud_img");
 const Multer = require('multer');
 const cookieParser = require('cookie-parser');
 const router = require('../server/router/authRouter');
 const pageRouter = require('../server/router/pageRouter')
 const errorMiddleware = require('./middlewares/errorMiddleware')
 const validateToken = require("./middlewares/authMiddleware");
+const mobileApi = require('./mobile-api')
+require('dotenv').config();
 
 
 
@@ -18,11 +20,12 @@ const parentDir = path.resolve(__dirname, '..');
 app.use(express.static(path.join(parentDir, '/client')))
 app.use(express.json());
 app.use(cookieParser());
+app.use('/mobileapi', mobileApi);
 app.use('/api', router);
 app.use('/', pageRouter)
 app.use(errorMiddleware);
 
-const cloudImg = new cloud_img();
+// const cloudImg = new cloud_img();
 
 const multer = Multer({
     storage: Multer.memoryStorage(),
@@ -39,10 +42,10 @@ app.use('/styles', express.static(path.join(parentDir, 'client/styles'), {
 app.get('/api/cloud-img', async (req, res) => {
     try {
         const url = await cloudImg.getImgUrl(req.query.filename);
-        res.json({url});
+        res.json({ url });
     } catch (err) {
         console.error(err);
-        res.status(500).json({error: 'Internal Server Error'});
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 
@@ -56,7 +59,7 @@ app.get('/person/:id', (req, res) => {
     let result = db.getUser(userId);
 
     result
-        .then((data) => {res.json({ data: data });})
+        .then((data) => { res.json({ data: data }); })
         .catch((err) => console.log(err));
 });
 
@@ -69,11 +72,11 @@ app.get('/product/:id', (req, res) => {
 
     Promise.all([product, images]).then(([p, i]) => {
         let result = addImagesToProducts(p, i);
-        res.json({data: result});
+        res.json({ data: result });
     });
 });
 
-app.get("/getAllProducts", function(request, response){
+app.get("/getAllProducts", function (request, response) {
     const db = dbService.getDbServiceInstance();
     let products = db.getAllProducts();
     let images = db.getProductImages();
@@ -81,13 +84,13 @@ app.get("/getAllProducts", function(request, response){
     let result;
 
     Promise.all([products, images]).then(([p, i]) => {
-       result = addImagesToProducts(p, i);
+        result = addImagesToProducts(p, i);
 
-       response.json({data: result});
+        response.json({ data: result });
     });
 });
 
-app.get("/getRecentClothes", function(request, response){
+app.get("/getRecentClothes", function (request, response) {
     const db = dbService.getDbServiceInstance();
     let products = db.getRecentClothes();
     let images = db.getProductImages();
@@ -97,11 +100,11 @@ app.get("/getRecentClothes", function(request, response){
     Promise.all([products, images]).then(([p, i]) => {
         result = addImagesToProducts(p, i);
 
-        response.json({data: result});
+        response.json({ data: result });
     });
 });
 
-app.get("/getTopClothes", function(request, response){
+app.get("/getTopClothes", function (request, response) {
     const db = dbService.getDbServiceInstance();
     let products = db.getTopClothes();
     let images = db.getProductImages();
@@ -111,11 +114,11 @@ app.get("/getTopClothes", function(request, response){
     Promise.all([products, images]).then(([p, i]) => {
         result = addImagesToProducts(p, i);
 
-        response.json({data: result});
+        response.json({ data: result });
     });
 });
 
-app.get("/getCart/:id", function(request, response){
+app.get("/getCart/:id", function (request, response) {
     const { id } = request.params;
     const db = dbService.getDbServiceInstance();
     let products = db.getAllProductsFromCart(id);
@@ -130,7 +133,7 @@ app.get("/getCart/:id", function(request, response){
 });
 
 app.delete("/deleteFromCart", (request, response) => {
-    const {userId, product_id} = request.query;
+    const { userId, product_id } = request.query;
     const db = dbService.getDbServiceInstance();
 
     const result = db.deleteFromCart_Fav(userId, product_id);
@@ -155,13 +158,13 @@ function addImagesToProducts(products, images) {
 }
 
 app.post('/insertProductJSON', (req, res) => {
-    const {name, sex, price, description, type_of_product,type,size,rating, season,collection_name, img} = req.body;
+    const { name, sex, price, description, type_of_product, type, size, rating, season, collection_name, img } = req.body;
     const db = dbService.getDbServiceInstance();
 
-    const result = db.addProduct(name, sex, price, description, type_of_product,type,size,rating, season,collection_name, img)
+    const result = db.addProduct(name, sex, price, description, type_of_product, type, size, rating, season, collection_name, img)
 
     result
-        .then((data) => {res.json({ data: data });})
+        .then((data) => { res.json({ data: data }); })
         .catch((err) => console.log(err));
 });
 
@@ -213,24 +216,24 @@ app.post('/insertProductFiles', multer.array('images', 4), (req, res) => {
 
 
 app.post('/insertIntoCart', (req, res) => {
-    const {userId, productId, is_cart} = req.body;
+    const { userId, productId, is_cart } = req.body;
     const db = dbService.getDbServiceInstance();
 
     const result = db.addIntoCart_Fav(userId, productId, is_cart)
 
     result
-        .then((data) => {res.json({ data: data });})
+        .then((data) => { res.json({ data: data }); })
         .catch((err) => console.log(err));
 });
 
 app.post('/insertIntoFav', (req, res) => {
-    const {userId, productId, is_cart} = req.body;
+    const { userId, productId, is_cart } = req.body;
     const db = dbService.getDbServiceInstance();
 
     const result = db.addIntoCart_Fav(userId, productId, is_cart)
 
     result
-        .then((data) => {res.json({ data: data });})
+        .then((data) => { res.json({ data: data }); })
         .catch((err) => console.log(err));
 });
 
@@ -257,8 +260,8 @@ app.get("/getAllProductsSizeForName", (request, response) => {
 // });
 
 
-app.get("/applyFilters", (req,res) =>{
-    const {priceFrom, priceTo, gender, sizes, types, seasons, orderBy} = req.query;
+app.get("/applyFilters", (req, res) => {
+    const { priceFrom, priceTo, gender, sizes, types, seasons, orderBy } = req.query;
     const db = dbService.getDbServiceInstance();
 
     const products = db.getProductsWithFilters(gender, sizes, types, seasons, priceFrom, priceTo, orderBy);
@@ -267,9 +270,12 @@ app.get("/applyFilters", (req,res) =>{
 
     Promise.all([products, images]).then(([p, i]) => {
         let result = addImagesToProducts(p, i);
-        res.json({data: result});
+        res.json({ data: result });
     });
 });
 
+const PORT = process.env.PORT || 3000;
 
-app.listen(3000);
+app.listen(PORT, () => {
+    console.log(`Listen at port ${PORT} : ${new Date().toLocaleString()}`);
+});
