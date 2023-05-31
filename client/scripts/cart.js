@@ -44,23 +44,26 @@ fetch(`http://localhost:3000/getCart/${decodedToken?.id}`)
 
 function loadCart(data){
     const basketLength = document.getElementById('basketLength');
-    basketLength.innerHTML = data.length;
+    basketLength.innerHTML = data.result.length;
+
+    const total_price = document.getElementById('totalPrice');
+    total_price.innerHTML = `$ ${data.total_price}`
 
     const cartBlock = document.getElementById('cart')
-    if (data.length === 0) {
+    if (data.result.length === 0) {
         cartBlock.innerHTML = "<h1>Корзина пуста</h1>";
         return;
     }
 
     let cartBlockHtml = "";
 
-    data.forEach(({ Id, Name, price, images }) => {
+    data.result.forEach(({ Id, Name, price, images }) => {
         cartBlockHtml += `
         <div class='cart-product' id="cart-product-${Id}">
             <img id="cart-product-image-${Id}" class="product-img" src="" alt="product ${Id}"/>
             <div>
                 <h4 class='product-cart-name'>${Name}</h4>
-                <span id='product_price-${price}'>$ ${price}</span>   
+                <span id='product_price-${price}' class="price">$ ${price}</span>   
             </div>
             <img src="../img/garbage.png" class="delete-from-cart-btn"  id="deleteFromCart" alt="garbage" data-id=${Id}>
         </div>`;
@@ -72,9 +75,11 @@ function loadCart(data){
                 img.src = data.url;
             })
             .catch(error => console.error(error));
-
     });
 
     cartBlock.innerHTML = cartBlockHtml;
+
+    const total_price1 = document.querySelectorAll('.price')
+    console.log(total_price1);
 }
 

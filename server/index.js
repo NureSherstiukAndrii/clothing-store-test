@@ -124,8 +124,8 @@ app.get("/getCart/:id", function(request, response){
     let result;
 
     Promise.all([products, images]).then(([p, i]) => {
-        result = addImagesToProducts(p, i);
-        response.json(result);
+        result = addImagesToProducts(p.products, i);
+        response.json({result , total_price: p.total_price});
     });
 });
 

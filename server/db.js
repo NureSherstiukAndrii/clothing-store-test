@@ -26,29 +26,27 @@ class DbService {
     //         console.error('ERROR:', err);
     //     }
     // }
+
     async getAllProductsFromCart(id) {
         try {
-            const pool = new sql.ConnectionPool(config);
-            const response = await new Promise((resolve, reject) => {
-                pool.connect().then(() => {
-                    const request = new sql.Request(pool);
-                    request.query(`SELECT Products.Id, Name, price FROM Products INNER JOIN Cart_Fav ON Products.id = Cart_Fav.p_id WHERE u_id = ${id} AND is_cart = 1;`).then((result, err) => {
-                        if(err){
-                            reject(new Error(err.message));
-                        }
-                        resolve(result.recordset);
-                        pool.close();
-                    }).catch((err) => {
-                        console.error(err);
-                        pool.close();
-                    });
-                })
-            })
-            return response
+            await sql.connect(config);
+            const result = await sql.query`SELECT Products.Id, Name, price FROM Products INNER JOIN Cart_Fav ON Products.id = Cart_Fav.p_id WHERE u_id = ${id} AND is_cart = 1`;
+            const total_price = await sql.query`SELECT SUM(Products.price) AS total_price
+                                                FROM Cart_Fav
+                                                JOIN Products ON Cart_Fav.p_id = Products.id
+                                                WHERE Cart_Fav.u_id = ${id};`;
+
+            return {
+                products: result.recordset,
+                total_price: total_price.recordset[0].total_price
+            };
         } catch (error) {
             console.log(error);
+        } finally {
+            sql.close();
         }
     }
+
 
     async getAllProducts() {
         try {
