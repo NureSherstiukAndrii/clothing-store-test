@@ -37,7 +37,7 @@ function loadProduct(data1) {
 
     let productHtmll = "";
 
-    data1.forEach(({Id, Name, price, description,type_of_product, amount, images, season}) => {
+    data1.forEach(({Id, Name, price, description,type_of_product, images, season}) => {
         productHtmll += `<div class = "main">`;
         productHtmll += `<div class="product-info">`;
         productHtmll += `<div class = "left">`;
@@ -94,28 +94,43 @@ function loadProduct(data1) {
         product.innerHTML = productHtmll;
 
     const addToCart = document.getElementById('addToCart');
-    const productId = document.getElementById('productId').textContent;
+
 
     addToCart.addEventListener('click', event => {
         event.preventDefault();
 
-        fetch('/insertIntoCart', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                userId: decodedToken.id,
-                productId: parseInt(productId.match(/\d+/)),
-                is_cart:1
-            }),
+        const name = document.getElementById('product_name').textContent;
+        const size = document.getElementById('size').value;
 
-        })
+        fetch(`http://localhost:3000/productForNameAndSize?name=${name}&size=${size}`)
             .then((response) => response.json())
-            .then(() => location.reload())
-            .catch(error => {
-                console.error(error);
+            .then((response) => {
+                fetch('/insertIntoCart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        userId: decodedToken.id,
+                        productId: response,
+                        is_cart:1
+                    }),
+
+                })
+                    .then((response) => response.json())
+                    .then(() =>     fetch(`http://localhost:3000/getCart/${decodedToken?.id}`)
+                        .then(response => response.json())
+                        .then(data => loadCart(data))
+                        .catch(error => {
+                            console.error('Произошла ошибка:', error);
+                        }))
+                    .catch(error => {
+                        console.error(error);
+                    });
             });
+
+
+
     })
 }
 

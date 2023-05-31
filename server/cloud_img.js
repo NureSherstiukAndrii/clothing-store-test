@@ -1,4 +1,5 @@
 const { Storage } = require('@google-cloud/storage');
+require("dotenv").config()
 
 const storageConfig = {
     projectId: process.env.PROJECT_ID,
@@ -30,7 +31,7 @@ class Cloud_img{
 
     config = {
         action: 'read',
-        expires: Date.now() + 180 * 60 * 1000 // дата истечения ссылки
+        expires: Date.now() + 180 * 60 * 100000 // дата истечения ссылки
     };
 
 

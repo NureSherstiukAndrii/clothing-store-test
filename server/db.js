@@ -17,20 +17,11 @@ class DbService {
         return instance ? instance : new DbService();
     }
 
-    // async getFilesFromStorage() {
-    //     try {
-    //         const [files] = await bucket.getFiles();
-    //         console.log('files', files);
-    //         return files;
-    //     } catch (err) {
-    //         console.error('ERROR:', err);
-    //     }
-    // }
 
     async getAllProductsFromCart(id) {
         try {
             await sql.connect(config);
-            const result = await sql.query`SELECT Products.Id, Name, price FROM Products INNER JOIN Cart_Fav ON Products.id = Cart_Fav.p_id WHERE u_id = ${id} AND is_cart = 1`;
+            const result = await sql.query`SELECT Products.Id, Name, price, size FROM Products INNER JOIN Cart_Fav ON Products.id = Cart_Fav.p_id WHERE u_id = ${id} AND is_cart = 1`;
             const total_price = await sql.query`SELECT SUM(Products.price) AS total_price
                                                 FROM Cart_Fav
                                                 JOIN Products ON Cart_Fav.p_id = Products.id
@@ -69,6 +60,18 @@ class DbService {
             return response
         } catch (error) {
             console.log(error);
+        }
+    }
+
+    async getProductForNameAndSize(name, size) {
+        try {
+            await sql.connect(config);
+            const result = await sql.query`SELECT Id FROM Products WHERE Name=${name} AND size=${size}`;
+            return result.recordset[0].Id
+        } catch (error) {
+            console.log(error);
+        } finally {
+            sql.close();
         }
     }
 
@@ -215,7 +218,13 @@ class DbService {
             return await new Promise((resolve, reject) => {
                 pool.connect().then(() => {
                     const request = new sql.Request(pool);
-                    request.query(`SELECT TOP 4 * FROM Products ORDER BY date_added DESC;`).then((result, err) => {
+                    request.query(`SELECT * FROM (
+    SELECT *, ROW_NUMBER() OVER (PARTITION BY Name ORDER BY date_added DESC) AS RowNum
+    FROM Products
+) AS subquery
+WHERE RowNum = 1
+ORDER BY date_added DESC
+OFFSET 0 ROWS FETCH NEXT 4 ROWS ONLY;`).then((result, err) => {
                         if (err) {
                             reject(new Error(err.message));
                         }
@@ -237,7 +246,14 @@ class DbService {
             return await new Promise((resolve, reject) => {
                 pool.connect().then(() => {
                     const request = new sql.Request(pool);
-                    request.query("SELECT TOP 4 * FROM Products ORDER BY rating DESC;").then((result, err) => {
+                    request.query(`SELECT * FROM (
+    SELECT *, ROW_NUMBER() OVER (PARTITION BY rating ORDER BY date_added DESC) AS RowNum
+    FROM Products
+) AS subquery
+WHERE RowNum = 1
+ORDER BY rating DESC
+OFFSET 0 ROWS FETCH NEXT 4 ROWS ONLY;
+`).then((result, err) => {
                         if (err) {
                             reject(new Error(err.message));
                         }

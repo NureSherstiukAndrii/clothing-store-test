@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const path = require('path');
-// const cloud_img = require("./cloud_img");
+const cloud_img = require("./cloud_img");
 const Multer = require('multer');
 const cookieParser = require('cookie-parser');
 const router = require('../server/router/authRouter');
@@ -25,7 +25,7 @@ app.use('/api', router);
 app.use('/', pageRouter)
 app.use(errorMiddleware);
 
-// const cloudImg = new cloud_img();
+const cloudImg = new cloud_img();
 
 const multer = Multer({
     storage: Multer.memoryStorage(),
@@ -74,6 +74,16 @@ app.get('/product/:id', (req, res) => {
         let result = addImagesToProducts(p, i);
         res.json({ data: result });
     });
+});
+
+app.get("/productForNameAndSize", function (request, response) {
+    const {name, size} = request.query;
+    const db = dbService.getDbServiceInstance();
+    let result = db.getProductForNameAndSize(name, size);
+
+    result
+        .then((data) => response.json(data))
+        .catch((err) => console.log(err));
 });
 
 app.get("/getAllProducts", function (request, response) {

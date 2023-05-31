@@ -19,9 +19,13 @@ function deleteFromCart(id){
         method: "DELETE",
     })
         .then((response) => response.json())
-        .then((data) => {
-            const cartProduct = document.getElementById(`cart-product-${id}`);
-            cartProduct.remove();
+        .then(() => {
+            fetch(`http://localhost:3000/getCart/${decodedToken?.id}`)
+                .then(response => response.json())
+                .then(data => loadCart(data))
+                .catch(error => {
+                    console.error('Произошла ошибка:', error);
+                })
         })
         .catch((error) => console.error(error));
 }
@@ -34,26 +38,32 @@ open_cart.addEventListener('click', () => {
     cart_container.classList.toggle('active');
 });
 
-fetch(`http://localhost:3000/getCart/${decodedToken?.id}`)
-    .then(response => response.json())
-    .then(data => loadCart(data))
-    .catch(error => {
-        console.error('Произошла ошибка:', error);
-    });
 
+if(decodedToken !== undefined){
+    const linkToCartPage = document.getElementById('linkToCartPage');
+    linkToCartPage.style.display = 'block'
+    fetch(`http://localhost:3000/getCart/${decodedToken?.id}`)
+        .then(response => response.json())
+        .then(data => loadCart(data))
+        .catch(error => {
+            console.error('Произошла ошибка:', error);
+        });
+}
 
 function loadCart(data){
     const basketLength = document.getElementById('basketLength');
     basketLength.innerHTML = data.result.length;
 
-    const total_price = document.getElementById('totalPrice');
-    total_price.innerHTML = `$ ${data.total_price}`
+
 
     const cartBlock = document.getElementById('cart')
-    if (data.result.length === 0) {
+    if (data.result.length === 0 || data.total_price === 0) {
         cartBlock.innerHTML = "<h1>Корзина пуста</h1>";
         return;
     }
+
+    const total_price = document.getElementById('totalPrice')
+    total_price.innerHTML = `$ ${data.total_price}`;
 
     let cartBlockHtml = "";
 
@@ -79,7 +89,5 @@ function loadCart(data){
 
     cartBlock.innerHTML = cartBlockHtml;
 
-    const total_price1 = document.querySelectorAll('.price')
-    console.log(total_price1);
 }
 

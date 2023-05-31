@@ -30,6 +30,7 @@
 }
 .cart-wrap.active {
     width: 400px;
+    overflow-y: auto;
 }
 .cart-product{
     display: flex;
@@ -54,4 +55,38 @@
 .cart-product > div{
     text-align: center;
     width: 80%;
+}
+.total-price{
+    display: flex;
+    flex-direction: column;
+    height: 160px;
+    align-items: center;
+    justify-content: space-between;
+}
+.total-price > div{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    border-bottom: 1px solid gray;
+}
+.total-price > div > h2{
+    padding-left: 15px;
+}
+.total-price > div > span {
+    padding-left: 15px;
+    font-size: 25px;
+}
+
+
+#linkToCartPage{
+    display: none;
+    text-decoration: none;
+    color: white;
+    background: #4A4A4A;
+    padding: 7px;
+}
+#linkToCartPage:hover{
+    transition: 0.5s;
+    cursor: pointer;
+    background: #282727;
 }
