@@ -19,7 +19,7 @@ document
     });
 
 function deleteFromCart(id){
-    fetch(`/deleteFromCart?userId=${check.id}&product_id=${id}`, {
+    fetch(`/deleteFromCart_Fav?userId=${check.id}&product_id=${id}&is_cart=1`, {
         method: "DELETE",
     })
         .then((response) => response.json())

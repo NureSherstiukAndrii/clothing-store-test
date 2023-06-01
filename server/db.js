@@ -17,6 +17,17 @@ class DbService {
         return instance ? instance : new DbService();
     }
 
+    async checkInFav(user_id, product_id) {
+        try {
+            await sql.connect(config);
+            const result = await sql.query`SELECT * FROM Cart_Fav WHERE u_id = ${user_id} AND p_id = ${product_id} AND is_cart=0`;
+            return result.recordset;
+        } catch (error) {
+            console.log(error);
+        } finally {
+            sql.close();
+        }
+    }
 
     async getAllProductsFromCart(id) {
         try {
@@ -25,8 +36,7 @@ class DbService {
             const total_price = await sql.query`SELECT SUM(Products.price) AS total_price
                                                 FROM Cart_Fav
                                                 JOIN Products ON Cart_Fav.p_id = Products.id
-                                                WHERE Cart_Fav.u_id = ${id};`;
-
+                                                WHERE Cart_Fav.u_id = ${id} AND is_cart = 1`;
             return {
                 products: result.recordset,
                 total_price: total_price.recordset[0].total_price
@@ -281,10 +291,10 @@ OFFSET 0 ROWS FETCH NEXT 4 ROWS ONLY;
         }
     }
 
-    async deleteFromCart_Fav(u_id, p_id){
+    async deleteFromCart_Fav(u_id, p_id, is_cart){
         try {
             await sql.connect(config);
-            const result = await sql.query`DELETE FROM Cart_Fav WHERE u_id = ${u_id} AND p_id = ${p_id}`;
+            const result = await sql.query`DELETE FROM Cart_Fav WHERE u_id = ${u_id} AND p_id = ${p_id} AND is_cart=${is_cart}`;
         } catch (error) {
             console.log(error);
         } finally {
@@ -293,13 +303,13 @@ OFFSET 0 ROWS FETCH NEXT 4 ROWS ONLY;
     }
 
 
-    async getAllProductsFromFav(id) {
+    async getAllProductsFromFavorite(id) {
         try {
             const pool = new sql.ConnectionPool(config);
             const response = await new Promise((resolve, reject) => {
                 pool.connect().then(() => {
                     const request = new sql.Request(pool);
-                    request.query(`SELECT * FROM Cart_Fav WHERE u_id = ${id} AND is_cart = 0`).then((result, err) => {
+                    request.query(`SELECT Products.Id, Name, price, size FROM Products INNER JOIN Cart_Fav ON Products.id = Cart_Fav.p_id WHERE u_id = ${id} AND is_cart = 1`).then((result, err) => {
                         if(err){
                             reject(new Error(err.message));
                         }

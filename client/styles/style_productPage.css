@@ -157,6 +157,15 @@ input[type="submit"]:hover {
     text-align: justify;
 }
 
+.size-fav{
+    display: flex;
+    width: 70%;
+    justify-content: space-between;
+}
+.size-fav > img {
+    width: 40px;
+    cursor: pointer;
+}
 footer{
     position: relative;
     border-top: 2px solid;
