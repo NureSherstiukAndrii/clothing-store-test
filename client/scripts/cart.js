@@ -15,13 +15,17 @@ document
     });
 
 function deleteFromCart(id){
-    fetch(`/deleteFromCart?userId=${decodedToken.id}&product_id=${id}`, {
+    fetch(`/deleteFromCart_Fav?userId=${decodedToken.id}&product_id=${id}&is_cart=1`, {
         method: "DELETE",
     })
         .then((response) => response.json())
-        .then((data) => {
-            const cartProduct = document.getElementById(`cart-product-${id}`);
-            cartProduct.remove();
+        .then(() => {
+            fetch(`http://localhost:3000/getCart/${decodedToken?.id}`)
+                .then(response => response.json())
+                .then(data => loadCart(data))
+                .catch(error => {
+                    console.error('Произошла ошибка:', error);
+                })
         })
         .catch((error) => console.error(error));
 }
@@ -34,33 +38,42 @@ open_cart.addEventListener('click', () => {
     cart_container.classList.toggle('active');
 });
 
-fetch(`http://localhost:3000/getCart/${decodedToken?.id}`)
-    .then(response => response.json())
-    .then(data => loadCart(data))
-    .catch(error => {
-        console.error('Произошла ошибка:', error);
-    });
 
+if(decodedToken !== undefined){
+    const linkToCartPage = document.getElementById('linkToCartPage');
+    linkToCartPage.style.display = 'block'
+    fetch(`http://localhost:3000/getCart/${decodedToken?.id}`)
+        .then(response => response.json())
+        .then(data => loadCart(data))
+        .catch(error => {
+            console.error('Произошла ошибка:', error);
+        });
+}
 
 function loadCart(data){
     const basketLength = document.getElementById('basketLength');
-    basketLength.innerHTML = data.length;
+    basketLength.innerHTML = data.result.length;
+
+
 
     const cartBlock = document.getElementById('cart')
-    if (data.length === 0) {
+    if (data.result.length === 0 || data.total_price === 0) {
         cartBlock.innerHTML = "<h1>Корзина пуста</h1>";
         return;
     }
 
+    const total_price = document.getElementById('totalPrice')
+    total_price.innerHTML = `$ ${data.total_price}`;
+
     let cartBlockHtml = "";
 
-    data.forEach(({ Id, Name, price, images }) => {
+    data.result.forEach(({ Id, Name, price, images }) => {
         cartBlockHtml += `
         <div class='cart-product' id="cart-product-${Id}">
             <img id="cart-product-image-${Id}" class="product-img" src="" alt="product ${Id}"/>
             <div>
                 <h4 class='product-cart-name'>${Name}</h4>
-                <span id='product_price-${price}'>$ ${price}</span>   
+                <span id='product_price-${price}' class="price">$ ${price}</span>   
             </div>
             <img src="../img/garbage.png" class="delete-from-cart-btn"  id="deleteFromCart" alt="garbage" data-id=${Id}>
         </div>`;
@@ -72,9 +85,9 @@ function loadCart(data){
                 img.src = data.url;
             })
             .catch(error => console.error(error));
-
     });
 
     cartBlock.innerHTML = cartBlockHtml;
+
 }
 

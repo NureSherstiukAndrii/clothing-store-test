@@ -3,6 +3,10 @@ document.addEventListener("DOMContentLoaded", function () {
         fetch(`http://localhost:3000/person/${decodedToken?.id}`)
             .then((response) => response.json())
             .then((response) => loadUser(response.data))
+
+        fetch(`http://localhost:3000/getFavorite/${decodedToken?.id}`)
+            .then((response) => response.json())
+            .then((response) => console.log(response))
     }
     else{
         const log = document.getElementById('goToLog');
@@ -11,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function loadUser(data1) {
-    const profile = document.getElementById('profileData')
+    const profile = document.getElementById('userData')
 
     if (data1.length === 0) {
         profile.innerHTML = "<a href='/login'>Авторизуйтесь</a>";
@@ -23,8 +27,6 @@ function loadUser(data1) {
     data1.forEach(({Name, e_mail, reg_date}) => {
 
         profileHtmll = `
-            <div class="user-data">
-
             <img src="../img/profile.png" alt="user-img">
 
                 <form>
@@ -41,16 +43,10 @@ function loadUser(data1) {
                     <button type="submit">Зберегти зміни</button>
                 </form>
 
-                <h4>Аккаунт створений - ${reg_date.slice(0,10)}</h4>
-            </div>
-
-            <div class="favorites">
-                <div>FDFDSFSF</div>
-            </div>
+                <h4>Аккаунт створений - ${reg_date.slice(0, 10)}</h4>
         `
-        
+
     });
 
     profile.innerHTML = profileHtmll;
 }
-

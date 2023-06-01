@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const path = require('path');
-// const cloud_img = require("./cloud_img");
+const cloud_img = require("./cloud_img");
 const Multer = require('multer');
 const cookieParser = require('cookie-parser');
 const router = require('../server/router/authRouter');
@@ -25,7 +25,7 @@ app.use('/api', router);
 app.use('/', pageRouter)
 app.use(errorMiddleware);
 
-// const cloudImg = new cloud_img();
+const cloudImg = new cloud_img();
 
 const multer = Multer({
     storage: Multer.memoryStorage(),
@@ -74,6 +74,16 @@ app.get('/product/:id', (req, res) => {
         let result = addImagesToProducts(p, i);
         res.json({ data: result });
     });
+});
+
+app.get("/productForNameAndSize", function (request, response) {
+    const {name, size} = request.query;
+    const db = dbService.getDbServiceInstance();
+    let result = db.getProductForNameAndSize(name, size);
+
+    result
+        .then((data) => response.json(data))
+        .catch((err) => console.log(err));
 });
 
 app.get("/getAllProducts", function (request, response) {
@@ -127,16 +137,41 @@ app.get("/getCart/:id", function (request, response) {
     let result;
 
     Promise.all([products, images]).then(([p, i]) => {
+        result = addImagesToProducts(p.products, i);
+        response.json({result , total_price: p.total_price});
+    });
+});
+
+app.get("/checkFav", (request, response) => {
+    const { user_id, product_id } = request.query;
+    const db = dbService.getDbServiceInstance();
+    let result = db.checkInFav(user_id, product_id);
+
+    result
+        .then((data) => response.json(data))
+        .catch((err) => console.log(err));
+});
+
+app.get("/getFavorite/:id", (request, response) => {
+    const { id } = request.params;
+    const db = dbService.getDbServiceInstance();
+    let products = db.getAllProductsFromFavorite(id);
+    let images = db.getProductImages();
+
+    let result;
+
+    Promise.all([products, images]).then(([p, i]) => {
         result = addImagesToProducts(p, i);
         response.json(result);
     });
 });
 
-app.delete("/deleteFromCart", (request, response) => {
-    const { userId, product_id } = request.query;
+
+app.delete("/deleteFromCart_Fav", (request, response) => {
+    const { userId, product_id, is_cart } = request.query;
     const db = dbService.getDbServiceInstance();
 
-    const result = db.deleteFromCart_Fav(userId, product_id);
+    const result = db.deleteFromCart_Fav(userId, product_id, +is_cart);
 
     result
         .then((data) => response.json({ success: data }))
@@ -215,18 +250,7 @@ app.post('/insertProductFiles', multer.array('images', 4), (req, res) => {
 // });
 
 
-app.post('/insertIntoCart', (req, res) => {
-    const { userId, productId, is_cart } = req.body;
-    const db = dbService.getDbServiceInstance();
-
-    const result = db.addIntoCart_Fav(userId, productId, is_cart)
-
-    result
-        .then((data) => { res.json({ data: data }); })
-        .catch((err) => console.log(err));
-});
-
-app.post('/insertIntoFav', (req, res) => {
+app.post('/insertIntoCart_Fav', (req, res) => {
     const { userId, productId, is_cart } = req.body;
     const db = dbService.getDbServiceInstance();
 
