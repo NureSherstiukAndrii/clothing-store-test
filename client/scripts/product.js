@@ -18,6 +18,17 @@ document.addEventListener("DOMContentLoaded", function (event) {
         });
 });
 
+
+document.addEventListener('click', event => {
+    if (event.target.className === 'edit-product-btn'){
+        console.log('delete', event.target.dataset.id);
+    }
+
+    if (event.target.className === 'delete-product-btn'){
+        console.log('delete', event.target.dataset.id);
+    }
+})
+
 function deleteFromFavorite(){
     fetch(`/deleteFromCart_Fav?userId=${decodedToken.id}&product_id=${productId}&is_cart=0`, {
         method: "DELETE",
@@ -74,8 +85,13 @@ function loadProduct(data1) {
             });
     }
 
+    const isAdmin = decodedToken?.role === "A";
 
-    data1.forEach(({Id, Name, price, description, type_of_product, images, season}) => {
+    data1.forEach(({Id, Name, price, description, type_of_product, images, season, gender}) => {
+        productHtmll += `<div class="manipulation-btn">`;
+        productHtmll += `${isAdmin ? `<button class="delete-product-btn" data-id=${Id}>Видалити</button>` : ''}`;
+        productHtmll += `${isAdmin ? `<button class="edit-product-btn" data-id=${Id}>Змінити</button>` : ''}`;
+        productHtmll += `</div>`;
         productHtmll += `<div class = "main">`;
         productHtmll += `<div class="product-info">`;
         productHtmll += `<div class = "left">`;
@@ -113,7 +129,7 @@ function loadProduct(data1) {
         productHtmll += `</div>`;
         productHtmll += `<div class="description">`;
         productHtmll += `<h2>Опис товару</h2>`;
-        productHtmll += `${description}`;
+        productHtmll += `<p id="product-description">${description}</p>`;
         productHtmll += `<br> <br>`;
         productHtmll += `<div id="season">`;
         productHtmll += `Рекомендована пора року: ${season}`;
@@ -181,34 +197,37 @@ function loadProduct(data1) {
             return;
         }
         else {
-                    fetch('/insertIntoCart_Fav', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            userId: decodedToken.id,
-                            productId: productId,
-                            is_cart: 0
-                        }),
+            fetch('/insertIntoCart_Fav', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userId: decodedToken.id,
+                    productId: productId,
+                    is_cart: 0
+                }),
 
-                    })
-                        .then((response) => response.json())
-                        .then(() => {
-                            if (decodedToken !== undefined) {
-                                fetch(`http://localhost:3000/checkFav?user_id=${decodedToken?.id}&product_id=${productId}`)
-                                    .then((response) => response.json())
-                                    .then((response) => {
-                                        const heart = document.getElementById('favBtn');
-                                        if (response.length === 0) {
-                                            heart.src = '../img/white-heart.png'
-                                        } else {
-                                            heart.src = '../img/red-heart.png'
-                                        }
-                                    });
-                            }
-                        })
+            })
+                .then((response) => response.json())
+                .then(() => {
+                    if (decodedToken !== undefined) {
+                        fetch(`http://localhost:3000/checkFav?user_id=${decodedToken?.id}&product_id=${productId}`)
+                            .then((response) => response.json())
+                            .then((response) => {
+                                const heart = document.getElementById('favBtn');
+                                if (response.length === 0) {
+                                    heart.src = '../img/white-heart.png'
+                                } else {
+                                    heart.src = '../img/red-heart.png'
+                                }
+                            });
+                    }
+                })
         }
     })
 }
+
+
+
 

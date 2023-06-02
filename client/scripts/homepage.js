@@ -1,5 +1,15 @@
+document.addEventListener('click', event => {
+    if (event.target.className === 'edit-product-btn'){
+        console.log('edit', event.target.dataset.id);
+    }
+
+    if (event.target.className === 'delete-product-btn'){
+        console.log('delete', event.target.dataset.id);
+    }
+})
+
+
 const loadProducts = (data, documentId) =>{
-    const isAdmin = decodedToken?.role === "A";
 
     const allProducts = document.getElementById(documentId);
 
@@ -16,11 +26,9 @@ const loadProducts = (data, documentId) =>{
         productHtml += `<img id="my-image-${Id}" src="" alt="product ${Id}"/>`;
         productHtml += `<h2 id='product_name-${Name}'>${Name}</h2>`;
         productHtml += `<span id='product_price-${price}'>$ ${price}</span>`
-        productHtml += `<div>`
-        productHtml += `${isAdmin ? `<button class="delete-product-btn" data-id=${Id}>Видалити</button>` : ''}`;
-        productHtml += `${isAdmin ? `<button class="edit-product-btn" data-id=${Id}>Змінити</button>` : ''}`;
-        productHtml += `</div>`
         productHtml += "</div>";
+        productHtml += `</div>`
+
 
         fetch(`/api/cloud-img?filename=${images[0]}`)
             .then(response => response.json())

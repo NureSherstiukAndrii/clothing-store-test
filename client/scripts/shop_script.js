@@ -45,21 +45,9 @@ addProductInput.addEventListener('click', event => {
     const size = sizeInput.value;
     sizeInput.value = "";
 
-    const ratingInput = document.querySelector("#rating");
-    const rating = ratingInput.value;
-    ratingInput.value = "";
-
-    const typeInput = document.querySelector("#type");
-    const type = typeInput.value;
-    typeInput.value = "";
-
     const seasonInput = document.querySelector("#season");
     const season = seasonInput.value;
     seasonInput.value = "";
-
-    const collection_nameInput = document.querySelector("#collection_name");
-    const collection_name = collection_nameInput.value;
-    collection_nameInput.value = "";
 
     const img = document.querySelector('#images');
 
@@ -81,11 +69,8 @@ addProductInput.addEventListener('click', event => {
         price: price,
         description: description,
         type_of_product: type_of_product,
-        type: type,
         size: size,
-        rating: rating,
         season: season,
-        collection_name: collection_name,
         img: images.join()
         }),
 
@@ -106,7 +91,6 @@ addProductInput.addEventListener('click', event => {
 });
 
 
-
 function loadHTMLProducts(data) {
     const uniqueNamesArray = Array.from(new Set(data.map(item => item.Name)));
     const uniqueObjectsArray = uniqueNamesArray.map(name => data.find(item => item.Name === name));
@@ -122,16 +106,17 @@ function loadHTMLProducts(data) {
 
     uniqueObjectsArray.forEach(({Id, Name, price, images}) => {
 
-
+        productHtml += `<div style="text-align: center;">`
         productHtml += `<div class='product' onclick="showProduct(${Id})">`;
         productHtml += `<img id="my-image-${Id}" src="" alt="product ${Id}"/>`;
         productHtml += `<h2 id='product_name-${Name}'>${Name}</h2>`;
         productHtml += `<span id='product_price-${price}'>$ ${price}</span>`
+        productHtml += "</div>"
         productHtml += `<div>`
         productHtml += decodedToken?.role === 'A' ? `<button class="delete-product-btn" data-id=${Id}>Видалити</button>` : '';
         productHtml += decodedToken?.role === 'A' ? `<button class="edit-product-btn" data-id=${Id}>Змінити</button>` : '';
         productHtml += `</div>`
-        productHtml += "</div>";
+        productHtml += `</div>`
 
 
         fetch(`/api/cloud-img?filename=${images[0]}`)

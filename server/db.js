@@ -309,7 +309,7 @@ OFFSET 0 ROWS FETCH NEXT 4 ROWS ONLY;
             const response = await new Promise((resolve, reject) => {
                 pool.connect().then(() => {
                     const request = new sql.Request(pool);
-                    request.query(`SELECT Products.Id, Name, price, size FROM Products INNER JOIN Cart_Fav ON Products.id = Cart_Fav.p_id WHERE u_id = ${id} AND is_cart = 1`).then((result, err) => {
+                    request.query(`SELECT Products.Id, Name, price, size FROM Products INNER JOIN Cart_Fav ON Products.id = Cart_Fav.p_id WHERE u_id = ${id} AND is_cart = 0`).then((result, err) => {
                         if(err){
                             reject(new Error(err.message));
                         }

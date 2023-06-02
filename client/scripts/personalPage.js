@@ -6,7 +6,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         fetch(`http://localhost:3000/getFavorite/${decodedToken?.id}`)
             .then((response) => response.json())
-            .then((response) => console.log(response))
+            .then((response) => loadFavorites(response))
+
+        const userData = document.getElementById('userData');
+        const favorites =  document.getElementById('userFavs');
+
+        userData.style.display = 'flex';
+        favorites.style.display = 'flex';
     }
     else{
         const log = document.getElementById('goToLog');
@@ -40,7 +46,7 @@ function loadUser(data1) {
                         <input type="text" id="email" value="${e_mail}">
                     </div>
 
-                    <button type="submit">Зберегти зміни</button>
+                    <button type="submit" id="changeUserBtn">Зберегти зміни</button>
                 </form>
 
                 <h4>Аккаунт створений - ${reg_date.slice(0, 10)}</h4>
@@ -49,4 +55,60 @@ function loadUser(data1) {
     });
 
     profile.innerHTML = profileHtmll;
+
+    const changeUserBtn = document.getElementById('changeUserBtn');
+
+    changeUserBtn.addEventListener('click', () => {
+
+        const nameInput = document.querySelector("#name");
+        const name = nameInput.value;
+        nameInput.value = "";
+
+        const emailInput = document.querySelector("#email");
+        const email = emailInput.value;
+        emailInput.value = "";
+
+
+        fetch('/api/changeUserData', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                userId: decodedToken.id,
+                name: name,
+                email: email,
+            }),
+
+        })
+            .then((response) => response.json())
+            .catch(error => {
+                console.error(error);
+            });
+    })
+}
+
+
+function loadFavorites(data){
+    const userFavs = document.getElementById('userFavs');
+
+    let favoriteProduct = "";
+
+    data.forEach(({Id, Name, price, images}) => {
+            favoriteProduct += `
+                <div class="favorite-block">
+                    <img id="my-image-${Id}" src="" alt="product-${Id}">
+                </div>
+            `
+
+        fetch(`/api/cloud-img?filename=${images[0]}`)
+            .then(response => response.json())
+            .then(data => {
+                const img = document.getElementById(`my-image-${Id}`);
+                img.src = data.url;
+            })
+            .catch(error => console.error(error));
+    })
+
+    userFavs.innerHTML += favoriteProduct;
 }

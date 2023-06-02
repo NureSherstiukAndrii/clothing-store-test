@@ -194,3 +194,20 @@ footer{
     padding-top: 10%;
     justify-content: center;
 }
+.manipulation-btn{
+    position: absolute;
+    top: 140px;
+    right: 200px;
+}
+
+.manipulation-btn > button{
+    padding: 7px;
+    margin:10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.manipulation-btn > button:hover{
+    transition: 0.5s;
+    filter: brightness(0.6);
+}

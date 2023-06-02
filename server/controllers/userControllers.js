@@ -1,6 +1,7 @@
 const userService = require('../service/userService');
 const { validationResult } = require('express-validator');
 const ApiError = require('../exeptions/apiErrors')
+const sql = require("mssql");
 
 class UserControllers {
     async registration(req, res, next) {
@@ -67,9 +68,20 @@ class UserControllers {
             next(e);
         }
     }
+
     async getUser(req, res, next) {
         try {
             return res.json(req.user)
+        } catch (e) {
+            next(e)
+        }
+    }
+
+
+    async changeUserData(req, res, next) {
+        try {
+            const {name, email, userId} = req.body;
+            const updateUser = await userService.changeUserInfo(name, email, userId);
         } catch (e) {
             next(e)
         }

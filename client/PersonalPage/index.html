@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../styles/style_about.css">
     <link rel="stylesheet" href="../styles/personal_page.css">
     <link rel="stylesheet" href="../styles/cart.css">
+    <link rel="stylesheet" href="../styles/slick.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
@@ -45,7 +46,7 @@
     <div class="cart-wrap" id="cart-container">
         <div class="cart-header">
             <button class="icon" id="close"><img src="../img/cart-arrow.png" alt=""></button>
-            <h2>Cart</h2>
+            <h2>Корзина</h2>
         </div>
         <div id="cart"></div>
 
@@ -68,6 +69,7 @@
         <a href="/login">Авторизуватися</a>
     </div>
 </div>
+</div>
 
 
 <footer>
@@ -86,10 +88,16 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
-<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script src="../scripts/validateToken.js"></script>
 <script src="../scripts/personalPage.js"></script>
 <script src="../scripts/cart.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="../scripts/slick.min.js"></script>
+<script>
+    $('.slider').slick({
+        slidesToShow: 1,
+    })
+</script>
 
 </body>
 </html>

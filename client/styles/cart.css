@@ -1,5 +1,5 @@
 .cart-wrap{
-    background-color: lightgray;
+    background-color: white;
     height: 100vh;
     overflow: hidden;
     transition: width 0.5s ease-out;
@@ -9,7 +9,7 @@
     z-index: 1;
 }
 .cart-header{
-    background: deepskyblue;
+    background: #F5F5F5;
     display: flex;
     align-items: center;
     height: 15%;

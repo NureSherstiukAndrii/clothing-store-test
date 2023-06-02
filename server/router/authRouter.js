@@ -16,6 +16,10 @@ router.post('/registration',
     .get('/users', authMiddleware, userController.getUsers)
     .post('/refresh', userController.refresh)
     .post('/registrateworker', validationMiddleware.validateRegistrationData(), workerController.registrateWorker)
-    .get('/', authMiddleware, userController.getUser);
+    .get('/', authMiddleware, userController.getUser)
+    .patch('/changeUserData',
+        body('mail').isEmail(),
+        body('password').isLength({ min: 8, max: 32 }),
+        userController.changeUserData);
 
 module.exports = router;

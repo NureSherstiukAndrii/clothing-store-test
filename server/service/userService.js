@@ -97,6 +97,16 @@ class UserService {
         }
     }
 
+    async changeUserInfo(name, email, userId) {
+        try {
+            const pool = await sql.connect(config);
+            const result = await pool.request().query(`UPDATE Users SET Name = '${name}' , e_mail = '${email}' WHERE Id = ${userId}`);
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    }
+
 }
 
 

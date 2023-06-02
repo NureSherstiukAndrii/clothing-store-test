@@ -21,33 +21,32 @@
     <h3>Заповніть інформацію про товар</h3>
     <div class="modal-content">
         <div class="modal-content__item">
-            <label for="name">Имя</label><input type="text" id="name">
+            <label for="name">Назва</label><input type="text" id="name">
         </div>
         <div class="modal-content__item">
-            <label for="sex">Гендер</label>
+            <label for="sex">Стать</label>
             <select id="sex" style="width: 208px;" >
                 <option value="Для чоловіка">Для чоловіка</option>
                 <option value="Для жінки">Для жінки</option>
             </select>
         </div>
         <div class="modal-content__item">
-            <label for="price">Цена</label><input type="text" id="price">
+            <label for="price">Ціна</label><input type="text" id="price">
         </div>
         <div class="modal-content__item">
-            <label for="description">Описание</label><input type="text" id="description">
+            <label for="description">Опис</label><input type="text" id="description">
         </div>
         <div class="modal-content__item">
-            <label for="type_of_product">Тип продукта</label><input type="text" id="type_of_product">
-        </div>
-        <div class="modal-content__item">
-            <label for="type">Тип(одежда обувь)</label>
-            <select id="type" style="width: 208px;" >
-                <option value="Одяг">Одяг</option>
-                <option value="Взуття">Взуття</option>
+            <label for="type_of_product">Тип продукта</label>
+            <select id="type_of_product" style="width: 208px;" >
+                <option value="Куртка">Куртка</option>
+                <option value="Футболка">Футболка</option>
+                <option value="Джинси">Джинси</option>
+                <option value="Худі">Джинси</option>
             </select>
         </div>
         <div class="modal-content__item">
-            <label for="size">Размер</label>
+            <label for="size">Розмір</label>
             <select id="size" style="width: 208px;" >
                 <option value="S">S</option>
                 <option value="M">M</option>
@@ -56,23 +55,19 @@
             </select>
         </div>
         <div class="modal-content__item">
-            <label for="rating">рейтинг</label><input type="text" id="rating">
-        </div>
-        <div class="modal-content__item">
             <label for="season">Сезон</label>
             <select id="season" style="width: 208px;" >
                 <option value="Осінь">Осінь</option>
                 <option value="Весна">Весна</option>
                 <option value="Літо">Літо</option>
                 <option value="Зима">Зима</option>
-                <option value="Всесезонний">Всесезонний</option>
             </select>
         </div>
         <div class="modal-content__item">
-            <label for="collection_name">Имя коллекции</label><input type="text" id="collection_name">
+            <label for="count_of_product">Кількість товару</label><input type="file" id="count_of_product" multiple>
         </div>
         <div class="modal-content__item">
-            <label for="images">картинка</label><input type="file" id="images" multiple>
+            <label for="images">Картинка</label><input type="file" id="images" multiple>
         </div>
         <div class="add-res">
             <input
@@ -85,23 +80,6 @@
         </div>
     </div>
 </form>
-
-<!--<form id="editPersonalData" class="formData1">-->
-<!--    <span class="close1" onclick="editData()">&times;</span>-->
-<!--    <h3>Змінити інформацію про тур</h3>-->
-<!--    <div class="modal-content__item">-->
-<!--        <label for="edit_id">id</label><input type="text" id="edit_id">-->
-<!--    </div>-->
-<!--    <div class="modal-content__item">-->
-<!--        <label for="edit_name">name</label><input type="text" id="edit_name">-->
-<!--    </div>-->
-<!--    <input-->
-<!--            type="submit"-->
-<!--            value="редактировать тур"-->
-<!--            id="edit"-->
-<!--            onclick="editData()"-->
-<!--    />-->
-<!--</form>-->
 
 
 <header>
@@ -136,7 +114,7 @@
 <div class="cart-wrap" id="cart-container">
     <div class="cart-header">
         <button class="icon" id="close"><img src="../img/cart-arrow.png" alt=""></button>
-        <h2>Cart</h2>
+        <h2>Корзина</h2>
     </div>
     <div id="cart"></div>
 
