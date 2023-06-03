@@ -24,14 +24,13 @@ enter.addEventListener('click', event => {
     })
         .then(response => response.json())
         .then(data => {
-            console.log(data.user);
             if (data.accessToken) {
                 localStorage.setItem('accessToken', data.accessToken);
                 localStorage.setItem('userId', data.user.id);
 
                 window.location.href = '/';
             } else {
-                alert('Токен не найден');
+                alert('Невірий логін чи пароль!!!');
             }
         })
         .catch(error => {

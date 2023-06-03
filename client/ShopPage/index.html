@@ -21,24 +21,27 @@
     <h3>Заповніть інформацію про товар</h3>
     <div class="modal-content">
         <div class="modal-content__item">
-            <label for="name">Назва</label><input type="text" id="name">
+            <label for="name">Назва</label>
+            <input type="text" id="name" required>
         </div>
         <div class="modal-content__item">
             <label for="sex">Стать</label>
-            <select id="sex" style="width: 208px;" >
+            <select id="sex" style="width: 208px;" required>
                 <option value="M">Для чоловіка</option>
                 <option value="F">Для жінки</option>
             </select>
         </div>
         <div class="modal-content__item">
-            <label for="price">Ціна</label><input type="text" id="price">
+            <label for="price">Ціна</label>
+            <input type="text" id="price" required>
         </div>
         <div class="modal-content__item">
-            <label for="description">Опис</label><input type="text" id="description">
+            <label for="description">Опис</label>
+            <input type="text" id="description" required>
         </div>
         <div class="modal-content__item">
             <label for="type_of_product">Тип продукта</label>
-            <select id="type_of_product" style="width: 208px;" >
+            <select id="type_of_product" style="width: 208px;" required>
                 <option value="Куртка">Куртка</option>
                 <option value="Футболка">Футболка</option>
                 <option value="Джинси">Джинси</option>
@@ -47,7 +50,7 @@
         </div>
         <div class="modal-content__item">
             <label for="size">Розмір</label>
-            <select id="size" style="width: 208px;" >
+            <select id="size" style="width: 208px;" required>
                 <option value="S">S</option>
                 <option value="M">M</option>
                 <option value="L">L</option>
@@ -56,7 +59,7 @@
         </div>
         <div class="modal-content__item">
             <label for="season">Сезон</label>
-            <select id="season" style="width: 208px;" >
+            <select id="season" style="width: 208px;" required>
                 <option value="Осінь">Осінь</option>
                 <option value="Весна">Весна</option>
                 <option value="Літо">Літо</option>
@@ -64,22 +67,20 @@
             </select>
         </div>
         <div class="modal-content__item">
-            <label for="count_of_product">Кількість товару</label><input type="number" id="count_of_product" multiple>
+            <label for="count_of_product">Кількість товару</label>
+            <input type="number" id="count_of_product" required>
         </div>
         <div class="modal-content__item">
-            <label for="images">Картинка</label><input type="file" id="images" multiple>
+            <label for="images">Картинка</label>
+            <input type="file" id="images" multiple required>
         </div>
         <div class="add-res">
-            <input
-                    type="submit"
-                    value="Додати продукт"
-                    id="addProductInput"
-                    onclick="closeModal()"
-            />
+            <input type="submit" value="Додати продукт" id="addProductInput" onclick="closeModal()" />
             <input type="reset" value="Скинути дані" />
         </div>
     </div>
 </form>
+
 
 
 <header>

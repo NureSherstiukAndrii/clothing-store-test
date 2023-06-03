@@ -43,7 +43,7 @@ function loadUser(data1) {
                     </div>
                     <div class="user-data-details">
                         <label for="email">Пошта</label>
-                        <input type="text" id="email" value="${e_mail}">
+                        <input type="email" id="email" value="${e_mail}">
                     </div>
 
                     <button type="submit" id="changeUserBtn">Зберегти зміни</button>
