@@ -1,103 +1,97 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="../styles/style_about.css">
-    <link rel="stylesheet" href="../styles/personal_page.css">
-    <link rel="stylesheet" href="../styles/cart.css">
-    <link rel="stylesheet" href="../styles/slick.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
-    <title>Личний кабинет</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="../styles/style_about.css">
+        <link rel="stylesheet" href="../styles/personal_page.css">
+        <link rel="stylesheet" href="../styles/cart.css">
+        <link rel="stylesheet" href="../styles/slick.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+        <title>Личний кабинет</title>
+    </head>
+    <body>
 
-<header>
-    <div class="header-content">
-        <div class="logo">
-            <a href="/"><img src="../img/logo.png" alt="logo"></a>
-            <span>Our logo</span>
-        </div>
-
-        <div class="navigation">
-            <div class="navigation-block">
-                <a href="/about" class="navigation-block-btn">Про нас</a>
-                <a href="/shop" class="navigation-block-btn">Магазин</a>
-                <a href="/size" class="navigation-block-btn">Розмірна сітка</a>
-                <a href="/contacts" class="navigation-block-btn">Зв'язок з нами</a>
-            </div>
-            <div class="navigation-account-links">
-                <div style="display: flex">
-                    <a href="/personalPage"><img src="../img/account.png" alt="account"></a>
-                    <a href="/login" id="enter-btn">Увійти</a>
-                    <a href="/login" id="exit-btn">Вийти</a>
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <a href="/"><img src="../img/logo.png" alt="logo"></a>
+                    <span>Our logo</span>
                 </div>
-                <div>
-                    <a id="open"><img src="../img/basket.png" alt="basket"></a><span id="basketLength">0</span>
+
+                <div class="navigation">
+                    <div class="navigation-block">
+                        <a href="/about" class="navigation-block-btn">Про нас</a>
+                        <a href="/shop" class="navigation-block-btn">Магазин</a>
+                        <a href="/size" class="navigation-block-btn">Розмірна сітка</a>
+                        <a href="/contacts" class="navigation-block-btn">Зв'язок з нами</a>
+                    </div>
+                    <div class="navigation-account-links">
+                        <div style="display: flex">
+                            <a href="/personalPage"><img src="../img/account.png" alt="account"></a>
+                            <a href="/login" id="enter-btn">Увійти</a>
+                            <a href="/login" id="exit-btn">Вийти</a>
+                        </div>
+                        <div>
+                            <a id="open"><img src="../img/basket.png" alt="basket"></a><span id="basketLength">0</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class="cart-wrap" id="cart-container">
-        <div class="cart-header">
-            <button class="icon" id="close"><img src="../img/cart-arrow.png" alt=""></button>
-            <h2>Корзина</h2>
-        </div>
-        <div id="cart"></div>
+            <div class="cart-wrap" id="cart-container">
+                <div class="cart-header">
+                    <button class="icon" id="close"><img src="../img/cart-arrow.png" alt=""></button>
+                    <h2>Корзина</h2>
+                </div>
+                <div id="cart"></div>
 
-        <div class="total-price">
-            <div>
-                <h2>Загальна ціна</h2>
-                <span id="totalPrice"></span>
+                <div class="total-price">
+                    <div>
+                        <h2>Загальна ціна</h2>
+                        <span id="totalPrice"></span>
+                    </div>
+                    <a href="/cart" id="linkToCartPage">Переглянути корзину</a>
+                </div>
             </div>
-            <a href="/cart" id="linkToCartPage">Переглянути корзину</a>
+
+        </header>
+
+        <div id="profileData" class="wrapper">
+            <div class="user-data" id="userData"></div>
+            <div class="favorites" id="userFavs"></div>
+            <div id="goToLog">
+                <h1>Для того щоб користуватися особостим кабінетом вам потрібно</h1>
+                <a href="/login">Авторизуватися</a>
+            </div>
         </div>
-    </div>
 
-</header>
+        <footer>
+            <img src="../img/logo.png" alt="logo">
 
-<div id="profileData" class="wrapper">
-    <div class="user-data" id="userData"></div>
-    <div class="favorites" id="userFavs"></div>
-    <div id="goToLog">
-        <h1>Для того щоб користуватися особостим кабінетом вам потрібно</h1>
-        <a href="/login">Авторизуватися</a>
-    </div>
-</div>
-</div>
+            <div class="mail">
+                <span>Свої питання пишить нам на пошту: </span>
+                <a href="mailto:ourchop@gmail.com">ourchop@gmail.com</a>
+            </div>
+
+            <div class="social-media">
+                <img src="../img/instagram.png" alt="insta">
+                <img src="../img/telegram.png" alt="tg">
+                <img src="../img/tiktok.png" alt="tiktok">
+            </div>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+        <script src="../scripts/validateToken.js"></script>
+        <script src="../scripts/personalPage.js"></script>
+        <script src="../scripts/cart.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+        <script src="../scripts/slick.min.js"></script>
 
 
-<footer>
-    <img src="../img/logo.png" alt="logo">
-
-    <div class="mail">
-        <span>Свої питання пишить нам на пошту: </span>
-        <a href="mailto:ourchop@gmail.com">ourchop@gmail.com</a>
-    </div>
-
-    <div class="social-media">
-        <img src="../img/instagram.png" alt="insta">
-        <img src="../img/telegram.png" alt="tg">
-        <img src="../img/tiktok.png" alt="tiktok">
-    </div>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
-<script src="../scripts/validateToken.js"></script>
-<script src="../scripts/personalPage.js"></script>
-<script src="../scripts/cart.js"></script>
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-<script src="../scripts/slick.min.js"></script>
-<script>
-    $('.slider').slick({
-        slidesToShow: 1,
-    })
-</script>
-
-</body>
+    </body>
 </html>

@@ -94,10 +94,20 @@ function loadFavorites(data){
 
     let favoriteProduct = "";
 
-    data.forEach(({Id, Name, price, images}) => {
+    data.forEach(({Id, Name, price, size, images}) => {
             favoriteProduct += `
-                <div class="favorite-block">
-                    <img id="my-image-${Id}" src="" alt="product-${Id}">
+                <div class="favorite-block" onclick="showProduct(${Id})">
+                    <div class="favorite-block-info">
+                           <img id="my-image-${Id}" src="" alt="product-${Id}"> 
+                           <div class="main-info">
+                                    <h3>${Name}</h3>
+                                    <div>
+                                         <h3>$ ${price}</h3>
+                                         <span>Розмір: ${size}</span>
+                                    </div>
+                           </div>
+                    </div>
+
                 </div>
             `
 
@@ -111,4 +121,19 @@ function loadFavorites(data){
     })
 
     userFavs.innerHTML += favoriteProduct;
+
+
+    $('#userFavs').slick({
+        infinite: true,
+        autoplay: true,
+        speed: 500,
+        fade: true,
+        cssEase: 'linear',
+    });
+
+
+}
+
+function showProduct(productId) {
+    window.location.href = `/products/${productId}`;
 }

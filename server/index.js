@@ -239,15 +239,15 @@ app.post('/insertProductFiles', multer.array('images', 4), (req, res) => {
 //         .catch((err) => console.log(err));
 // });
 //
-// app.patch("/updateTour", (request, response) => {
-//     console.log(request);
-//     const {id, name} = request.body;
-//     const db = dbService.getDbServiceInstance();
-//     const result = db.editTour(+id, name);
-//     result
-//         .then((data) => response.json({ success: data }))
-//         .catch((err) => console.log(err));
-// });
+app.patch("/updateProductJSON", (request, response) => {
+    console.log(request);
+    // const {id, name} = request.body;
+    // const db = dbService.getDbServiceInstance();
+    // const result = db.editTour(+id, name);
+    // result
+    //     .then((data) => response.json({ success: data }))
+    //     .catch((err) => console.log(err));
+});
 
 
 app.post('/insertIntoCart_Fav', (req, res) => {

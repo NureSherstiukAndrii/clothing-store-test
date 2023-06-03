@@ -15,7 +15,7 @@
 <body>
 
 <form id="editProductData">
-  <span class="close" onclick="closeModal()">&times;</span>
+  <span class="close" onclick="closeEditModal()">&times;</span>
   <h3>Змінити інформацію про товар</h3>
   <div class="modal-content">
     <div class="modal-content__item">
@@ -62,7 +62,7 @@
       </select>
     </div>
     <div class="modal-content__item">
-      <label for="edit_count_of_product">Кількість товару</label><input type="file" id="edit_count_of_product" multiple>
+      <label for="edit_count_of_product">Кількість товару</label><input type="number" id="edit_count_of_product" multiple>
     </div>
     <div class="modal-content__item">
       <label for="edit_images">Картинка</label><input type="file" id="edit_images" multiple>
@@ -72,7 +72,7 @@
               type="submit"
               value="Змінити продукт"
               id="editProductInput"
-              onclick="closeModal()"
+              onclick="closeEditModal()"
       />
       <input type="reset" value="Скинути дані" />
     </div>
@@ -149,5 +149,6 @@
 <script src="../scripts/validateToken.js"></script>
 <script src="../scripts/product.js"></script>
 <script src="../scripts/cart.js"></script>
+<script src="../scripts/modal.js"></script>
 </body>
 </html>

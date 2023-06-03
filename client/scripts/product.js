@@ -1,5 +1,5 @@
 const productId = window.location.pathname.split('/')[2];
-document.addEventListener("DOMContentLoaded", function (event) {
+document.addEventListener("DOMContentLoaded", () => {
 
     const loader = document.getElementById("loader");
     loader.style.display = "flex";
@@ -18,16 +18,112 @@ document.addEventListener("DOMContentLoaded", function (event) {
         });
 });
 
+const insertInputs = () =>{
+
+    const name = document.getElementById('product_name').textContent;
+    const size = document.getElementById('size').value;
+
+    fetch(`http://localhost:3000/productForNameAndSize?name=${name}&size=${size}`)
+        .then((response) => response.json())
+        .then((response) => {
+
+            fetch(`http://localhost:3000/product/${response}`)
+                .then((response) => response.json())
+                .then((response) => {
+                    const editModal = document.getElementById('editProductData');
+                    editModal.style.display = 'flex'
+
+                    const genders = {
+                        M: 'Для чоловіка',
+                        F: 'Для жінки'
+                    }
+
+                    const edit_name = document.querySelector("#edit_name");
+                    const edit_sex = document.querySelector("#edit_sex");
+                    const edit_price = document.querySelector("#edit_price");
+                    const edit_description = document.querySelector("#edit_description");
+                    const edit_type_of_product = document.querySelector("#edit_type_of_product");
+                    const edit_size = document.querySelector("#edit_size");
+                    const edit_season = document.querySelector("#edit_season");
+                    const edit_count_of_product = document.querySelector("#edit_count_of_product");
+
+                    edit_name.value = response.data[0].Name;
+                    edit_sex.value = genders[response.data[0].gender];
+                    edit_price.value = response.data[0].price;
+                    edit_description.value = response.data[0].description;
+                    edit_type_of_product.value = response.data[0].type_of_product;
+                    edit_size.value = response.data[0].size;
+                    edit_season.value = response.data[0].season;
+                    edit_count_of_product.value = response.data[0].amount;
+                })
+        })
+}
 
 document.addEventListener('click', event => {
     if (event.target.className === 'edit-product-btn'){
-        console.log('delete', event.target.dataset.id);
+        insertInputs()
     }
-
     if (event.target.className === 'delete-product-btn'){
-        console.log('delete', event.target.dataset.id);
+        // deleteProduct()
     }
 })
+
+const updateProductBtn = document.getElementById('editProductInput');
+
+updateProductBtn.addEventListener('click', event =>{
+    event.preventDefault();
+
+    const edit_name = document.querySelector("#edit_name").value;
+    const edit_sex = document.querySelector("#edit_sex").value;
+    const edit_price = document.querySelector("#edit_price").value;
+    const edit_description = document.querySelector("#edit_description").value;
+    const edit_type_of_product = document.querySelector("#edit_type_of_product").value;
+    const edit_size = document.querySelector("#edit_size").value;
+    const edit_season = document.querySelector("#edit_season").value;
+    const edit_count_of_product = document.querySelector("#edit_count_of_product").value;
+
+    const img = document.querySelector('#edit_images');
+
+    const formData = new FormData();
+    const images = [];
+    for (let i = 0; i < img.files.length; i++) {
+        images.push(img.files[i].name)
+        formData.append('images', img.files[i]);
+    }
+
+    fetch('/updateProductJSON', {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: edit_name,
+            sex: edit_sex,
+            price: edit_price,
+            description: edit_description,
+            type_of_product: edit_type_of_product,
+            size: edit_size,
+            season: edit_season,
+            amount:edit_count_of_product,
+            img: images.join()
+        }),
+
+    })
+        .then((response) => response.json())
+        .catch(error => {
+            console.error(error);
+        });
+
+    fetch('/UpdateProductFiles', {
+        method: 'PATCH',
+        body: formData,
+    })
+        .then((response) => response.json())
+        .catch(error => {
+            console.error(error);
+        });
+})
+
 
 function deleteFromFavorite(){
     fetch(`/deleteFromCart_Fav?userId=${decodedToken.id}&product_id=${productId}&is_cart=0`, {
@@ -87,7 +183,7 @@ function loadProduct(data1) {
 
     const isAdmin = decodedToken?.role === "A";
 
-    data1.forEach(({Id, Name, price, description, type_of_product, images, season, gender}) => {
+    data1.forEach(({Id, Name, price, description, type_of_product, images, season}) => {
         productHtmll += `<div class="manipulation-btn">`;
         productHtmll += `${isAdmin ? `<button class="delete-product-btn" data-id=${Id}>Видалити</button>` : ''}`;
         productHtmll += `${isAdmin ? `<button class="edit-product-btn" data-id=${Id}>Змінити</button>` : ''}`;
@@ -194,7 +290,6 @@ function loadProduct(data1) {
 
         if(heart.src.replace(/^.*:\/\/[^/]+/, '..') === "../img/red-heart.png"){
             deleteFromFavorite()
-            return;
         }
         else {
             fetch('/insertIntoCart_Fav', {

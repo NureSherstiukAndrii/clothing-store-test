@@ -1,10 +1,19 @@
-const modal = document.getElementById('productData')
+const modal = document.getElementById('productData');
+const editModal = document.getElementById('editProductData');
 
 function openModal() {
         modal.style.display = "flex";
-        document.body.style.backgroundColor = "rgba(0, 0, 0, 0.5);";
 }
 
 function closeModal() {
         modal.style.display = "none";
+
+}
+
+function openEditModal(){
+        editModal.style.display = "flex";
+}
+
+function closeEditModal() {
+        editModal.style.display = "none";
 }
