@@ -282,7 +282,7 @@ function loadProduct(data1) {
     })
 
 
-    if(decodedToken.role === 'A'){
+    if(decodedToken?.role === 'A'){
         const deleteBtn = document.getElementById('deleteProductBtn');
         console.log(deleteBtn);
         deleteBtn.addEventListener('click', event => {
