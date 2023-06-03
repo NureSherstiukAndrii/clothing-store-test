@@ -282,16 +282,19 @@ function loadProduct(data1) {
     })
 
 
-    const deleteBtn = document.getElementById('deleteProductBtn');
+    if(decodedToken.role === 'A'){
+        const deleteBtn = document.getElementById('deleteProductBtn');
+        console.log(deleteBtn);
+        deleteBtn.addEventListener('click', event => {
+            event.preventDefault();
 
-    deleteBtn.addEventListener('click', event => {
-        event.preventDefault();
-
-        fetch(`/deleteProduct/${productId}`, {
-            method: "DELETE",
+            fetch(`/deleteProduct/${productId}`, {
+                method: "DELETE",
+            })
+                .then(response => response.json())
         })
-            .then(response => response.json())
-    })
+    }
+
 
     const heart = document.getElementById('favBtn');
 
