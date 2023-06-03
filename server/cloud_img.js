@@ -14,17 +14,6 @@ const storage = new Storage(storageConfig);
 
 const bucketName = process.env.BUCKETNAME;
 
-
-// async function getFilesFromStorage() {
-//     try {
-//         const [files] = await storage.bucket(bucketName).getFiles();
-//         console.log('files', files);
-//         return files;
-//     } catch (err) {
-//         console.error('ERROR:', err);
-//     }
-// }
-
 class Cloud_img{
 
     bucket = storage.bucket(bucketName);

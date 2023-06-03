@@ -61,10 +61,7 @@ const insertInputs = () =>{
 
 document.addEventListener('click', event => {
     if (event.target.className === 'edit-product-btn'){
-        insertInputs()
-    }
-    if (event.target.className === 'delete-product-btn'){
-        // deleteProduct()
+        insertInputs();
     }
 })
 
@@ -97,6 +94,7 @@ updateProductBtn.addEventListener('click', event =>{
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+            productId: productId,
             name: edit_name,
             sex: edit_sex,
             price: edit_price,
@@ -114,8 +112,8 @@ updateProductBtn.addEventListener('click', event =>{
             console.error(error);
         });
 
-    fetch('/UpdateProductFiles', {
-        method: 'PATCH',
+    fetch('/InsertProductFiles', {
+        method: 'POST',
         body: formData,
     })
         .then((response) => response.json())
@@ -185,7 +183,7 @@ function loadProduct(data1) {
 
     data1.forEach(({Id, Name, price, description, type_of_product, images, season}) => {
         productHtmll += `<div class="manipulation-btn">`;
-        productHtmll += `${isAdmin ? `<button class="delete-product-btn" data-id=${Id}>Видалити</button>` : ''}`;
+        productHtmll += `${isAdmin ? `<button class="delete-product-btn" data-id=${Id}  id="deleteProductBtn">Видалити</button>` : ''}`;
         productHtmll += `${isAdmin ? `<button class="edit-product-btn" data-id=${Id}>Змінити</button>` : ''}`;
         productHtmll += `</div>`;
         productHtmll += `<div class = "main">`;
@@ -281,6 +279,18 @@ function loadProduct(data1) {
                         console.error(error);
                     });
             });
+    })
+
+
+    const deleteBtn = document.getElementById('deleteProductBtn');
+
+    deleteBtn.addEventListener('click', event => {
+        event.preventDefault();
+
+        fetch(`/deleteProduct/${productId}`, {
+            method: "DELETE",
+        })
+            .then(response => response.json())
     })
 
     const heart = document.getElementById('favBtn');

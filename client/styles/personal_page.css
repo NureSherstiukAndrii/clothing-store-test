@@ -80,7 +80,7 @@
     flex-direction: column;
     background: aliceblue;
     width: 40%;
-    height: 280px;
+    height: 330px;
     border-radius: 7px;
     position: relative;
 }
@@ -123,7 +123,7 @@
     background: url('../img/arrow-up.png') 0 0 no-repeat;
     left: 230px;
     border: none;
-    top: 280px;
+    top: 330px;
     cursor: pointer;
 }
 

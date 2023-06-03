@@ -49,6 +49,10 @@ addProductInput.addEventListener('click', event => {
     const season = seasonInput.value;
     seasonInput.value = "";
 
+    const amountInput = document.querySelector("#count_of_product");
+    const amount = amountInput.value;
+    amountInput.value = "";
+
     const img = document.querySelector('#images');
 
     const formData = new FormData();
@@ -71,6 +75,7 @@ addProductInput.addEventListener('click', event => {
         type_of_product: type_of_product,
         size: size,
         season: season,
+        amount: amount,
         img: images.join()
         }),
 
@@ -112,10 +117,6 @@ function loadHTMLProducts(data) {
         productHtml += `<h2 id='product_name-${Name}'>${Name}</h2>`;
         productHtml += `<span id='product_price-${price}'>$ ${price}</span>`
         productHtml += "</div>"
-        productHtml += `<div>`
-        productHtml += decodedToken?.role === 'A' ? `<button class="delete-product-btn" data-id=${Id}>Видалити</button>` : '';
-        productHtml += decodedToken?.role === 'A' ? `<button class="edit-product-btn" data-id=${Id}>Змінити</button>` : '';
-        productHtml += `</div>`
         productHtml += `</div>`
 
 

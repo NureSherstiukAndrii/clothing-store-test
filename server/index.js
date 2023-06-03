@@ -14,7 +14,7 @@ require('dotenv').config();
 
 
 const dbService = require("./db");
-const dbForCart = require("./dbForCart")
+const {Storage} = require("@google-cloud/storage");
 const parentDir = path.resolve(__dirname, '..');
 
 app.use(express.static(path.join(parentDir, '/client')))
@@ -33,6 +33,16 @@ const multer = Multer({
         fileSize: 5 * 1024 * 1024 // 5 MB
     }
 });
+
+const storageConfig = {
+    projectId: process.env.PROJECT_ID,
+    credentials: {
+        client_email: process.env.CLIENT_EMAIL,
+        private_key: process.env.PRIVATE_KEY.replace(/\\n/g, '\n'),
+    }
+};
+
+const storage = new Storage(storageConfig);
 
 app.use('/styles', express.static(path.join(parentDir, 'client/styles'), {
     headers: { 'Content-Type': 'text/css' }
@@ -193,10 +203,10 @@ function addImagesToProducts(products, images) {
 }
 
 app.post('/insertProductJSON', (req, res) => {
-    const { name, sex, price, description, type_of_product, type, size, rating, season, collection_name, img } = req.body;
+    const { name, sex, price, description, type_of_product, size, season, amount, img } = req.body;
     const db = dbService.getDbServiceInstance();
 
-    const result = db.addProduct(name, sex, price, description, type_of_product, type, size, rating, season, collection_name, img)
+    const result = db.addProduct(name, sex, price, description, type_of_product, size, season, amount, img)
 
     result
         .then((data) => { res.json({ data: data }); })
@@ -205,10 +215,22 @@ app.post('/insertProductJSON', (req, res) => {
 
 app.post('/insertProductFiles', multer.array('images', 4), (req, res) => {
     const files = req.files;
+    const storageConfig = {
+        projectId: process.env.PROJECT_ID,
+        credentials: {
+            client_email: process.env.CLIENT_EMAIL,
+            private_key: process.env.PRIVATE_KEY.replace(/\\n/g, '\n'),
+        }
+    };
+
+    const storage = new Storage(storageConfig);
+
+    const bucketName = process.env.BUCKETNAME;
+    const bucket = storage.bucket(bucketName);
+
     for (let i = 0; i < files.length; i++) {
         const file = files[i];
         const fileName = file.originalname;
-
         const blob = bucket.file(fileName);
         const blobStream = blob.createWriteStream();
 
@@ -227,26 +249,28 @@ app.post('/insertProductFiles', multer.array('images', 4), (req, res) => {
     }
 });
 
-//
-// app.delete("/deleteTour/:id", (request, response) => {
-//     const { id } = request.params;
-//     const db = dbService.getDbServiceInstance();
-//
-//     const result = db.deleteTour(id);
-//
-//     result
-//         .then((data) => response.json({ success: data }))
-//         .catch((err) => console.log(err));
-// });
-//
+
+app.delete("/deleteProduct/:id", (request, response) => {
+    const { id } = request.params;
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.deleteProduct(id);
+
+    result
+        .then((data) => response.json({ success: data }))
+        .catch((err) => console.log(err));
+});
+
+
 app.patch("/updateProductJSON", (request, response) => {
-    console.log(request);
-    // const {id, name} = request.body;
-    // const db = dbService.getDbServiceInstance();
-    // const result = db.editTour(+id, name);
-    // result
-    //     .then((data) => response.json({ success: data }))
-    //     .catch((err) => console.log(err));
+    const {productId, name, sex, price, description, type_of_product, size, season, amount, img } = request.body;
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.editProduct(productId, name, sex, price, description, type_of_product, size, season, amount, img)
+
+    result
+        .then((data) => { response.json({ data: data }); })
+        .catch((err) => console.log(err));
 });
 
 

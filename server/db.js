@@ -136,10 +136,10 @@ class DbService {
 
 
 
-    async addProduct(name, sex, price, description, type_of_product,type,size,rating, season,collection_name, images) {
+    async addProduct(name, sex, price, description, type_of_product,size, season, amount, images) {
         try {
             await sql.connect(config);
-            const result = await sql.query`EXEC InsertProduct ${sex}, ${name} , ${price}, ${description}, ${type_of_product},${type}, ${size} ,${rating}, ${season},${collection_name}, ${images}`;
+            const result = await sql.query`EXEC InsertProduct ${sex}, ${name} , ${price}, ${description}, ${type_of_product}, ${size} , ${season}, ${amount}, ${images}`;
         } catch (error) {
             console.log(error);
         } finally {
@@ -147,27 +147,22 @@ class DbService {
         }
     }
 
-    async deleteTour(id){
-        sql.connect(config)
-            .then(pool => {
-                const request = pool.request();
-                request.query(`DELETE FROM MyTable WHERE id = ${id}`)
-                    .then(result => {
-                        console.log(`Deleted ${result.rowsAffected} rows`);
-                    })
-                    .catch(error => {
-                        console.log(`Error: ${error}`);
-                    });
-            })
-            .catch(error => {
-                console.log(`Error connecting to the database: ${error}`);
-            });
-    }
-
-    async editTour(id, name) {
+    async editProduct(productId, name, sex, price, description, type_of_product,size, season, amount, images) {
         try {
             await sql.connect(config);
-            const result = await sql.query`UPDATE MyTable SET Name=${name} WHERE Id=${id}`;
+            const result = await sql.query`EXEC UpdateProduct ${productId}, ${sex}, ${name} , ${price}, ${description}, ${type_of_product}, ${size} , ${season}, ${amount}, ${images}`;
+        } catch (error) {
+            console.log(error);
+        } finally {
+            sql.close();
+        }
+    }
+
+
+    async deleteProduct(productId) {
+        try {
+            await sql.connect(config);
+            const result = await sql.query`EXEC DeleteProduct ${productId}`;
         } catch (error) {
             console.log(error);
         } finally {

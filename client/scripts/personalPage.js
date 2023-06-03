@@ -97,6 +97,7 @@ function loadFavorites(data){
     data.forEach(({Id, Name, price, size, images}) => {
             favoriteProduct += `
                 <div class="favorite-block" onclick="showProduct(${Id})">
+                  <h3 style="margin-left: 10px">Збережені</h3>
                     <div class="favorite-block-info">
                            <img id="my-image-${Id}" src="" alt="product-${Id}"> 
                            <div class="main-info">

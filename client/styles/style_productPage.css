@@ -193,6 +193,8 @@ footer{
     display: none;
     padding-top: 10%;
     justify-content: center;
+    width: 100%;
+    height: 100px;
 }
 .manipulation-btn{
     position: absolute;
