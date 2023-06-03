@@ -115,7 +115,7 @@ function loadHTMLProducts(data) {
         productHtml += `<div class='product' onclick="showProduct(${Id})">`;
         productHtml += `<img id="my-image-${Id}" src="" alt="product ${Id}"/>`;
         productHtml += `<h2 id='product_name-${Name}'>${Name}</h2>`;
-        productHtml += `<span id='product_price-${price}'>$ ${price}</span>`
+        productHtml += `<span id='product_price-${price}'>${price} грн</span>`
         productHtml += "</div>"
         productHtml += `</div>`
 
