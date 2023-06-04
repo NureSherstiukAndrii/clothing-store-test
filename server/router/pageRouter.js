@@ -4,10 +4,7 @@ const router = express.Router();
 
 const parentDir = path.resolve(__dirname, '..');
 
-console.log(parentDir);
-
 const trimmedPath = parentDir.substring(0, parentDir.lastIndexOf('\\server'));
-
 
 
 router.get("/", function (req, res){
