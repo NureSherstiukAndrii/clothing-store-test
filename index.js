@@ -1,21 +1,22 @@
 const express = require("express");
 const app = express();
 const path = require('path');
-const cloud_img = require("./cloud_img");
+const cloud_img = require("./server/cloud_img");
 const Multer = require('multer');
 const cookieParser = require('cookie-parser');
-const router = require('../server/router/authRouter');
-const pageRouter = require('../server/router/pageRouter')
-const errorMiddleware = require('./middlewares/errorMiddleware')
-const validateToken = require("./middlewares/authMiddleware");
-const mobileApi = require('./mobile-api')
+const router = require('./server/router/authRouter');
+const pageRouter = require('./server/router/pageRouter')
+const errorMiddleware = require('./server/middlewares/errorMiddleware')
+const validateToken = require("./server/middlewares/authMiddleware");
+const mobileApi = require('./server/mobile-api')
 require('dotenv').config();
 
 
 
-const dbService = require("./db");
+const dbService = require("./server/db");
 const {Storage} = require("@google-cloud/storage");
-const parentDir = path.resolve(__dirname, '..');
+const parentDir = path.resolve(__dirname);
+
 
 app.use(express.static(path.join(parentDir, '/client')))
 app.use(express.json());

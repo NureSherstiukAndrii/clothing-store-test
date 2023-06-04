@@ -1,6 +1,6 @@
 .idea
 node_modules
-server/.env
+.env
 server/json-google-cloud.json
 
 ## Ignore Visual Studio temporary files, build results, and
