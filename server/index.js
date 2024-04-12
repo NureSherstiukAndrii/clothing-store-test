@@ -15,6 +15,7 @@ require('dotenv').config();
 
 const dbService = require("./db");
 const {Storage} = require("@google-cloud/storage");
+const Console = require("console");
 const parentDir = path.resolve(__dirname, '..');
 
 app.use(express.static(path.join(parentDir, '/client')))
@@ -27,12 +28,28 @@ app.use(errorMiddleware);
 
 const cloudImg = new cloud_img();
 
-const multer = Multer({
-    storage: Multer.memoryStorage(),
-    limits: {
-        fileSize: 5 * 1024 * 1024 // 5 MB
+// const multer = Multer({
+//     storage: Multer.memoryStorage(),
+//     limits: {
+//         fileSize: 5 * 1024 * 1024 // 5 MB
+//     }
+// });
+
+const uploadDir = path.join(__dirname, 'images');
+
+// Создание хранилища Multer
+const imagesStorage = Multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, uploadDir);
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname);
     }
 });
+
+const upload = Multer({ storage: imagesStorage });
+
+
 
 const storageConfig = {
     projectId: process.env.PROJECT_ID,
@@ -51,8 +68,11 @@ app.use('/styles', express.static(path.join(parentDir, 'client/styles'), {
 
 app.get('/api/cloud-img', async (req, res) => {
     try {
-        const url = await cloudImg.getImgUrl(req.query.filename);
-        res.json({ url });
+        const imageName = req.query.filename;
+        let localFilePath = path.join(__dirname, 'images', imageName);
+        res.sendFile(localFilePath);
+        //const url = await cloudImg.getImgUrl(req.query.filename);
+        //res.json({ url });
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Internal Server Error' });
@@ -109,6 +129,28 @@ app.get("/getAllProducts", function (request, response) {
         response.json({ data: result });
     });
 });
+
+app.get("/getProducts/:page", function (request, response) {
+    const { page } = request.params;
+    const db = dbService.getDbServiceInstance();
+    let products = db.getProductsWithOffset(page);
+    let images = db.getProductImages();
+
+    let result;
+
+    Promise.all([products, images]).then(([p, i]) => {
+        result = addImagesToProducts(p, i);
+
+        response.json({ data: result });
+    });
+});
+
+app.get("/productsCount", function (request, response) {
+    const db = dbService.getDbServiceInstance();
+    let count = db.countProducts();
+    count.then((data) => response.json({count: data}));
+});
+
 
 app.get("/getRecentClothes", function (request, response) {
     const db = dbService.getDbServiceInstance();
@@ -213,40 +255,44 @@ app.post('/insertProductJSON', (req, res) => {
         .catch((err) => console.log(err));
 });
 
-app.post('/insertProductFiles', multer.array('images', 4), (req, res) => {
-    const files = req.files;
-    const storageConfig = {
-        projectId: process.env.PROJECT_ID,
-        credentials: {
-            client_email: process.env.CLIENT_EMAIL,
-            private_key: process.env.PRIVATE_KEY.replace(/\\n/g, '\n'),
-        }
-    };
+app.post('/insertProductFiles', upload.array('images', 4), (req, res) => {
+    console.log(req.files);
 
-    const storage = new Storage(storageConfig);
+    res.json({ message: 'Images uploaded successfully' });
 
-    const bucketName = process.env.BUCKETNAME;
-    const bucket = storage.bucket(bucketName);
-
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const fileName = file.originalname;
-        const blob = bucket.file(fileName);
-        const blobStream = blob.createWriteStream();
-
-        blobStream.on('error', err => {
-            console.error(err);
-            res.status(500).send({ error: 'Error uploading files to Google Cloud' });
-        });
-
-        blobStream.on('finish', () => {
-            if (i === files.length - 1) {
-                res.status(200).send({ message: 'Files uploaded successfully' });
-            }
-        });
-
-        blobStream.end(file.buffer);
-    }
+    // const files = req.files;
+    // const storageConfig = {
+    //     projectId: process.env.PROJECT_ID,
+    //     credentials: {
+    //         client_email: process.env.CLIENT_EMAIL,
+    //         private_key: process.env.PRIVATE_KEY.replace(/\\n/g, '\n'),
+    //     }
+    // };
+    //
+    // const storage = new Storage(storageConfig);
+    //
+    // const bucketName = process.env.BUCKETNAME;
+    // const bucket = storage.bucket(bucketName);
+    //
+    // for (let i = 0; i < files.length; i++) {
+    //     const file = files[i];
+    //     const fileName = file.originalname;
+    //     const blob = bucket.file(fileName);
+    //     const blobStream = blob.createWriteStream();
+    //
+    //     blobStream.on('error', err => {
+    //         console.error(err);
+    //         res.status(500).send({ error: 'Error uploading files to Google Cloud' });
+    //     });
+    //
+    //     blobStream.on('finish', () => {
+    //         if (i === files.length - 1) {
+    //             res.status(200).send({ message: 'Files uploaded successfully' });
+    //         }
+    //     });
+    //
+    //     blobStream.end(file.buffer);
+    // }
 });
 
 

@@ -44,6 +44,4 @@ router.get("/cart", function (req, res){
     res.sendFile(parentDir + "/client/CartPage/index.html");
 })
 
-
-
 module.exports = router;

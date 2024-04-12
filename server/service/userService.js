@@ -3,11 +3,13 @@ const bcrypt = require('bcrypt');
 const tokenService = require('../service/tokenService');
 const UserDto = require('../dtos/userDto');
 const ApiError = require('../exeptions/apiErrors')
+require('dotenv').config();
+
 const config = {
-    user: "dsrdsr7",
-    password: "NAMS9kUgcwgQS@S",
-    server: "dsrdsr7v2.database.windows.net",
-    database: "Internet_ cloth_shop_v2",
+    user: process.env.USER_DB,
+    password: process.env.PASSWORD_DB,
+    server: process.env.SERVER_DB,
+    database: process.env.DATABASE_NAME,
     options: {
         encrypt: true,
         trustServerCertificate: false
@@ -26,7 +28,6 @@ class UserService {
         const query = role ? `INSERT INTO Users (Name, e_mail, password, role) VALUES ('${name}', '${mail}', '${hashPassword}', '${role}')`
             : `INSERT INTO Users (Name, e_mail, password) VALUES ('${name}', '${mail}', '${hashPassword}')`;
 
-        // console.log("query : ", query)
         const user = await sql.query(query);
 
         const newUser = await sql.query`SELECT * FROM Users WHERE e_mail = ${mail}`;
@@ -51,6 +52,7 @@ class UserService {
         }
 
         const isPassEquals = await bcrypt.compare(password, user.recordset[0].password)
+        console.log(isPassEquals);
         if (!isPassEquals) {
             throw ApiError.BadRequest(`Неверный пароль`);
         }

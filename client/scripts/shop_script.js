@@ -1,4 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
+    fetch("http://localhost:3000/productsCount")
+        .then((response) => response.json())
+        .then((response) => loadPagesCount(response.count))
+
     fetch("http://localhost:3000/getAllProducts")
         .then((response) => response.json())
         .then((response) => loadHTMLProducts(response.data))
@@ -95,6 +99,17 @@ addProductInput.addEventListener('click', event => {
         });
 });
 
+// function loadPagesCount(data) {
+//     const mainContentBlock = document.getElementById('main-container');
+//     const pagesCountBlock = document.createElement('div');
+//     pagesCountBlock.classList.add('pagesCountBlock');
+//     for(let i=0; i < data / 25; i++){
+//         let pagesCountEl = document.createElement('a');
+//         pagesCountEl.classList.add('pagesCountElement');
+//         pagesCountEl.appendChild(pagesCountBlock);
+//     }
+//     pagesCountBlock.appendChild(mainContentBlock);
+// }
 
 function loadHTMLProducts(data) {
     const uniqueNamesArray = Array.from(new Set(data.map(item => item.Name)));
@@ -121,10 +136,11 @@ function loadHTMLProducts(data) {
 
 
         fetch(`/api/cloud-img?filename=${images[0]}`)
-            .then(response => response.json())
-            .then(data => {
-            const img = document.getElementById(`my-image-${Id}`);
-                img.src = data.url;
+            .then(response => response.blob())
+            .then(blob => {
+                const url = URL.createObjectURL(blob);
+                const img = document.getElementById(`my-image-${Id}`);
+                img.src = url;
             })
             .catch(error => console.error(error));
     });

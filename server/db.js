@@ -12,6 +12,8 @@ const config = {
     },
 };
 
+console.log(config);
+
 class DbService {
     static getDbServiceInstance() {
         return instance ? instance : new DbService();
@@ -48,6 +50,17 @@ class DbService {
         }
     }
 
+    async countProducts(){
+        try {
+            await sql.connect(config);
+            const result = await sql.query`SELECT COUNT(Id) as pdCount FROM Products;`;
+            return result.recordset[0].pdCount;
+        } catch (error) {
+            console.log(error);
+        } finally {
+            sql.close();
+        }
+    }
 
     async getAllProducts() {
         try {

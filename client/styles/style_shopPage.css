@@ -268,3 +268,17 @@ footer{
 .cart-wrap.active {
     width: 400px;
 }
+
+.pagesCountBlock{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 50px;
+    justify-content: center;
+}
+
+.pagesCountElement{
+    width: 45px;
+    height: 45px;
+    border: 2px solid black;
+}
