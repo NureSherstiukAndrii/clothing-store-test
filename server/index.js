@@ -137,7 +137,6 @@ app.get("/getProducts/:page", function (request, response) {
     let images = db.getProductImages();
 
     let result;
-
     Promise.all([products, images]).then(([p, i]) => {
         result = addImagesToProducts(p, i);
 

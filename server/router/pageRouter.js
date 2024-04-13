@@ -12,7 +12,7 @@ router.get("/about", function (req, res){
     res.sendFile(parentDir + "/client/AboutUsPage/index.html");
 })
 
-router.get("/shop", function (req, res){
+router.get("/shop/:page", function (req, res){
     res.sendFile(parentDir + "/client/ShopPage/index.html");
 })
 

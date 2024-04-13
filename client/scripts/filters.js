@@ -98,12 +98,12 @@ function loadHTMLProducts2(data) {
         productHtml += `</div>`
         productHtml += "</div>";
 
-
         fetch(`/api/cloud-img?filename=${images[0]}`)
-            .then(response => response.json())
-            .then(data => {
+            .then(response => response.blob())
+            .then(blob => {
+                const url = URL.createObjectURL(blob);
                 const img = document.getElementById(`my-image-${Id}`);
-                img.src = data.url;
+                img.src = url;
             })
             .catch(error => console.error(error));
     });

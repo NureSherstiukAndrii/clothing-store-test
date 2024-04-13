@@ -278,7 +278,16 @@ footer{
 }
 
 .pagesCountElement{
-    width: 45px;
-    height: 45px;
+    margin: 10px;
+    text-align: center;
+    border-radius: 10px;
+    width: 25px;
+    height: 25px;
     border: 2px solid black;
+    cursor: pointer;
+}
+
+.pagesCountElement:hover{
+    transform: scale(105%);
+    transition: transform .3s;
 }

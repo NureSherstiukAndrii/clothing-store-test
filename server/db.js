@@ -86,6 +86,31 @@ class DbService {
         }
     }
 
+    async getProductsWithOffset(page){
+        try {
+            const pool = new sql.ConnectionPool(config);
+            const response = await new Promise((resolve, reject) => {
+                pool.connect().then(() => {
+                    const request = new sql.Request(pool);
+                    request.query(`SELECT * FROM Products ORDER BY Id 
+                                            OFFSET ${(page-1) * 25} ROWS FETCH NEXT 25 ROWS ONLY`).then((result, err) => {
+                        if(err){
+                            reject(new Error(err.message));
+                        }
+                        resolve(result.recordset);
+                        pool.close();
+                    }).catch((err) => {
+                        console.error(err);
+                        pool.close();
+                    });
+                })
+            })
+            return response
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     async getProductForNameAndSize(name, size) {
         try {
             await sql.connect(config);
