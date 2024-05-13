@@ -9,20 +9,38 @@ const pageRouter = require('../server/router/pageRouter')
 const errorMiddleware = require('./middlewares/errorMiddleware')
 const validateToken = require("./middlewares/authMiddleware");
 const mobileApi = require('./mobile-api')
+const cors = require('cors');
+const sql = require('mssql');
 require('dotenv').config();
-
-
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const dbService = require("./db");
 const {Storage} = require("@google-cloud/storage");
 const Console = require("console");
 const parentDir = path.resolve(__dirname, '..');
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+});
 
+const corsOptions ={
+    origin:'http://localhost:3001',
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200
+}
+
+
+app.use(cors(corsOptions));
 app.use(express.static(path.join(parentDir, '/client')))
 app.use(express.json());
 app.use(cookieParser());
 app.use('/mobileapi', mobileApi);
 app.use('/api', router);
+app.use('/api/login', router);
+app.use('/api/registration', router);
 app.use('/', pageRouter)
 app.use(errorMiddleware);
 
@@ -36,6 +54,19 @@ const cloudImg = new cloud_img();
 // });
 
 const uploadDir = path.join(__dirname, 'images');
+
+const config = {
+    user: process.env.USER_DB,
+    password: process.env.PASSWORD_DB,
+    server: process.env.SERVER_DB,
+    database: process.env.DATABASE_NAME,
+    options: {
+        encrypt: true,
+        trustServerCertificate: false
+    },
+};
+
+
 
 // Создание хранилища Multer
 const imagesStorage = Multer.diskStorage({
@@ -365,6 +396,97 @@ app.get("/applyFilters", (req, res) => {
         let result = addImagesToProducts(p, i);
         res.json({ data: result });
     });
+});
+
+app.post('/auth', async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        await sql.connect(config);
+        sql.query(`SELECT * FROM Users WHERE e_mail = '${email}'`, async (err, results) => {
+            if (err) throw err;
+
+            if (results.length > 0) {
+                const user = results[0];
+
+                const isMatch = await bcrypt.compare(password, user.password);
+
+                if (isMatch) {
+
+                    const accessToken = jwt.sign({ id: user.id, email: user.email }, 'secretKey', { expiresIn: '1h' });
+                    res.json({ accessToken });
+                } else {
+                    res.status(401).json({ error: 'Invalid credentials' });
+                }
+            } else {
+                res.status(401).json({ error: 'Invalid credentials' });
+            }
+        });
+    } catch (err) {
+        console.error('Error logging in:', err);
+        res.status(500).json({ error: 'Error logging in' });
+    }
+});
+
+app.post('/orders', async (req, res) => {
+    const { u_id, total_price } = req.body;
+
+    if (!u_id || !total_price) {
+        return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    try {
+        await sql.connect(config);
+
+        const result = await sql.query(`INSERT INTO Orders (u_id, total_price) VALUES (${u_id}, ${total_price}); SELECT SCOPE_IDENTITY() AS orderId;`);
+
+        console.log('Order created successfully');
+        return res.status(200).json({ message: 'Order created successfully', orderId: result.recordset[0].orderId });
+    } catch (error) {
+        console.error('Error creating order:', error);
+        return res.status(500).json({ error: 'Error creating order' });
+    }
+});
+
+app.get('/orders/:u_id', async (req, res) => {
+    const { u_id } = req.params;
+
+    try {
+        // Подключение к базе данных и выполнение запроса
+        await sql.connect(config);
+        const result = await sql.query(`SELECT * FROM Orders WHERE u_id = ${u_id}`);
+
+        // Проверка наличия заказов пользователя
+        if (result.recordset.length === 0) {
+            return res.status(404).json({ message: 'No orders found for the user' });
+        }
+
+        // Отправка найденных заказов в формате JSON
+        return res.status(200).json({ orders: result.recordset });
+    } catch (error) {
+        console.error('Error fetching orders:', error);
+        return res.status(500).json({ error: 'Error fetching orders' });
+    }
+});
+app.post('/orders/:order_num/items', async (req, res) => {
+    const { order_num } = req.params;
+    const { p_id } = req.body;
+
+    if (!order_num || !p_id) {
+        return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    try {
+        await sql.connect(config);
+
+        const result = await sql.query(`INSERT INTO Ordered_items (order_num, p_id) VALUES (${order_num}, ${p_id});`);
+
+        console.log('Item added to order successfully');
+        return res.status(200).json({ message: 'Item added to order successfully' });
+    } catch (error) {
+        console.error('Error adding item to order:', error);
+        return res.status(500).json({ error: 'Error adding item to order' });
+    }
 });
 
 const PORT = process.env.PORT || 3000;

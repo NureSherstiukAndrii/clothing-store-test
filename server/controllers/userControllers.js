@@ -21,6 +21,8 @@ class UserControllers {
         }
     }
 
+    
+
     async login(req, res, next) {
         try {
             const { mail, password } = req.body;

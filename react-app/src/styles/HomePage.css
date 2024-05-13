@@ -1,0 +1,106 @@
+.introduction{
+    display: flex;
+    width: 100%;
+    height: 85vh;
+    position: relative;
+    justify-content: space-between;
+    top: 57px;
+}
+.introduction > img{
+    width: 59%;
+}
+.introduction-container{
+    background: lightgray;
+    height: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+}
+.introduction-phrase{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+.introduction-phrase > a{
+    color: #333333;
+    text-decoration: none;
+    border: 1px solid grey;
+    padding: 10px;
+}
+.introduction-phrase > a:hover{
+    cursor: pointer;
+    transition: 0.4s;
+    background: #333333;
+    color: white;
+    border: 1px solid black;
+}
+
+.main-categories{
+    width: 100%;
+    display: flex;
+    position: relative;
+    top: 65px;
+    height: 610px;
+    justify-content: space-between;
+    font-weight: bold;
+}
+.main-categories > a{
+    width: 33%;
+    color: white;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    text-decoration: none;
+}
+.main-categories > a > h1{
+    width: 60%;
+}
+.main-categories > a:hover{
+    cursor: pointer;
+    filter: brightness(0.5);
+    transition: 0.6s;
+    transform: scale(0.98);
+}
+.category-about{
+    background-image: url("../../public/resources/about-us.jpg");
+    background-repeat: round;
+}
+.category-shop{
+    background-image: url("../../public/resources/about-shop.jpg");
+    background-repeat: round;
+}
+.category-size{
+    background-image: url("../../public/resources/size-chart.jpg");
+    background-repeat: round;
+}
+
+.last-arrivals, .popular-clothes{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    top: 100px;
+}
+
+.mail > a{
+    text-decoration: none;
+    color: black;
+}
+.mail > a:hover{
+    transition: 0.3s;
+    color: lightgray;
+}
+.social-media{
+    width: 7%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.popular-clothes-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}

@@ -1,0 +1,152 @@
+.main{
+
+    height: 1100px;
+
+    display: flex;
+
+    justify-content: center;
+}
+
+.product-info{
+    display: flex;
+
+    width: 70%;
+    height: 100%;
+    justify-content: space-between;
+
+}
+
+.left{
+    width: 625px;
+}
+
+.title{
+    padding-top: 128px;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 24px;
+}
+
+.title-link{
+    text-decoration: none;
+    color: black;
+}
+
+.clothes-photo{
+    padding-top: 90px;
+}
+
+.photo{
+    height: 834px;
+    width: 625px;
+    align-self: flex-end;
+}
+
+.right{
+    width: 375px;
+}
+
+.clothes-name{
+    padding-top: 200px;
+}
+
+.form{
+    font-style: normal;
+    font-weight: 900;
+    font-size: 24px;
+}
+
+select {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    width: 200px;
+}
+
+input[type="number"] {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+input[type="submit"] {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    width: 225px;
+    height: 40px;
+    color: white;
+    background-color:  #B46A51;
+    border: none;
+}
+
+
+input[type="submit"]:hover {
+    transition: 0.4s;
+    cursor: pointer;
+    border-radius: 5px;
+    background: #a94422;
+}
+
+.description{
+    padding-top: 15px;
+    font-size: 18px;
+    text-align: justify;
+}
+
+.size-fav{
+    display: flex;
+    width: 70%;
+    justify-content: space-between;
+}
+.size-fav > img {
+    width: 40px;
+    cursor: pointer;
+}
+footer{
+    position: relative;
+    border-top: 2px solid;
+    top: 100px;
+    width: 100%;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.mail > a{
+    text-decoration: none;
+    color: black;
+}
+.mail > a:hover{
+    transition: 0.3s;
+    color: lightgray;
+}
+.social-media{
+    width: 7%;
+    display: flex;
+    justify-content: space-between;
+}
+#loader {
+    display: none;
+    padding-top: 10%;
+    justify-content: center;
+    width: 100%;
+    height: 100px;
+}
+.manipulation-btn{
+    position: absolute;
+    top: 140px;
+    right: 200px;
+}
+
+.manipulation-btn > button{
+    padding: 7px;
+    margin:10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.manipulation-btn > button:hover{
+    transition: 0.5s;
+    filter: brightness(0.6);
+}
